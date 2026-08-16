@@ -10,7 +10,7 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://deepagentlabs.github.io/">
   <title>DeepAgentLabs — Open AI Operations</title>
-  <link rel="stylesheet" href="assets/styles.css?v=3">
+  <link rel="stylesheet" href="assets/styles.css?v=4">
   <script src="assets/site.js" defer></script>
 </head>
 <body>
@@ -22,6 +22,7 @@
     </a>
     <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
     <nav id="site-nav" aria-label="Primary navigation">
+      <a href="#architecture">Architecture</a>
       <a href="#ecosystem">Ecosystem</a>
       <a href="#standard">Specification</a>
       <a href="#roadmap">Roadmap</a>
@@ -55,7 +56,9 @@
         <div class="tool-grid">
           <div class="tool-node"><span>01</span><strong>AgenticLens</strong><small>Observe + optimize</small></div>
           <div class="tool-node"><span>02</span><strong>Agentic Chaos</strong><small>Stress + validate</small></div>
-          <div class="tool-node"><span>03</span><strong>DeepAgent MCP</strong><small>Expose + operate</small></div>
+          <div class="tool-node"><span>03</span><strong>Agentic Sidecar</strong><small>Supervise + guide</small></div>
+          <div class="tool-node"><span>04</span><strong>DeepAgent Control Tower</strong><small>Coordinate + govern</small></div>
+          <div class="tool-node"><span>05</span><strong>DeepAgent MCP</strong><small>Expose + operate</small></div>
         </div>
         <div class="system-footer"><span>One model</span><span>Multiple implementations</span></div>
       </div>
@@ -66,34 +69,56 @@
       <p class="manifesto-copy">Most AI tooling starts with a dashboard. We start with the <strong>operational contract</strong> underneath it—so every runtime, evaluator, and resilience tool can describe the same system consistently.</p>
     </section>
 
+    <section class="architecture section-shell" id="architecture">
+      <div class="section-heading">
+        <div><p class="section-label">Reference architecture</p><h2>The ecosystem, as one operating model.</h2></div>
+        <p>The diagram below is the clearest representation of how users, runtimes, the control plane, the specification, and the packages fit together.</p>
+      </div>
+      <figure class="architecture-figure">
+        <img src="assets/deepagentlabs-ecosystem.png" loading="lazy" alt="DeepAgentLabs reference architecture showing users, console, DeepAgent Control Tower, AI Operations Specification, Agentic Lens, Agentic Sidecar, Agentic Chaos, MCP Server, exports, and platform principles.">
+      </figure>
+    </section>
+
     <section class="ecosystem section-shell" id="ecosystem">
       <div class="section-heading">
         <div><p class="section-label">The ecosystem</p><h2>Independent tools.<br>A common foundation.</h2></div>
-        <p>Each project is useful on its own and more powerful when combined through the shared specification.</p>
+        <p>Six connected building blocks, each useful on its own and more powerful when combined through the shared specification.</p>
       </div>
       <div class="project-grid">
         <article class="project-card project-spec">
-          <div class="project-meta"><span>FOUNDATION</span><span>v0.1 draft</span></div>
+          <div class="project-meta"><span>FOUNDATION</span><span>v0.1.0 · draft</span></div>
           <h3>AI Operations<br>Specification</h3>
           <p>The language-neutral model for workflows, runs, agents, model interactions, evaluations, safety, reliability, and incidents.</p>
           <a href="https://github.com/DeepAgentLabs/ai-operations-spec">Read the standard <span aria-hidden="true">→</span></a>
         </article>
         <article class="project-card">
-          <div class="project-meta"><span>OBSERVABILITY</span><span>Python</span></div>
+          <div class="project-meta"><span>OBSERVABILITY</span><span>v0.4.0 · Python</span></div>
           <h3>AgenticLens</h3>
-          <p>Profile AI workflows locally. See token usage, latency, cost, and concrete opportunities to reduce waste.</p>
+          <p>Profile, evaluate, and compare AI workflows locally. Token usage, latency, cost, evaluation gates, and evidence-backed opportunities to reduce waste.</p>
           <a href="https://github.com/DeepAgentLabs/agenticlens">View AgenticLens <span aria-hidden="true">→</span></a>
         </article>
         <article class="project-card">
-          <div class="project-meta"><span>RESILIENCE</span><span>Python</span></div>
+          <div class="project-meta"><span>RESILIENCE</span><span>v0.4.0 · Python</span></div>
           <h3>Agentic Chaos</h3>
           <p>Inject provider failures, corrupted outputs, tool errors, and agent faults before production does.</p>
           <a href="https://github.com/DeepAgentLabs/agentic-chaos">View Agentic Chaos <span aria-hidden="true">→</span></a>
         </article>
         <article class="project-card">
-          <div class="project-meta"><span>CONTROL PLANE</span><span>MCP</span></div>
+          <div class="project-meta"><span>SUPERVISION</span><span>v0.2.0 · Python</span></div>
+          <h3>Agentic Sidecar</h3>
+          <p>Companion intelligence for autonomous agents with real-time supervision, governance, escalation, and human approval loops.</p>
+          <a href="https://github.com/DeepAgentLabs/agentic-sidecar">View Agentic Sidecar <span aria-hidden="true">→</span></a>
+        </article>
+        <article class="project-card">
+          <div class="project-meta"><span>CONTROL PLANE</span><span>v0.2.0 · Python</span></div>
+          <h3>DeepAgent<br>Control Tower</h3>
+          <p>The operating console and control plane for agent registry, capability discovery, configuration, and a unified control API.</p>
+          <a href="https://github.com/DeepAgentLabs/agenticops-control-tower">View Control Tower <span aria-hidden="true">→</span></a>
+        </article>
+        <article class="project-card">
+          <div class="project-meta"><span>CONTROL PLANE</span><span>v0.2.0 · MCP</span></div>
           <h3>DeepAgent MCP</h3>
-          <p>A thin MCP-native interface for analyzing, comparing, and operating on shared AI operations artifacts.</p>
+          <p>A unified MCP interface over the shared model for AgenticLens, Agentic Chaos, and Agentic Sidecar workflows.</p>
           <a href="https://github.com/DeepAgentLabs/mcp-server">View the MCP server <span aria-hidden="true">→</span></a>
         </article>
       </div>
@@ -124,6 +149,7 @@
         <article class="phase"><span>v0.2</span><strong>Relationships</strong><small>Next</small></article>
         <article class="phase"><span>v0.3</span><strong>Semantics</strong><small>Planned</small></article>
         <article class="phase"><span>v0.4</span><strong>JSON Schemas</strong><small>Planned</small></article>
+        <article class="phase"><span>v0.5</span><strong>Versioning</strong><small>Planned</small></article>
         <article class="phase"><span>v1.0</span><strong>Stable standard</strong><small>North star</small></article>
       </div>
     </section>
