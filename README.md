@@ -15,3 +15,11 @@ GitHub will publish `index.html` at the organization URL. No build step or packa
 ## Local preview
 
 Open `index.html` directly, or serve this directory with any static file server.
+
+## `ecosystem-docs/`
+
+Internal architecture and audit documentation for the DeepAgentLabs repos —
+not part of the built site, not linked from `index.html`, and not written in
+the site's marketing voice. It's kept in this repo only because it has
+nowhere else to live; treat it as engineering reference material, not
+public copy.
