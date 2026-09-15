@@ -59,7 +59,7 @@
     return e;
   }
   function cx(n) { return n.x + n.w / 2; }
-  function top(n) { return { x: cx(n), y: n.y }; }
+  function topPt(n) { return { x: cx(n), y: n.y }; }
   function bottom(n) { return { x: cx(n), y: n.y + n.h }; }
   function side(n, other) {
     var fromCenter = cx(n) < cx(other) ? n.x + n.w : n.x;
@@ -104,8 +104,8 @@
     var a = NODES[e.from], b = NODES[e.to];
     var p1, p2;
     if (a.y === b.y) { p1 = side(a, b); p2 = side(b, a); }
-    else if (bottom(a).y <= b.y) { p1 = bottom(a); p2 = top(b); }
-    else { p1 = top(a); p2 = bottom(b); }
+    else if (bottom(a).y <= b.y) { p1 = bottom(a); p2 = topPt(b); }
+    else { p1 = topPt(a); p2 = bottom(b); }
     var midY = (p1.y + p2.y) / 2;
     var d = 'M' + p1.x + ',' + p1.y + ' C ' + p1.x + ',' + midY + ' ' + p2.x + ',' + midY + ' ' + p2.x + ',' + p2.y;
     var cls = 'arch-edge ' + (e.kind === 'plan' ? 'arch-planned' : '');

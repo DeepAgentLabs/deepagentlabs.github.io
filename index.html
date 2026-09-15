@@ -9,6 +9,9 @@
   <meta property="og:description" content="A specification-first ecosystem for observable, efficient, and resilient AI systems.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://deepagentlabs.io/">
+  <meta property="og:image" content="https://deepagentlabs.io/assets/deepagentlabs-ecosystem.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://deepagentlabs.io/assets/deepagentlabs-ecosystem.png">
   <link rel="canonical" href="https://deepagentlabs.io/">
   <title>DeepAgentLabs — Open AI Operations</title>
   <link rel="stylesheet" href="assets/styles.css?v=6">
@@ -101,7 +104,7 @@
     <section class="architecture section-shell" id="architecture">
       <div class="section-heading">
         <div><p class="section-label">Reference architecture</p><h2>The ecosystem, as one operating model.</h2></div>
-        <p>Select a package to see how it connects to the rest of the ecosystem today, and what's on the roadmap.</p>
+        <p>Select a package to see how it connects to the rest of the ecosystem today, and what's on the roadmap. <a class="text-link" href="assets/deepagentlabs-ecosystem.png">Download a static copy ↗</a></p>
       </div>
 
       <div class="arch-legend">
@@ -199,126 +202,120 @@
     <section class="dashboards section-shell" id="dashboards">
       <div class="section-heading">
         <div><p class="section-label">See it in action</p><h2>What each tool<br>actually does.</h2></div>
-        <p>Illustrative sample output from each project's own CLI/API — not live telemetry from this site. Select a project to see what it does and what it reports.</p>
+        <p>Illustrative sample output from each project's own CLI/API — not live telemetry from this site.</p>
       </div>
 
-      <div class="console-shell">
-        <div class="console-tabs" role="tablist" aria-label="DeepAgentLabs projects">
-          <button type="button" class="ctab active" data-target="spec" role="tab" aria-selected="true">AI Operations Spec</button>
-          <button type="button" class="ctab" data-target="lens" role="tab" aria-selected="false">AgenticLens</button>
-          <button type="button" class="ctab" data-target="evals" role="tab" aria-selected="false">Agentic Evals</button>
-          <button type="button" class="ctab" data-target="chaos" role="tab" aria-selected="false">Agentic Chaos</button>
-          <button type="button" class="ctab" data-target="sidecar" role="tab" aria-selected="false">Agentic Sidecar</button>
-          <button type="button" class="ctab" data-target="tower" role="tab" aria-selected="false">Control Tower</button>
-          <button type="button" class="ctab" data-target="mcp" role="tab" aria-selected="false">DeepAgent MCP</button>
-        </div>
+      <div class="dash-panels">
 
-        <div class="dash-panels">
+        <article class="dash-card dash-panel">
+          <div class="dash-head"><strong>AI Operations Specification</strong><span class="dash-tag">v0.4 draft</span></div>
+          <p class="dash-desc">The vendor-neutral contract for runs, steps, model/tool calls, evaluations, and incidents — the shared vocabulary every tool on this page implements, not an SDK or a runtime itself.</p>
+          <ul class="dash-check" aria-hidden="true">
+            <li><span class="dot dot-good"></span>schema_valid</li>
+            <li><span class="dot dot-good"></span>semantic_valid</li>
+            <li><span class="dot dot-good"></span>aligned: true</li>
+          </ul>
+          <p class="sr-only">Conformance check example: schema valid, semantic valid, aligned true.</p>
+          <p class="dash-caption">One shared contract every tool below can validate against.</p>
+          <a class="text-link" href="https://github.com/DeepAgentLabs/ai-operations-spec">Read the standard <span aria-hidden="true">↗</span></a>
+        </article>
 
-          <article class="dash-card dash-panel active" data-panel="spec" role="tabpanel">
-            <div class="dash-head"><strong>AI Operations Specification</strong><span class="dash-tag">v0.4 draft</span></div>
-            <p class="dash-desc">The vendor-neutral contract for runs, steps, model/tool calls, evaluations, and incidents — the shared vocabulary every tool on this page implements, not an SDK or a runtime itself.</p>
-            <ul class="dash-check" aria-hidden="true">
-              <li><span class="dot dot-good"></span>schema_valid</li>
-              <li><span class="dot dot-good"></span>semantic_valid</li>
-              <li><span class="dot dot-good"></span>aligned: true</li>
-            </ul>
-            <p class="sr-only">Conformance check example: schema valid, semantic valid, aligned true.</p>
-            <p class="dash-caption">One shared contract every tool below can validate against.</p>
-            <a class="text-link" href="https://github.com/DeepAgentLabs/ai-operations-spec">Read the standard <span aria-hidden="true">↗</span></a>
-          </article>
+        <article class="dash-card dash-panel">
+          <div class="dash-head"><strong>AgenticLens</strong><span class="dash-tag">workflow profile</span></div>
+          <p class="dash-desc">OpenTelemetry-native observability for production AI: ingest OTLP traces, track cost and latency per run, and surface evidence-backed findings for where to cut waste.</p>
+          <div class="dash-stats" aria-hidden="true">
+            <div><strong>$0.041</strong><span>avg cost / run</span></div>
+            <div><strong>412ms</strong><span>p95 latency</span></div>
+            <div><strong>6</strong><span>findings</span></div>
+          </div>
+          <div class="dash-spark" aria-hidden="true">
+            <span style="height:78%"></span><span style="height:64%"></span><span style="height:52%"></span><span style="height:40%"></span><span style="height:29%"></span>
+          </div>
+          <p class="sr-only">Cost per run trending down across five recent runs, from $0.087 to $0.041, alongside six optimization findings.</p>
+          <p class="dash-caption">Cost trending down over five runs after acting on its own findings.</p>
+          <p class="dash-quickstart">pip install agenticlens</p>
+          <a class="text-link" href="https://github.com/DeepAgentLabs/agenticlens">View AgenticLens <span aria-hidden="true">↗</span></a>
+        </article>
 
-          <article class="dash-card dash-panel" data-panel="lens" role="tabpanel">
-            <div class="dash-head"><strong>AgenticLens</strong><span class="dash-tag">workflow profile</span></div>
-            <p class="dash-desc">OpenTelemetry-native observability for production AI: ingest OTLP traces, track cost and latency per run, and surface evidence-backed findings for where to cut waste.</p>
-            <div class="dash-stats" aria-hidden="true">
-              <div><strong>$0.041</strong><span>avg cost / run</span></div>
-              <div><strong>412ms</strong><span>p95 latency</span></div>
-              <div><strong>6</strong><span>findings</span></div>
-            </div>
-            <div class="dash-spark" aria-hidden="true">
-              <span style="height:78%"></span><span style="height:64%"></span><span style="height:52%"></span><span style="height:40%"></span><span style="height:29%"></span>
-            </div>
-            <p class="sr-only">Cost per run trending down across five recent runs, from $0.087 to $0.041, alongside six optimization findings.</p>
-            <p class="dash-caption">Cost trending down over five runs after acting on its own findings.</p>
-            <a class="text-link" href="https://github.com/DeepAgentLabs/agenticlens">View AgenticLens <span aria-hidden="true">↗</span></a>
-          </article>
+        <article class="dash-card dash-panel">
+          <div class="dash-head"><strong>Agentic Evals</strong><span class="dash-tag">release gate</span></div>
+          <p class="dash-desc">Framework-agnostic scoring for any trace-shaped run — deterministic checks, rubric scorers, and LLM-as-judge evaluators, wired into a pass/fail gate you drop into CI.</p>
+          <ul class="dash-gate" aria-hidden="true">
+            <li><span><span class="dot dot-good"></span>trajectory-quality ≥ 0.85</span><span class="val">0.91</span></li>
+            <li><span><span class="dot dot-good"></span>cost-per-run ≤ $0.05</span><span class="val">$0.031</span></li>
+            <li><span><span class="dot dot-warn"></span>hallucination-rate ≤ 2%</span><span class="val">1.8%</span></li>
+          </ul>
+          <p class="sr-only">Release gate: trajectory quality 0.91 passes an 0.85 threshold, cost per run $0.031 passes a $0.05 cap, hallucination rate 1.8% sits inside a 2% warning band.</p>
+          <p class="dash-caption">Three thresholds, one CI gate — the merge blocks until every run clears them.</p>
+          <p class="dash-quickstart">pip install agentic-evals</p>
+          <a class="text-link" href="https://github.com/DeepAgentLabs/agentic-evals">View Agentic Evals <span aria-hidden="true">↗</span></a>
+        </article>
 
-          <article class="dash-card dash-panel" data-panel="evals" role="tabpanel">
-            <div class="dash-head"><strong>Agentic Evals</strong><span class="dash-tag">release gate</span></div>
-            <p class="dash-desc">Framework-agnostic scoring for any trace-shaped run — deterministic checks, rubric scorers, and LLM-as-judge evaluators, wired into a pass/fail gate you drop into CI.</p>
-            <ul class="dash-gate" aria-hidden="true">
-              <li><span><span class="dot dot-good"></span>trajectory-quality ≥ 0.85</span><span class="val">0.91</span></li>
-              <li><span><span class="dot dot-good"></span>cost-per-run ≤ $0.05</span><span class="val">$0.031</span></li>
-              <li><span><span class="dot dot-warn"></span>hallucination-rate ≤ 2%</span><span class="val">1.8%</span></li>
-            </ul>
-            <p class="sr-only">Release gate: trajectory quality 0.91 passes an 0.85 threshold, cost per run $0.031 passes a $0.05 cap, hallucination rate 1.8% sits inside a 2% warning band.</p>
-            <p class="dash-caption">Three thresholds, one CI gate — the merge blocks until every run clears them.</p>
-            <a class="text-link" href="https://github.com/DeepAgentLabs/agentic-evals">View Agentic Evals <span aria-hidden="true">↗</span></a>
-          </article>
+        <article class="dash-card dash-panel">
+          <div class="dash-head"><strong>Agentic Chaos</strong><span class="dash-tag">120 injected faults</span></div>
+          <p class="dash-desc">Fault injection and topology-aware drift testing across agent frameworks — provider failures, corrupted outputs, and tool errors, forced before production does it for you.</p>
+          <div class="dash-bar" aria-hidden="true">
+            <span class="seg seg-good" style="width:68%"></span><span class="seg seg-warn" style="width:22%"></span><span class="seg seg-critical" style="width:10%"></span>
+          </div>
+          <ul class="dash-legend" aria-hidden="true">
+            <li><span class="dot dot-good"></span>Recovered · 68%</li>
+            <li><span class="dot dot-warn"></span>Degraded · 22%</li>
+            <li><span class="dot dot-critical"></span>Failed · 10%</li>
+          </ul>
+          <p class="sr-only">Outcome of 120 injected faults: 68% recovered, 22% degraded, 10% failed.</p>
+          <p class="dash-caption">One in ten injected faults broke the agent outright — before a user hit it.</p>
+          <p class="dash-quickstart">pip install agentic-chaos</p>
+          <a class="text-link" href="https://github.com/DeepAgentLabs/agentic-chaos">View Agentic Chaos <span aria-hidden="true">↗</span></a>
+        </article>
 
-          <article class="dash-card dash-panel" data-panel="chaos" role="tabpanel">
-            <div class="dash-head"><strong>Agentic Chaos</strong><span class="dash-tag">120 injected faults</span></div>
-            <p class="dash-desc">Fault injection and topology-aware drift testing across agent frameworks — provider failures, corrupted outputs, and tool errors, forced before production does it for you.</p>
-            <div class="dash-bar" aria-hidden="true">
-              <span class="seg seg-good" style="width:68%"></span><span class="seg seg-warn" style="width:22%"></span><span class="seg seg-critical" style="width:10%"></span>
-            </div>
-            <ul class="dash-legend" aria-hidden="true">
-              <li><span class="dot dot-good"></span>Recovered · 68%</li>
-              <li><span class="dot dot-warn"></span>Degraded · 22%</li>
-              <li><span class="dot dot-critical"></span>Failed · 10%</li>
-            </ul>
-            <p class="sr-only">Outcome of 120 injected faults: 68% recovered, 22% degraded, 10% failed.</p>
-            <p class="dash-caption">One in ten injected faults broke the agent outright — before a user hit it.</p>
-            <a class="text-link" href="https://github.com/DeepAgentLabs/agentic-chaos">View Agentic Chaos <span aria-hidden="true">↗</span></a>
-          </article>
+        <article class="dash-card dash-panel">
+          <div class="dash-head"><strong>Agentic Sidecar</strong><span class="dash-tag">500 decisions</span></div>
+          <p class="dash-desc">A real-time Decision Gate that watches an agent's next action against its declared intent — catching moves that are technically permitted but contextually wrong, not just disallowed content.</p>
+          <div class="dash-bar" aria-hidden="true">
+            <span class="seg seg-1" style="width:92.4%"></span><span class="seg seg-2" style="width:5.8%"></span><span class="seg seg-3" style="width:1.8%"></span>
+          </div>
+          <ul class="dash-legend" aria-hidden="true">
+            <li><span class="dot dot-1"></span>Allow · 462</li>
+            <li><span class="dot dot-2"></span>Warn · 29</li>
+            <li><span class="dot dot-3"></span>Block · 9</li>
+          </ul>
+          <p class="sr-only">Decision Gate outcomes across 500 actions: 462 allowed, 29 warned, 9 blocked as out of scope.</p>
+          <p class="dash-caption">Escalating intervention, not a failure rate — a block is the Sidecar working.</p>
+          <p class="dash-quickstart">pip install agentic-sidecar</p>
+          <a class="text-link" href="https://github.com/DeepAgentLabs/agentic-sidecar">View Agentic Sidecar <span aria-hidden="true">↗</span></a>
+        </article>
 
-          <article class="dash-card dash-panel" data-panel="sidecar" role="tabpanel">
-            <div class="dash-head"><strong>Agentic Sidecar</strong><span class="dash-tag">500 decisions</span></div>
-            <p class="dash-desc">A real-time Decision Gate that watches an agent's next action against its declared intent — catching moves that are technically permitted but contextually wrong, not just disallowed content.</p>
-            <div class="dash-bar" aria-hidden="true">
-              <span class="seg seg-1" style="width:92.4%"></span><span class="seg seg-2" style="width:5.8%"></span><span class="seg seg-3" style="width:1.8%"></span>
-            </div>
-            <ul class="dash-legend" aria-hidden="true">
-              <li><span class="dot dot-1"></span>Allow · 462</li>
-              <li><span class="dot dot-2"></span>Warn · 29</li>
-              <li><span class="dot dot-3"></span>Block · 9</li>
-            </ul>
-            <p class="sr-only">Decision Gate outcomes across 500 actions: 462 allowed, 29 warned, 9 blocked as out of scope.</p>
-            <p class="dash-caption">Escalating intervention, not a failure rate — a block is the Sidecar working.</p>
-            <a class="text-link" href="https://github.com/DeepAgentLabs/agentic-sidecar">View Agentic Sidecar <span aria-hidden="true">↗</span></a>
-          </article>
+        <article class="dash-card dash-panel">
+          <div class="dash-head"><strong>AgenticOps Control Tower</strong><span class="dash-tag">48 agents</span></div>
+          <p class="dash-desc">The fleet-wide registry and control plane: which agents exist, what's installed, which framework they run on, and what needs attention right now.</p>
+          <div class="dash-bar" aria-hidden="true">
+            <span class="seg seg-good" style="width:85.4%"></span><span class="seg seg-warn" style="width:10.4%"></span><span class="seg seg-critical" style="width:4.2%"></span>
+          </div>
+          <ul class="dash-legend" aria-hidden="true">
+            <li><span class="dot dot-good"></span>Healthy · 41</li>
+            <li><span class="dot dot-warn"></span>Degraded · 5</li>
+            <li><span class="dot dot-critical"></span>Unhealthy · 2</li>
+          </ul>
+          <p class="sr-only">Fleet status across 48 registered agents: 41 healthy, 5 degraded, 2 unhealthy.</p>
+          <p class="dash-caption">One registry for every agent's runtime, framework, and capability versions.</p>
+          <p class="dash-quickstart">pip install agenticops-control-tower</p>
+          <a class="text-link" href="https://github.com/DeepAgentLabs/agenticops-control-tower">View Control Tower <span aria-hidden="true">↗</span></a>
+        </article>
 
-          <article class="dash-card dash-panel" data-panel="tower" role="tabpanel">
-            <div class="dash-head"><strong>AgenticOps Control Tower</strong><span class="dash-tag">48 agents</span></div>
-            <p class="dash-desc">The fleet-wide registry and control plane: which agents exist, what's installed, which framework they run on, and what needs attention right now.</p>
-            <div class="dash-bar" aria-hidden="true">
-              <span class="seg seg-good" style="width:85.4%"></span><span class="seg seg-warn" style="width:10.4%"></span><span class="seg seg-critical" style="width:4.2%"></span>
-            </div>
-            <ul class="dash-legend" aria-hidden="true">
-              <li><span class="dot dot-good"></span>Healthy · 41</li>
-              <li><span class="dot dot-warn"></span>Degraded · 5</li>
-              <li><span class="dot dot-critical"></span>Unhealthy · 2</li>
-            </ul>
-            <p class="sr-only">Fleet status across 48 registered agents: 41 healthy, 5 degraded, 2 unhealthy.</p>
-            <p class="dash-caption">One registry for every agent's runtime, framework, and capability versions.</p>
-            <a class="text-link" href="https://github.com/DeepAgentLabs/agenticops-control-tower">View Control Tower <span aria-hidden="true">↗</span></a>
-          </article>
+        <article class="dash-card dash-panel dash-panel-wide">
+          <div class="dash-head"><strong>DeepAgent MCP</strong><span class="dash-tag">live surface</span></div>
+          <p class="dash-desc">A unified MCP interface over the shared model — exposing AgenticLens, Agentic Chaos, Agentic Sidecar, and Spec validation as one set of tools any MCP client can call.</p>
+          <div class="dash-stats" aria-hidden="true">
+            <div><strong>14</strong><span>tools exposed</span></div>
+            <div><strong>1,284</strong><span>calls routed today</span></div>
+            <div><strong>4/5</strong><span>adapters connected</span></div>
+          </div>
+          <p class="sr-only">14 tools exposed, 1,284 calls routed today, 4 of 5 sibling adapters connected.</p>
+          <p class="dash-caption">One MCP-native surface over every tool above, degrading honestly when one's missing.</p>
+          <p class="dash-quickstart">pip install deep-agentic-core-mcp</p>
+          <a class="text-link" href="https://github.com/DeepAgentLabs/mcp-server">View the MCP server <span aria-hidden="true">↗</span></a>
+        </article>
 
-          <article class="dash-card dash-panel" data-panel="mcp" role="tabpanel">
-            <div class="dash-head"><strong>DeepAgent MCP</strong><span class="dash-tag">live surface</span></div>
-            <p class="dash-desc">A unified MCP interface over the shared model — exposing AgenticLens, Agentic Chaos, Agentic Sidecar, and Spec validation as one set of tools any MCP client can call.</p>
-            <div class="dash-stats" aria-hidden="true">
-              <div><strong>14</strong><span>tools exposed</span></div>
-              <div><strong>1,284</strong><span>calls routed today</span></div>
-              <div><strong>4/5</strong><span>adapters connected</span></div>
-            </div>
-            <p class="sr-only">14 tools exposed, 1,284 calls routed today, 4 of 5 sibling adapters connected.</p>
-            <p class="dash-caption">One MCP-native surface over every tool above, degrading honestly when one's missing.</p>
-            <a class="text-link" href="https://github.com/DeepAgentLabs/mcp-server">View the MCP server <span aria-hidden="true">↗</span></a>
-          </article>
-
-        </div>
       </div>
     </section>
 
