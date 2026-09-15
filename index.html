@@ -12,7 +12,9 @@
   <link rel="canonical" href="https://deepagentlabs.io/">
   <title>DeepAgentLabs — Open AI Operations</title>
   <link rel="stylesheet" href="assets/styles.css?v=6">
+  <link rel="stylesheet" href="assets/architecture.css?v=1">
   <script src="assets/site.js" defer></script>
+  <script src="assets/architecture.js?v=1" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -72,7 +74,7 @@
       <div class="trust-track">
         <div class="trust-stat"><strong>7</strong><span>open packages, one shared contract</span></div>
         <div class="trust-stat"><strong>6</strong><span>agent frameworks adapted natively</span></div>
-        <div class="trust-stat"><strong>12</strong><span>tools exposed over one MCP surface</span></div>
+        <div class="trust-stat"><strong>14</strong><span>tools exposed over one MCP surface</span></div>
         <div class="trust-stat"><strong>0</strong><span>vendor lock-in — spec-first, Apache 2.0</span></div>
       </div>
     </section>
@@ -99,11 +101,48 @@
     <section class="architecture section-shell" id="architecture">
       <div class="section-heading">
         <div><p class="section-label">Reference architecture</p><h2>The ecosystem, as one operating model.</h2></div>
-        <p>The diagram below is the clearest representation of how users, runtimes, the control plane, the specification, and the packages fit together.</p>
+        <p>Select a package to see how it connects to the rest of the ecosystem today, and what's on the roadmap.</p>
       </div>
-      <figure class="architecture-figure">
-        <img src="assets/deepagentlabs-ecosystem.png" loading="lazy" alt="DeepAgentLabs reference architecture showing users, console, DeepAgent Control Tower, AI Operations Specification, Agentic Lens, Agentic Sidecar, Agentic Chaos, MCP Server, exports, and platform principles.">
-      </figure>
+
+      <div class="arch-legend">
+        <span><i class="arch-swatch arch-sw-warn"></i> Integrated</span>
+        <span><i class="arch-swatch arch-sw-plan"></i> Planned</span>
+      </div>
+
+      <div class="arch-stage">
+        <div class="arch-diagram-pane">
+          <svg id="arch-diagram" viewBox="0 0 1200 500" role="img" aria-label="DeepAgentLabs architecture: ai-operations-spec is the shared contract at the top; AgenticLens, Agentic Chaos, Agentic Evals, and AgenticOps Control Tower form the operating loop; Agentic Sidecar and the MCP server are cross-cutting layers connecting into the loop, with several integrations planned.">
+            <defs>
+              <marker id="arch-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                <path d="M0,0 L10,5 L0,10 z"></path>
+              </marker>
+              <marker id="arch-arrow-plan" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                <path d="M0,0 L10,5 L0,10 z"></path>
+              </marker>
+            </defs>
+            <g id="arch-edges"></g>
+            <g id="arch-nodes"></g>
+          </svg>
+          <p class="arch-hint">Select a node to focus on its connections. Select it again, or use reset, to view the full graph.</p>
+        </div>
+
+        <div class="arch-panel">
+          <div class="arch-panel-empty" id="arch-panel-empty">
+            <p><b>ai-operations-spec</b> defines the shared vocabulary — runs, steps, and evaluations — that every package in the ecosystem is built around.</p>
+            <p>Select any package to see how it connects to the rest of the ecosystem today.</p>
+          </div>
+          <div id="arch-panel-detail" style="display:none">
+            <p class="arch-panel-eyebrow" id="arch-pd-kind">—</p>
+            <h3 id="arch-pd-name">—</h3>
+            <span class="arch-ver" id="arch-pd-version">—</span>
+            <p class="arch-desc" id="arch-pd-desc">—</p>
+            <p class="arch-edges-title">Real connections</p>
+            <div id="arch-pd-edges"></div>
+          </div>
+          <div class="arch-reset-btn"><button type="button" id="arch-reset">Show whole graph</button></div>
+        </div>
+      </div>
+      <p class="architecture-footnote"><b>Integrated</b> means the connection is implemented and tested today; <b>planned</b> means it's on the roadmap.</p>
     </section>
 
     <section class="ecosystem section-shell" id="ecosystem">
@@ -113,43 +152,43 @@
       </div>
       <div class="project-grid">
         <article class="project-card project-spec">
-          <div class="project-meta"><span>FOUNDATION</span><span>v0.1.0 · draft</span></div>
+          <div class="project-meta"><span>FOUNDATION</span><span>pkg v0.1.0 · spec draft v0.4</span></div>
           <h3>AI Operations<br>Specification</h3>
           <p>The language-neutral model for workflows, runs, agents, model interactions, evaluations, safety, reliability, and incidents.</p>
           <a href="https://github.com/DeepAgentLabs/ai-operations-spec">Read the standard <span aria-hidden="true">→</span></a>
         </article>
         <article class="project-card">
-          <div class="project-meta"><span>OBSERVABILITY</span><span>v0.4.0 · Python</span></div>
+          <div class="project-meta"><span>OBSERVABILITY</span><span>v0.5.0 · Python</span></div>
           <h3>AgenticLens</h3>
           <p>Profile, evaluate, and compare AI workflows locally. Token usage, latency, cost, evaluation gates, and evidence-backed opportunities to reduce waste.</p>
           <a href="https://github.com/DeepAgentLabs/agenticlens">View AgenticLens <span aria-hidden="true">→</span></a>
         </article>
         <article class="project-card">
-          <div class="project-meta"><span>EVALUATION</span><span>Python</span></div>
+          <div class="project-meta"><span>EVALUATION</span><span>v0.5.0 · Python</span></div>
           <h3>Agentic Evals</h3>
           <p>Framework-agnostic scoring for any trace-shaped run — deterministic checks, rubric and LLM-as-judge evaluators, and a pass/fail release gate you wire into CI.</p>
           <a href="https://github.com/DeepAgentLabs/agentic-evals">View Agentic Evals <span aria-hidden="true">→</span></a>
         </article>
         <article class="project-card">
-          <div class="project-meta"><span>GOVERNANCE</span><span>Python</span></div>
+          <div class="project-meta"><span>GOVERNANCE</span><span>v0.2.0 · Python</span></div>
           <h3>Agentic Sidecar</h3>
           <p>A companion layer that watches an agent's next action and can allow, warn, or block it against the user's original intent.</p>
           <a href="https://github.com/DeepAgentLabs/agentic-sidecar">View Agentic Sidecar <span aria-hidden="true">→</span></a>
         </article>
         <article class="project-card">
-          <div class="project-meta"><span>RESILIENCE</span><span>Python</span></div>
+          <div class="project-meta"><span>RESILIENCE</span><span>v0.4.0 · Python</span></div>
           <h3>Agentic Chaos</h3>
           <p>Inject provider failures, corrupted outputs, tool errors, and agent faults before production does.</p>
           <a href="https://github.com/DeepAgentLabs/agentic-chaos">View Agentic Chaos <span aria-hidden="true">→</span></a>
         </article>
         <article class="project-card">
-          <div class="project-meta"><span>OPERATIONS</span><span>Python</span></div>
+          <div class="project-meta"><span>OPERATIONS</span><span>v0.0.1 · early scaffold</span></div>
           <h3>AgenticOps<br>Control Tower</h3>
           <p>The fleet-wide registry and control plane: which agents exist, what's installed, and what needs attention.</p>
           <a href="https://github.com/DeepAgentLabs/agenticops-control-tower">View Control Tower <span aria-hidden="true">→</span></a>
         </article>
         <article class="project-card">
-          <div class="project-meta"><span>CONTROL PLANE</span><span>MCP</span></div>
+          <div class="project-meta"><span>CONTROL PLANE</span><span>v0.2.0 · MCP</span></div>
           <h3>DeepAgent MCP</h3>
           <p>A unified MCP interface over the shared model for AgenticLens, Agentic Chaos, and Agentic Sidecar workflows.</p>
           <a href="https://github.com/DeepAgentLabs/mcp-server">View the MCP server <span aria-hidden="true">→</span></a>
@@ -313,7 +352,7 @@
       </div>
       <ol class="principle-list">
         <li><span>01</span><div><strong>Shared object model</strong><p>Consistent concepts for runtime activity and operational evidence.</p></div></li>
-        <li><span>02</span><div><strong>Semantic conventions</strong><p>Stable AI-native event meanings, independent of framework or transport.</p></div></li>
+        <li><span>02</span><div><strong>Semantic conventions</strong><p>Draft AI-native event meanings, independent of framework or transport — not yet frozen.</p></div></li>
         <li><span>03</span><div><strong>Portable artifacts</strong><p>Schema-backed evidence any conforming tool can produce or consume.</p></div></li>
         <li><span>04</span><div><strong>Additive extensions</strong><p>Room for new systems without fragmenting the common core.</p></div></li>
       </ol>
