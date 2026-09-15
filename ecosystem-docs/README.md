@@ -37,6 +37,13 @@ own README describes itself as a "v0.1/v0.2 scaffold," which does not match its
 
 ## How the pieces fit today
 
+A static reference diagram covering all eight repositories, including
+Agentic Sidecar, Agentic Evals, and AgenticOps Control Tower, is kept at
+[`../assets/deepagentlabs-ecosystem.png`](../assets/deepagentlabs-ecosystem.png)
+(this is also the image the live site would use as a static/social-preview
+copy of the interactive architecture diagram on the homepage). The mermaid
+diagrams below cover the same ground with more implementation detail.
+
 The solid arrows below are implemented in the current repositories.
 
 ```mermaid
