@@ -13,3 +13,21 @@ nav?.querySelectorAll('a').forEach((link) => link.addEventListener('click', () =
 }));
 
 document.querySelector('#year').textContent = String(new Date().getFullYear());
+
+const consoleTabs = document.querySelectorAll('.console-tabs .ctab');
+const dashPanels = document.querySelectorAll('.dash-panel');
+
+consoleTabs.forEach((tab) => {
+  tab.addEventListener('click', () => {
+    const target = tab.getAttribute('data-target');
+    consoleTabs.forEach((t) => {
+      t.classList.remove('active');
+      t.setAttribute('aria-selected', 'false');
+    });
+    tab.classList.add('active');
+    tab.setAttribute('aria-selected', 'true');
+    dashPanels.forEach((panel) => {
+      panel.classList.toggle('active', panel.getAttribute('data-panel') === target);
+    });
+  });
+});
