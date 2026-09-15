@@ -55,4 +55,11 @@
 .architecture-footnote{margin-top:18px;font-size:12px;color:var(--muted);line-height:1.6;max-width:74ch}
 .architecture-footnote b{color:var(--ink)}
 
+.architecture-static{margin-top:56px}
+.architecture-static-head{margin-bottom:16px}
+.architecture-static-head h3{font-size:20px;letter-spacing:-.02em;margin:0 0 6px}
+.architecture-static-head p{margin:0;color:var(--muted);font-size:13.5px;max-width:68ch;line-height:1.55}
+.architecture-static figure.architecture-figure{margin-bottom:40px}
+.architecture-static figure.architecture-figure:last-child{margin-bottom:0}
+
 @media (max-width:680px){ .arch-panel{min-height:0} }

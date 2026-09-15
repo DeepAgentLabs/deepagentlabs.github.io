@@ -23,10 +23,17 @@ h1{font-size:clamp(58px,6.6vw,94px);line-height:.93;letter-spacing:-.075em;margi
 .standard{margin-top:60px;margin-bottom:130px;background:var(--ink);color:white;padding:85px 70px;display:grid;grid-template-columns:1fr 1fr;gap:90px}.standard-copy>p:not(.section-label){color:#aeb9b3;font-size:17px;line-height:1.7}.text-link{display:inline-block;margin-top:20px;border-bottom:1px solid;padding-bottom:4px;font-weight:700}.principle-list{list-style:none;margin:0;padding:0}.principle-list li{display:grid;grid-template-columns:45px 1fr;gap:15px;padding:22px 0;border-top:1px solid #3c4943}.principle-list li:last-child{border-bottom:1px solid #3c4943}.principle-list span{font:12px 'DM Mono';color:var(--acid)}.principle-list strong{font-size:18px}.principle-list p{margin:5px 0 0;color:#9ca8a2}
 .dashboards{padding-top:10px;padding-bottom:120px}
 .dash-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-.dash-panels{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.dash-panels{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
 .dash-panel{min-height:300px;border:none}
 .dash-panel-wide{grid-column:1/-1}
 .dash-panel-wide .dash-desc{max-width:none}
+.dash-caps-title{font:11px 'DM Mono',monospace;color:#9aa59f;text-transform:uppercase;letter-spacing:.06em;margin:0 0 10px}
+.dash-caps{list-style:none;margin:0 0 20px;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:8px 16px;font-size:13px;color:#dfe6e1}
+.dash-caps li{display:flex;align-items:baseline;gap:8px;line-height:1.4}
+.dash-caps li::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--acid);flex:0 0 5px;margin-top:6px}
+.dash-panel-wide .dash-caps{grid-template-columns:repeat(3,1fr)}
+.dash-facts{display:flex;flex-wrap:wrap;gap:8px 20px;margin:0 0 18px;font:11.5px 'DM Mono',monospace;color:#9aa59f}
+.dash-facts b{color:#c7d0ca;font-weight:600}
 .dash-desc{color:#c7d0ca;font-size:14px;line-height:1.6;margin:0 0 18px;max-width:560px}
 .dash-quickstart{font:12px 'DM Mono',monospace;color:var(--acid);background:#101d18;border:1px solid #223028;padding:9px 12px;margin:0 0 18px;overflow-x:auto;white-space:pre}
 .dash-gate{list-style:none;margin:0 0 18px;padding:0;font-size:13px}.dash-gate li{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:9px 0;border-top:1px solid #223028}.dash-gate li:first-child{border-top:none}.dash-gate li>span:first-child{display:flex;align-items:center;gap:9px}.dash-gate .val{font:12px 'DM Mono',monospace;color:#c7d0ca;white-space:nowrap}
