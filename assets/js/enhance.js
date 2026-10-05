@@ -408,26 +408,7 @@
         activateHeroNetwork();
       };
 
-      const bootLoader = document.querySelector("#agent-loader");
-      if (!bootLoader) {
-        startHero();
-      } else {
-        let started = false;
-        let observer;
-        const begin = () => {
-          if (started) return;
-          started = true;
-          observer?.disconnect();
-          window.clearTimeout(bootFailsafe);
-          startHero();
-        };
-        const bootFailsafe = window.setTimeout(begin, 7000);
-        observer = new MutationObserver(() => {
-          if (!document.body.contains(bootLoader)) begin();
-        });
-        observer.observe(document.body, { childList: true, subtree: true });
-        if (!document.body.contains(bootLoader)) begin();
-      }
+      startHero();
     }
 
     const packageNames = [

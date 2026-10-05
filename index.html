@@ -26,20 +26,8 @@
   <link rel="stylesheet" href="assets/css/tools.css">
   <link rel="stylesheet" href="assets/css/architecture-theme.css">
   <link rel="stylesheet" href="assets/css/adoption-card.css">
-  <script>
-    let showAgentBoot = true;
-    try {
-      showAgentBoot = sessionStorage.getItem("deepagentlabs-agent-boot-seen") !== "1";
-      if (showAgentBoot) sessionStorage.setItem("deepagentlabs-agent-boot-seen", "1");
-    } catch {}
-    if (showAgentBoot) {
-      document.documentElement.classList.add("agent-loader-enabled");
-      window.__agentLoaderFailsafe = window.setTimeout(() => {
-        document.documentElement.classList.remove("agent-loader-enabled");
-        document.querySelector("#agent-loader")?.remove();
-      }, 6000);
-    }
-  </script>
+  <link rel="stylesheet" href="assets/css/polish.css">
+  <link rel="stylesheet" href="assets/css/mobile.css">
   <script src="assets/js/site.js" defer></script>
   <script src="assets/js/architecture.js" defer></script>
   <script src="assets/js/enhance.js" defer></script>
@@ -50,78 +38,14 @@
   <script src="assets/js/copy.js" defer></script>
   <script src="assets/js/tools.js" defer></script>
   <script src="assets/js/architecture-compact.js" defer></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/fontawesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/brands.min.css">
+  <link rel="stylesheet" href="assets/css/community.css">
+  <link rel="stylesheet" href="assets/css/footer.css">
+  <link rel="stylesheet" href="assets/css/beam.css">
+  <script src="assets/js/beam.js" defer></script>
 </head>
 <body>
-  <div class="agent-loader" id="agent-loader" data-stage="1" role="region" aria-label="DeepAgentLabs agent initialization">
-    <header class="agent-loader-header">
-      <div class="agent-loader-brand" aria-label="DeepAgentLabs">
-        <span class="brand-logo" aria-hidden="true"></span>
-        <span><strong>DEEPAGENTLABS</strong><small>AGENT OPERATING LAYER</small></span>
-      </div>
-      <div class="agent-loader-system"><span>SYSTEM / 01</span><span>BOOT SEQUENCE</span></div>
-    </header>
-
-    <main class="agent-loader-main">
-      <p class="agent-loader-overline"><span>AGENT RUNTIME INITIALIZATION</span><span>PROTOCOL / AI-OPS</span></p>
-      <svg class="agent-loader-map" viewBox="0 0 1000 500" role="img" aria-labelledby="agent-map-title">
-        <title id="agent-map-title">Agent runtime network progressively connecting observation, evaluation, governance, resilience, and ecosystem services</title>
-        <defs>
-          <radialGradient id="agent-core-glow"><stop stop-color="#b7f343" stop-opacity=".24"/><stop offset="1" stop-color="#b7f343" stop-opacity="0"/></radialGradient>
-        </defs>
-        <circle class="agent-loader-halo" cx="500" cy="250" r="160" fill="url(#agent-core-glow)" />
-        <g class="agent-loader-network agent-layer-runtime" fill="none">
-          <path id="agent-link-runtime-a" d="M500 250 500 80"/><path id="agent-link-runtime-b" d="M500 250 345 160"/><path id="agent-link-runtime-c" d="M500 250 655 160"/>
-        </g>
-        <g class="agent-loader-network agent-layer-observe" fill="none">
-          <path id="agent-link-observe-a" d="M345 160 205 95 115 210 270 300 500 250"/><path id="agent-link-observe-b" d="M205 95 500 80"/><path id="agent-link-observe-c" d="M115 210 270 300"/>
-        </g>
-        <g class="agent-loader-network agent-layer-evaluate" fill="none">
-          <path id="agent-link-evaluate-a" d="M655 160 795 95 885 210 730 300 500 250"/><path id="agent-link-evaluate-b" d="M795 95 500 80"/><path id="agent-link-evaluate-c" d="M885 210 730 300"/>
-        </g>
-        <g class="agent-loader-network agent-layer-govern" fill="none">
-          <path id="agent-link-govern-a" d="M270 300 345 390 500 420 655 390 730 300"/><path id="agent-link-govern-b" d="M345 390 500 250 655 390"/><path id="agent-link-govern-c" d="M500 250 500 420"/>
-        </g>
-        <g class="agent-loader-network agent-layer-connect" fill="none">
-          <path id="agent-link-connect-a" d="M115 210 115 365 270 420 345 390"/><path id="agent-link-connect-b" d="M885 210 885 365 730 420 655 390"/><path id="agent-link-connect-c" d="M270 420 500 420 730 420"/>
-        </g>
-        <g class="agent-loader-particles" aria-hidden="true">
-          <circle r="4"><animateMotion dur="2.4s" repeatCount="indefinite"><mpath href="#agent-link-runtime-a"/></animateMotion></circle>
-          <circle r="3"><animateMotion dur="3.1s" begin="-.9s" repeatCount="indefinite"><mpath href="#agent-link-observe-a"/></animateMotion></circle>
-          <circle r="3"><animateMotion dur="2.8s" begin="-1.6s" repeatCount="indefinite"><mpath href="#agent-link-evaluate-a"/></animateMotion></circle>
-          <circle r="3"><animateMotion dur="3.5s" begin="-2s" repeatCount="indefinite"><mpath href="#agent-link-connect-b"/></animateMotion></circle>
-        </g>
-        <g class="agent-loader-nodes">
-          <circle class="agent-loader-node agent-node-core" data-node="runtime" cx="500" cy="250" r="17" />
-          <circle class="agent-loader-node agent-node-runtime" data-node="runtime" cx="500" cy="80" r="9" />
-          <circle class="agent-loader-node agent-node-observe" data-node="observation" cx="345" cy="160" r="9" /><circle class="agent-loader-node agent-node-observe" data-node="observation" cx="205" cy="95" r="7" /><circle class="agent-loader-node agent-node-observe" data-node="observation" cx="115" cy="210" r="8" />
-          <circle class="agent-loader-node agent-node-evaluate" data-node="evaluation" cx="655" cy="160" r="9" /><circle class="agent-loader-node agent-node-evaluate" data-node="evaluation" cx="795" cy="95" r="7" /><circle class="agent-loader-node agent-node-evaluate" data-node="evaluation" cx="885" cy="210" r="8" />
-          <circle class="agent-loader-node agent-node-govern" data-node="governance" cx="270" cy="300" r="8" /><circle class="agent-loader-node agent-node-govern" data-node="governance" cx="730" cy="300" r="8" /><circle class="agent-loader-node agent-node-govern" data-node="governance" cx="500" cy="420" r="8" />
-          <circle class="agent-loader-node agent-node-connect" data-node="connection" cx="115" cy="365" r="7" /><circle class="agent-loader-node agent-node-connect" data-node="connection" cx="270" cy="420" r="7" /><circle class="agent-loader-node agent-node-connect" data-node="connection" cx="345" cy="390" r="7" /><circle class="agent-loader-node agent-node-connect" data-node="connection" cx="655" cy="390" r="7" /><circle class="agent-loader-node agent-node-connect" data-node="connection" cx="730" cy="420" r="7" /><circle class="agent-loader-node agent-node-connect" data-node="connection" cx="885" cy="365" r="7" />
-        </g>
-        <g class="agent-loader-map-labels"><text x="500" y="48">AGENT RUNTIME</text><text x="95" y="250">OBSERVE</text><text x="905" y="250">EVALUATE</text><text x="500" y="468">GOVERN / CONNECT</text></g>
-      </svg>
-      <p class="agent-loader-core-label">AGENT CORE <span id="agent-loader-stage-number">STAGE 01 / 06</span></p>
-      <h1 class="agent-loader-stage" id="agent-loader-stage">INITIALIZING AGENT RUNTIME</h1>
-      <p class="agent-loader-status" id="agent-loader-status" aria-live="polite" aria-atomic="true">Bringing runtime online...</p>
-    </main>
-
-    <section class="agent-loader-status-area" aria-label="Initialization components">
-      <p class="agent-loader-status-title">SYSTEM STATUS <span>AGENT-CORE</span></p>
-      <ul class="agent-loader-components">
-        <li data-component="runtime" data-state="processing"><span class="agent-loader-check" aria-hidden="true">◌</span><span>Runtime</span><span class="sr-only agent-loader-state-text">, processing</span></li>
-        <li data-component="observation" data-state="pending"><span class="agent-loader-check" aria-hidden="true">○</span><span>Observation</span><span class="sr-only agent-loader-state-text">, pending</span></li>
-        <li data-component="evaluation" data-state="pending"><span class="agent-loader-check" aria-hidden="true">○</span><span>Evaluation</span><span class="sr-only agent-loader-state-text">, pending</span></li>
-        <li data-component="governance" data-state="pending"><span class="agent-loader-check" aria-hidden="true">○</span><span>Governance</span><span class="sr-only agent-loader-state-text">, pending</span></li>
-        <li data-component="connection" data-state="pending"><span class="agent-loader-check" aria-hidden="true">○</span><span>Connection</span><span class="sr-only agent-loader-state-text">, pending</span></li>
-      </ul>
-    </section>
-
-    <footer class="agent-loader-footer">
-      <div class="agent-loader-progress-copy"><span>INITIALIZATION</span><strong class="agent-loader-percent">00%</strong></div>
-      <div class="agent-loader-progress" role="progressbar" aria-label="Agent initialization progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span></span></div>
-      <p>DEEPAGENTLABS <span>/</span> AGENT RUNTIME <span>/</span> <b id="agent-loader-footer-state">INITIALIZING</b></p>
-    </footer>
-  </div>
   <a class="skip-link" href="#main">Skip to content</a>
   <header class="site-header">
     <a class="brand" href="#top" aria-label="DeepAgentLabs home">
@@ -186,6 +110,7 @@
               <li><a class="mega-link mega-link-plain" href="#loop"><span class="mega-text"><strong>The operating loop <i aria-hidden="true">→</i></strong><small>Define, observe, stress, evaluate, improve.</small></span></a></li>
               <li><a class="mega-link mega-link-plain" href="#dashboards"><span class="mega-text"><strong>Dashboards <i aria-hidden="true">→</i></strong><small>What each product shows you.</small></span></a></li>
               <li><a class="mega-link mega-link-plain" href="#why"><span class="mega-text"><strong>Why DeepAgentLabs <i aria-hidden="true">→</i></strong><small>How we differ from dashboards and SDK evals.</small></span></a></li>
+              <li><a class="mega-link mega-link-plain" href="#community"><span class="mega-text"><strong>Community <i aria-hidden="true">→</i></strong><small>Discord, LinkedIn, Instagram and GitHub.</small></span></a></li>
             </ul>
           </div>
           <a class="mega-side" href="roadmap.html">
@@ -197,11 +122,10 @@
         </div>
       </div>
       <a href="#architecture">Architecture</a>
-      <a href="#dashboards">Dashboards</a>
-      <a href="#why">Why us</a>
-      <a href="#standard">Specification</a>
-      <a href="#roadmap">Roadmap</a>
-      <a href="https://mcp.deepagentlabs.io">Remote MCP</a>
+      <a href="#faq">FAQ</a>
+      <a href="https://github.com/DeepAgentLabs/ai-operations-spec">Specification</a>
+      <a href="roadmap.html">Roadmap</a>
+      <a href="https://mcp.deepagentlabs.io" target="_blank" rel="noopener noreferrer">Remote MCP</a>
       <a class="nav-cta" href="https://github.com/DeepAgentLabs">GitHub <span aria-hidden="true">↗</span></a>
     </nav>
   </header>
@@ -222,7 +146,7 @@
       </div>
 
       <div class="system-card" aria-label="DeepAgentLabs ecosystem model">
-        <div class="system-card-top"><span>ECOSYSTEM / 01</span><span class="pulse">LIVE</span></div>
+        <div class="system-card-top"><span>ECOSYSTEM / 01</span><span class="pulse"><i class="live-dot" aria-hidden="true"></i>Live</span></div>
         <img class="hero-diagram" src="assets/img/ecosystem.png" alt="DeepAgentLabs reference architecture: ai-operations-spec as the shared contract connecting AgenticLens, Agentic Evals, Agentic Chaos, Agentic Sidecar, AgenticOps Control Tower, and the MCP server.">
         <div class="system-footer"><span>One model</span><span>Multiple implementations</span></div>
       </div>
@@ -624,6 +548,25 @@
       </div>
     </section>
 
+    <section class="cta cta-join section-shell" id="community" aria-labelledby="community-title">
+      <div class="cj-copy">
+        <p class="section-label">Build with us</p>
+        <h2 id="community-title">Help define how AI systems are operated.</h2>
+        <p>The standard is early by design. Join the open-source community behind it, or shape the spec directly as a framework author, AI engineer or reliability team.</p>
+        <ul class="cm-does" aria-label="What the community does"><li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20h18M5 20V9l7-5 7 5v11M9 20v-6h6v6"/></svg>Workshops</li><li><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="1"/><path d="M8 20h8M12 16v4M7 9l2 2-2 2M12 13h4"/></svg>Technical sessions</li><li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-9V3M7.5 15h9"/></svg>Research</li><li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="6" r="2.5"/><circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="8" r="2.5"/><path d="M6 8.5v7M18 10.5c0 4-6 3-11.2 5.6"/></svg>Open source</li></ul>
+        <div class="hero-actions">
+          <a class="button button-light" href="https://github.com/DeepAgentLabs/ai-operations-spec">Join the discussion</a>
+          <a class="button button-ghost" href="https://github.com/DeepAgentLabs">Follow on GitHub</a>
+        </div>
+      </div>
+      <div class="cm-links">
+        <a class="cm-link cm-link-main" href="https://discord.gg/fEqPFWgcDG" target="_blank" rel="noopener noreferrer"><span class="cm-link-icon"><i class="fa-brands fa-discord" aria-hidden="true"></i></span><span class="cm-link-text"><strong>Discord</strong><small>Join the server · questions, traces, workshops</small></span><span class="cm-link-go" aria-hidden="true">→</span></a>
+        <a class="cm-link" href="https://www.linkedin.com/company/deepagentlabs" target="_blank" rel="noopener noreferrer"><span class="cm-link-icon"><i class="fa-brands fa-linkedin-in" aria-hidden="true"></i></span><span class="cm-link-text"><strong>LinkedIn</strong><small>Releases and workshop announcements</small></span><span class="cm-link-go" aria-hidden="true">→</span></a>
+        <a class="cm-link" href="https://www.instagram.com/deepagentlabs.io" target="_blank" rel="noopener noreferrer"><span class="cm-link-icon"><i class="fa-brands fa-instagram" aria-hidden="true"></i></span><span class="cm-link-text"><strong>Instagram</strong><small>Behind the scenes from sessions</small></span><span class="cm-link-go" aria-hidden="true">→</span></a>
+        <a class="cm-link" href="https://github.com/DeepAgentLabs" target="_blank" rel="noopener noreferrer"><span class="cm-link-icon"><i class="fa-brands fa-github" aria-hidden="true"></i></span><span class="cm-link-text"><strong>GitHub</strong><small>Star, open issues, send PRs</small></span><span class="cm-link-go" aria-hidden="true">→</span></a>
+        </div>
+    </section>
+
     <section class="newsletter section-shell" id="newsletter">
       <div class="newsletter-inner">
         <div class="newsletter-copy">
@@ -639,22 +582,24 @@
         </form>
       </div>
     </section>
-
-    <section class="cta section-shell">
-      <p class="section-label">Build with us</p>
-      <h2>Help define how AI systems are operated.</h2>
-      <p>The standard is early by design. This is the moment for framework authors, AI engineers, and reliability teams to shape it.</p>
-      <div class="hero-actions">
-        <a class="button button-light" href="https://github.com/DeepAgentLabs/ai-operations-spec">Join the discussion</a>
-        <a class="button button-ghost" href="https://github.com/DeepAgentLabs">Follow on GitHub</a>
-      </div>
-    </section>
   </main>
 
-  <footer>
-    <a class="brand" href="#top"><span class="brand-logo" aria-hidden="true"></span><span>DeepAgentLabs</span></a>
-    <p>Open infrastructure for observable, efficient, and resilient AI. <a class="social-link" href="https://www.linkedin.com/company/133447532/" target="_blank" rel="noopener noreferrer" aria-label="DeepAgentLabs on LinkedIn">LinkedIn <span aria-hidden="true">↗</span></a></p>
-    <p>© <span id="year">2026</span> DeepAgentLabs</p>
+  <footer class="site-footer">
+    <div class="ft-inner">
+      <div class="ft-about">
+        <p class="ft-statement">Open infrastructure for <em>observable, efficient and resilient</em> AI agents, built in the open.</p>
+        <ul class="ft-values" aria-label="Principles"><li>Spec comes first</li><li>Works with any framework</li><li>Runs on your machine</li><li>Free and open source</li></ul>
+      </div>
+      <nav class="ft-col" aria-label="Products"><p class="ft-title">Products</p><ul><li><a href="https://github.com/DeepAgentLabs/agenticlens" target="_blank" rel="noopener noreferrer">AgenticLens</a></li><li><a href="https://github.com/DeepAgentLabs/agentic-evals" target="_blank" rel="noopener noreferrer">Agentic Evals</a></li><li><a href="https://github.com/DeepAgentLabs/agentic-sidecar" target="_blank" rel="noopener noreferrer">Agentic Sidecar</a></li><li><a href="https://github.com/DeepAgentLabs/agentic-chaos" target="_blank" rel="noopener noreferrer">Agentic Chaos</a></li><li><a href="https://github.com/DeepAgentLabs/mcp-server" target="_blank" rel="noopener noreferrer">MCP Server</a></li><li><a href="https://github.com/DeepAgentLabs/agenticops-control-tower" target="_blank" rel="noopener noreferrer">Control Tower</a></li></ul></nav>
+      <nav class="ft-col" aria-label="Explore"><p class="ft-title">Explore</p><ul><li><a href="https://github.com/DeepAgentLabs/ai-operations-spec" target="_blank" rel="noopener noreferrer">Specification</a></li><li><a href="roadmap.html">Roadmap</a></li><li><a href="#architecture">Capability map</a></li><li><a href="#dashboards">Frameworks</a></li><li><a href="#faq">FAQ</a></li><li><a href="https://mcp.deepagentlabs.io" target="_blank" rel="noopener noreferrer">Remote MCP</a></li></ul></nav>
+      <nav class="ft-col" aria-label="Community"><p class="ft-title">Community</p><ul><li><a href="https://discord.gg/fEqPFWgcDG" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-discord" aria-hidden="true"></i> Discord</a></li><li><a href="https://www.linkedin.com/company/deepagentlabs" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-linkedin-in" aria-hidden="true"></i> LinkedIn</a></li><li><a href="https://www.instagram.com/deepagentlabs.io" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-instagram" aria-hidden="true"></i> Instagram</a></li><li><a href="https://github.com/DeepAgentLabs" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-github" aria-hidden="true"></i> GitHub</a></li></ul></nav>
+    </div>
+    <div class="ft-word" aria-hidden="true"><span class="ft-word-text"><span class="ft-w1">DeepAgent</span><span class="ft-w2">Labs</span></span></div>
+    <div class="ft-bottom">
+      <p>© <span id="year">2026</span> DeepAgentLabs</p>
+      <p class="ft-status"><i aria-hidden="true"></i>AI Operations Specification · v0.1 in review</p>
+      <a class="ft-top" href="#top">Back to top <span aria-hidden="true">↑</span></a>
+    </div>
   </footer>
 </body>
 </html>

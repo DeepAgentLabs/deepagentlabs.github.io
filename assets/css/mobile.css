@@ -1,0 +1,74 @@
+/* Phone layouts (≤ 680px). Loaded last on the homepage.
+   Goal: less stacking, less repetition, nothing crammed side by side. */
+
+/* ---------- What each framework actually does: accordion ---------- */
+.tl.tl-acc{display:block;box-shadow:8px 8px 0 var(--acid);background:var(--paper)}
+.tl-acc .tl-tabs{flex-direction:column;overflow:visible;border:0;background:var(--paper)}
+.tl-acc .tl-tab{display:grid;grid-template-columns:minmax(0,1fr) 28px;grid-template-rows:auto auto;column-gap:12px;align-items:center;width:100%;
+  padding:15px 16px;border:0;border-bottom:1px solid var(--ink);background:var(--paper);color:var(--ink);transition:background .2s}
+.tl-acc .tl-tab:last-of-type{border-bottom:0}
+.tl-acc .tl-verb{grid-column:1;grid-row:1}
+.tl-acc .tl-tab strong{grid-column:1;grid-row:2;font-size:17px;white-space:normal;transform:none}
+.tl-acc .tl-tab::after{content:"";grid-column:2;grid-row:1/3;justify-self:end;width:28px;height:28px;border:1px solid var(--ink);
+  background:linear-gradient(currentColor,currentColor) center/12px 1.6px no-repeat,linear-gradient(currentColor,currentColor) center/1.6px 12px no-repeat;transition:transform .2s,background-color .2s}
+.tl-acc .tl-tab::before{display:none}
+.tl-acc .tl-tab .tl-progress{display:none}
+.tl-acc .tl-tab[aria-expanded=true]{background:var(--ink);color:#fff;padding-left:16px;border-bottom-color:#223028}
+.tl-acc .tl-tab[aria-expanded=true] .tl-verb{color:var(--acid)}
+.tl-acc .tl-tab[aria-expanded=true]::after{border-color:var(--acid);background:linear-gradient(var(--ink),var(--ink)) center/12px 1.6px no-repeat,var(--acid);color:var(--ink)}
+.tl-acc .tl-tab:hover{background:var(--mint)}
+.tl-acc .tl-tab[aria-expanded=true]:hover{background:var(--ink)}
+.tl-acc .tl-tab strong{transition:none}
+.tl-acc .tl-tab:hover strong{transform:none}
+
+/* the open card sits under its row */
+.tl-acc .tl-panel.dash-card{height:auto;padding:18px 16px 22px;border-bottom:1px solid var(--ink);animation:tl-acc-in .25s var(--ease,ease) both}
+.tl-acc .tl-panel.dash-card:last-child{border-bottom:0}
+@keyframes tl-acc-in{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+.tl-acc .tl-panel .dash-head{margin-bottom:10px}
+.tl-acc .tl-panel .dash-head strong{display:none}           /* name is already on the row above */
+.tl-acc .tl-panel .dash-desc{font-size:14.5px;line-height:1.6;margin-bottom:16px}
+.tl-acc .tl-panel .dash-caps-title{margin-bottom:8px}
+.tl-acc .tl-panel .dash-caps{grid-template-columns:1fr;gap:6px;margin-bottom:16px;font-size:13.5px}
+.tl-acc .tl-panel .dash-caption{margin-bottom:16px;font-size:12.5px}
+.tl-acc .tl-panel .dash-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.tl-acc .tl-panel .dash-stats strong{font-size:19px}
+.tl-acc .tl-foot{flex-direction:column;align-items:stretch;gap:14px}
+.tl-acc .tl-foot code.tl-pip.has-copy{width:100%;max-width:none;white-space:normal}
+.tl-acc .tl-foot code.tl-pip .copy-text{overflow-wrap:anywhere}
+
+@media(max-width:680px){
+  /* ---------- Ecosystem adoption: one compact row per package ---------- */
+  .adp-card{padding:28px 16px 22px}
+  .adp-total{margin:14px 0 22px}
+  .adp-total strong{font-size:64px}
+  .adp-total span{font-size:15px}
+  .adp-kicker{font-size:10px;letter-spacing:.1em;text-align:left}
+  .adp-grid{grid-template-columns:1fr}
+  .adp-stat,.adp-stat:nth-child(odd),.adp-stat:not(:nth-child(3n)){border-right:0}
+  .adp-link{display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"name num" "slug num" "bar bar" "links links";column-gap:12px;row-gap:2px;padding:16px 2px}
+  .adp-num{grid-area:num;align-self:center;font-size:30px}
+  .adp-name{grid-area:name;margin-top:0;font-size:15px}
+  .adp-slug{grid-area:slug;overflow-wrap:anywhere}
+  .adp-bar{grid-area:bar;margin-top:10px}
+  .adp-links{grid-area:links;margin-top:10px}
+  .adp-foot{margin-top:20px}
+
+  /* ---------- Roadmap: two columns of short cards ---------- */
+  .roadmap-track.rm-track{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .rm-track .phase{padding:14px 13px 16px;min-height:0}
+  .rm-track .phase .rm-top{flex-wrap:wrap;gap:6px}
+  .rm-track .phase .rm-status{font-size:9px;letter-spacing:.06em}
+  .rm-track .phase strong{font-size:17px;padding-top:14px;line-height:1.15}
+  .rm-track .phase p{font-size:12.5px;line-height:1.45}
+  .rm-track .phase .rm-arrow{display:none}
+  .rm-track .phase.rm-north{grid-column:auto}
+  .rm-track .phase:hover{transform:none;box-shadow:none}
+
+  /* ---------- Capability map: package cards show their capabilities when selected ---------- */
+  .architecture-figure:not(.arch-is-expanded) .arch-package:not(.arch-selected) .arch-capabilities{display:none}
+  .architecture-figure:not(.arch-is-expanded) .arch-package:not(.arch-selected) .arch-package-head{border-bottom:0}
+
+  /* ---------- Operating loop: tighter steps ---------- */
+  .loop-step{padding-top:20px;padding-bottom:20px}
+}

@@ -1,0 +1,113 @@
+/* Final layer: shared design tokens, sticky header, consistent focus + hover behaviour.
+   Loaded last on every page. Keeps the green / white / black identity. */
+
+:root{
+  --surface:#fff;
+  --ink-soft:#3f4944;
+  --focus:#4c7b13;
+  --danger:#b3261e;
+  --radius:0;
+  --shadow-hard:14px 14px 0 var(--acid);
+  --shadow-lift:0 14px 28px -18px rgba(7,17,14,.45);
+  --ease:cubic-bezier(.2,.72,.25,1);
+  --dur-hover:.22s;
+  --header-h:82px;
+}
+@media(max-width:680px){:root{--header-h:68px}}
+
+/* anchors land below the sticky header */
+html{scroll-padding-top:calc(var(--header-h) + 12px)}
+
+/* ---- sticky header (stays above every section, full-bleed paper background) ---- */
+.site-header{position:sticky;top:0;z-index:60;
+  border-image:linear-gradient(to top,var(--line) 1px,var(--paper) 1px) fill 0//0 100vmax}
+.scroll-progress{z-index:70}
+
+/* ---- one focus style everywhere ---- */
+:where(a,button,input,select,textarea,summary,[tabindex]):focus-visible{outline:2px solid var(--focus);outline-offset:3px}
+.button:focus-visible{outline-offset:4px}
+
+/* ---- hover: short, subtle lift, borders and shadows kept intact ---- */
+.button{transition:transform var(--dur-hover) var(--ease),box-shadow var(--dur-hover) var(--ease),background-color var(--dur-hover),color var(--dur-hover)}
+.rm-track .phase{transition:transform var(--dur-hover) var(--ease),box-shadow var(--dur-hover) var(--ease),background-color var(--dur-hover)}
+.rp-why-card{transition:transform var(--dur-hover) var(--ease),box-shadow var(--dur-hover) var(--ease)}
+.rp-window{transition:transform .26s var(--ease),box-shadow .26s var(--ease)}
+.rp-chip svg{transition:transform var(--dur-hover) var(--ease)}
+.mega-side::after{transition:transform .26s var(--ease)}
+
+/* nav pill: quick ease-out instead of a springy bounce */
+@media(min-width:821px){
+  .nav-glider{transition:transform .28s var(--ease),width .28s var(--ease),opacity .18s}
+  .nav-glider::after{transition:transform .2s var(--ease)}
+}
+
+/* ---- error / not-found page ---- */
+.nf{max-width:var(--max);margin:auto;padding:110px 28px 120px;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:64px;align-items:center;min-height:calc(100dvh - var(--header-h) - 120px)}
+.nf h1{margin:22px 0 22px;font-size:clamp(44px,5.4vw,76px)}
+.nf-lede{font-size:18px;line-height:1.65;max-width:560px;color:var(--ink-soft)}
+.nf-path{font:500 12px 'DM Mono',monospace;color:var(--muted);overflow-wrap:anywhere}
+.nf-card{background:var(--ink);color:#fff;border:1px solid var(--ink);box-shadow:var(--shadow-hard);padding:26px 28px}
+.nf-card .section-label{color:var(--acid)}
+.nf-list{list-style:none;margin:16px 0 0;padding:0}
+.nf-list li{border-top:1px solid #223028}
+.nf-list a{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:14px 0;transition:color var(--dur-hover)}
+.nf-list a:hover{color:var(--acid)}
+.nf-list small{font:12px 'DM Mono',monospace;color:#9aa59f}
+@media(max-width:820px){.nf{grid-template-columns:1fr;gap:44px;padding:64px 20px 80px;min-height:0}}
+
+/* ---- reduced motion: final states, no smooth scrolling ---- */
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .button,.rm-track .phase,.rp-why-card,.rp-window{transition:none}
+}
+
+/* ---- phone menu button: ink tile with the site's lime hard shadow, "trace" lines that turn into an X ---- */
+@media(max-width:820px){
+  .nav-toggle{position:relative;width:46px;height:46px;min-height:0;padding:0;margin-left:auto;margin-right:6px;display:grid!important;place-items:center;
+    font-size:0;line-height:0;color:transparent;background:var(--ink);border:1px solid var(--ink);border-radius:0;
+    box-shadow:5px 5px 0 var(--acid);transition:transform .16s var(--ease),box-shadow .16s var(--ease),background-color .2s}
+  .nav-toggle::before,.nav-toggle::after{content:"";position:absolute;left:50%;top:50%;width:20px;height:14px;margin:-7px 0 0 -10px;transition:transform .24s var(--ease),opacity .18s,background-size .24s var(--ease)}
+  /* three uneven lines, like a trace log */
+  .nav-toggle::before{box-shadow:none;transform:none;
+    background:linear-gradient(var(--acid),var(--acid)) 0 0/20px 2px no-repeat,
+               linear-gradient(var(--acid),var(--acid)) 0 6px/11px 2px no-repeat,
+               linear-gradient(var(--acid),var(--acid)) 0 12px/16px 2px no-repeat}
+  .nav-toggle::after{opacity:0;transform:rotate(-90deg) scale(.4);
+    background:linear-gradient(45deg,transparent 45%,var(--ink) 45%,var(--ink) 55%,transparent 55%),
+               linear-gradient(-45deg,transparent 45%,var(--ink) 45%,var(--ink) 55%,transparent 55%);width:18px;height:18px;margin:-9px 0 0 -9px}
+  .nav-toggle:active{transform:translate(3px,3px);box-shadow:2px 2px 0 var(--acid)}
+  @media(hover:hover){.nav-toggle:hover::before{background-size:11px 2px,20px 2px,14px 2px}}
+  .nav-toggle[aria-expanded=true]{background:var(--acid);border-color:var(--ink);box-shadow:5px 5px 0 var(--ink)}
+  .nav-toggle[aria-expanded=true]::before{opacity:0;transform:scaleX(0)}
+  .nav-toggle[aria-expanded=true]::after{opacity:1;transform:none}
+  .nav-toggle:focus-visible{outline:2px solid var(--focus);outline-offset:4px}
+}
+@media(prefers-reduced-motion:reduce){.nav-toggle,.nav-toggle::before,.nav-toggle::after{transition:none}}
+
+/* ---- phone menu: dropdown rows show a +/− box, plain links show an arrow ---- */
+@media(max-width:820px){
+  .nav-trigger{display:flex;align-items:center;justify-content:space-between}
+  .nav-trigger::after{content:"";flex:0 0 26px;width:26px;height:26px;border:1px solid var(--ink);
+    background:linear-gradient(var(--ink),var(--ink)) center/11px 1.6px no-repeat,linear-gradient(var(--ink),var(--ink)) center/1.6px 11px no-repeat;
+    transition:transform .22s var(--ease),background-color .2s}
+  .nav-item.is-open .nav-trigger::after,.nav-trigger[aria-expanded=true]::after{transform:rotate(180deg);background:linear-gradient(var(--ink),var(--ink)) center/11px 1.6px no-repeat,var(--acid)}
+  .nav-item.is-open .nav-trigger{color:var(--ink)}
+  .nav-item.is-open{background:linear-gradient(90deg,var(--acid) 3px,transparent 3px)}
+  .nav-item.is-open .nav-trigger,.nav-item.is-open .mega{padding-left:14px}
+  #site-nav>a:not(.nav-cta){display:flex;align-items:center;justify-content:space-between}
+  #site-nav>a:not(.nav-cta)::after{content:"→";flex:0 0 26px;text-align:center;font-weight:500;color:var(--muted)}
+}
+@media(prefers-reduced-motion:reduce){.nav-trigger::after{transition:none}}
+
+/* hero card "Live" badge with a pulsing green dot */
+.system-card-top .pulse{display:inline-flex;align-items:center;gap:8px}
+.live-dot{position:relative;width:8px;height:8px;border-radius:50%;background:var(--acid);box-shadow:0 0 8px rgba(183,243,67,.8)}
+.live-dot::after{content:"";position:absolute;inset:0;border-radius:50%;background:var(--acid);animation:live-ping 1.8s cubic-bezier(0,0,.2,1) infinite}
+@keyframes live-ping{0%{transform:scale(1);opacity:.75}80%,100%{transform:scale(2.8);opacity:0}}
+@media(prefers-reduced-motion:reduce){.live-dot::after{animation:none;opacity:0}}
+
+
+/* desktop nav: keep every item on one line, tighten spacing on narrower desktops */
+@media(min-width:821px){#site-nav>a,#site-nav .nav-trigger{white-space:nowrap}.site-header .brand{flex-shrink:0;margin-right:16px}}
+@media(min-width:821px) and (max-width:1180px){#site-nav{gap:16px;font-size:13px}.nav-cta{padding:9px 11px}}
+@media(min-width:821px) and (max-width:960px){#site-nav{gap:11px;font-size:12px}.site-header .brand{font-size:17px}}

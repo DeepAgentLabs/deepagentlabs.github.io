@@ -30,7 +30,6 @@ h1 .hl,.hero h1 em,.rp-title .rp-mark{font-size:1.08em}
 /* sweep in when the heading is revealed by the scroll animation */
 html.js .rv:not(.in) .hl{background-size:0 100%}
 .hero h1 em{color:inherit;background-size:0 100%;animation:theme-mark 1s cubic-bezier(.2,.72,.25,1) 1.4s forwards}
-html.agent-loader-enabled .hero h1 em{animation:none}
 @keyframes theme-mark{to{background-size:100% 100%}}
 
 /* ---------- Kicker labels with a lime underline ---------- */

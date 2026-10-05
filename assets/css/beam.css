@@ -1,0 +1,31 @@
+/* Border beam: a short streak of light that travels around an element's border.
+   Vanilla take on the "Beam" effect (libraries.dev/beam), in the site's lime / ink colours.
+   Elements get it from assets/js/beam.js, which adds <span class="beam" aria-hidden="true">. */
+
+@property --beam-a{syntax:"<angle>";initial-value:0deg;inherits:false}
+
+[data-beam]{position:relative}
+.beam{position:absolute;inset:0;z-index:3;pointer-events:none;border-radius:inherit;padding:var(--beam-w,2px);
+  --beam-c:var(--acid);--beam-hi:#f4ffd9;
+  background:conic-gradient(from var(--beam-a),transparent 0 58%,color-mix(in srgb,var(--beam-c) 0%,transparent) 60%,color-mix(in srgb,var(--beam-c) 55%,transparent) 76%,var(--beam-c) 86%,var(--beam-hi) 90%,var(--beam-c) 92%,transparent 96%);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;
+  mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0);
+  filter:drop-shadow(0 0 6px color-mix(in srgb,var(--beam-c) 85%,transparent));
+  animation:beam-run var(--beam-s,7s) linear infinite;animation-play-state:paused;opacity:1;transition:opacity .3s}
+[data-beam].beam-on>.beam{animation-play-state:running}
+@keyframes beam-run{to{--beam-a:360deg}}
+
+/* variants */
+[data-beam=ink]>.beam{--beam-c:var(--ink);--beam-hi:#3d6b14;filter:none;--beam-w:2px;inset:-7px}
+[data-beam=quick]>.beam{--beam-s:4.5s}
+/* hover / focus: appears only while pointed at or focused, in the element's text colour */
+[data-beam=hover]>.beam,[data-beam=focus]>.beam{--beam-c:currentColor;--beam-hi:currentColor;--beam-s:2.4s;--beam-w:1.5px;opacity:0;filter:none}
+[data-beam=hover]:hover>.beam,[data-beam=hover]:focus-visible>.beam{opacity:1;animation-play-state:running}
+[data-beam=focus]>.beam{--beam-c:var(--acid);--beam-hi:var(--ink);--beam-w:2px;inset:-4px}
+[data-beam=focus]:focus-within>.beam{opacity:1;animation-play-state:running}
+
+/* only animate on screen (beam.js toggles .beam-on); no animation for reduced motion */
+@media(prefers-reduced-motion:reduce){
+  .beam{animation:none;--beam-a:20deg}
+  [data-beam=hover]>.beam,[data-beam=focus]>.beam{display:none}
+}

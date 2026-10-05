@@ -251,3 +251,7 @@ html.js .rm-page .rp-block .rp-visual[data-rv].in{transform:none;transition-dela
 .rp-ticker span{border-right:0!important;padding:16px 26px;gap:10px;color:var(--ink)}
 .rp-ticker span::after{content:"";width:6px;height:6px;margin-left:26px;background:var(--ink);transform:rotate(45deg)}
 .rp-ticker b{background:var(--ink);color:var(--acid)}
+
+/* phones: wrap illustration code instead of widening the page */
+.rp-window,.rp-code{min-width:0}
+@media(max-width:680px){.rp-code{white-space:pre-wrap;overflow-wrap:anywhere;word-break:break-word}}
