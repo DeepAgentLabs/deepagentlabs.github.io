@@ -185,15 +185,17 @@
 
     <section class="loop section-shell" id="loop">
       <div class="section-heading">
-        <div><p class="section-label">The operating loop</p><h2>One loop,<br><span class="hl">five stages.</span></h2></div>
-        <p>Define a shared draft, observe and evaluate agent runs, test resilience, and supervise agent actions. Control Tower brings fleet operations together.</p>
+        <div><p class="section-label">The operating loop</p><h2>One loop,<br><span class="hl">seven stages.</span></h2></div>
+        <p>Define shared concepts, supervise agent actions, observe behavior, stress-test and evaluate. Improve from evidence, then operate the fleet. MCP connects the tools across these stages.</p>
       </div>
       <ol class="loop-track">
-        <li class="loop-step"><span class="loop-index">01</span><strong>Define</strong><span class="loop-pkg">ai-operations-spec</span><p>A shared draft specification for runs, steps, and evaluations. Integrations are evolving, and conformance is not yet stable.</p></li>
-        <li class="loop-step"><span class="loop-index">02</span><strong>Observe</strong><span class="loop-pkg">agenticlens</span><p>OTLP trace ingest, cost and latency tracking on live traffic.</p></li>
-        <li class="loop-step"><span class="loop-index">03</span><strong>Stress</strong><span class="loop-pkg">agentic-chaos</span><p>Fault injection and topology-aware drift testing across agent frameworks.</p></li>
-        <li class="loop-step"><span class="loop-index">04</span><strong>Evaluate</strong><span class="loop-pkg">agentic-evals</span><p>Deterministic and LLM-as-judge scoring behind a pass/fail CI gate.</p></li>
-        <li class="loop-step"><span class="loop-index">05</span><strong>Operate</strong><span class="loop-pkg">control-tower</span><p>Unified dashboard for fleet health, evidence, alerts, and approved operations.</p></li>
+        <li class="loop-step"><span class="loop-index">01</span><strong>Define</strong><span class="loop-pkg">ai-operations-spec</span><p>Set shared draft concepts for runs, steps, and evaluations.</p></li>
+        <li class="loop-step"><span class="loop-index">02</span><strong>Supervise &amp; Govern</strong><span class="loop-pkg">agentic-sidecar</span><p>Align intent and context; apply guardrails, critique, optional LLM-as-judge checks, and human approval.</p></li>
+        <li class="loop-step"><span class="loop-index">03</span><strong>Observe</strong><span class="loop-pkg">agenticlens</span><p>End-to-end observability for traces, cost, latency, and agent behavior.</p></li>
+        <li class="loop-step"><span class="loop-index">04</span><strong>Stress</strong><span class="loop-pkg">agentic-chaos</span><p>Inject controlled faults and validate recovery. Make your system more resilient.</p></li>
+        <li class="loop-step"><span class="loop-index">05</span><strong>Evaluate</strong><span class="loop-pkg">agentic-evals</span><p>Score behavior with deterministic and LLM-as-judge evaluations; gate releases.</p></li>
+        <li class="loop-step"><span class="loop-index">06</span><strong>Improve</strong><span class="loop-pkg">evidence-driven</span><p>Optimize prompts, models, and workflows using findings from earlier stages.</p></li>
+        <li class="loop-step"><span class="loop-index">07</span><strong>Operate</strong><span class="loop-pkg">control-tower</span><p>Unified dashboard to monitor and manage your AI agent fleet.</p></li>
       </ol>
     </section>
 
