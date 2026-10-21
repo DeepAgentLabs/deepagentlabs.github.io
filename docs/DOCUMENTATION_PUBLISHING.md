@@ -10,11 +10,13 @@ source in the product repositories; do not maintain a second copy here.
 | `/agentic-chaos/docs/` | `agentic-chaos/docs` | Chaos Pages workflow |
 | `/agentic-evals/docs/` | `agentic-evals/docs/*.md` | Evals Pages workflow |
 | `/mcp/docs/` | `mcp-server/docs` and its MkDocs config | This website's Pages workflow |
-| `/control-tower/docs/` | `agenticops-control-tower/docs`, README and examples | This website's Pages workflow |
+| `/control-tower/` | `agenticops-control-tower/index.html`, styles, scripts and images | This website's Pages workflow |
+| `/control-tower/docs/` | `agenticops-control-tower/docs` | This website's Pages workflow |
+| `/control-tower/usecases/` | `agenticops-control-tower/usecases` | This website's Pages workflow |
 
 The MCP and Tower paths differ from their repository names, so this website
-builds them into its deployment artifact. Product pages and other website
-assets are preserved. The workflow fetches both repositories' `main` branches
+builds them into its deployment artifact. The Tower product page and assets are staged from its repository when present;
+other product pages and website assets are preserved. The workflow fetches both repositories' `main` branches
 on website pushes, daily, or when manually dispatched. Pull requests build an
 artifact without deploying. Documentation source is never executed as Python;
 only the MkDocs configuration is loaded. Source repositories are trusted inputs.
@@ -55,3 +57,9 @@ Navigation and presentation are standardized; existing technical guides remain
 owned by their original repositories. The shared [tutorial template](../docs-theme/tutorial-template.md)
 defines prerequisites, installation, a runnable example, expected results and
 next steps for new and revised tutorials.
+
+The Tower repository Docs workflow validates product previews and the same shared
+docs/use-case builds without deploying a separate project Pages site. Old
+`/control-tower/docs/docs/...` and `/control-tower/docs/quickstart/` bookmarks
+redirect to the current guide paths. Build staging uses temporary directories
+outside the published artifact.

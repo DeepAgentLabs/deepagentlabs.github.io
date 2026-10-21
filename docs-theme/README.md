@@ -27,6 +27,8 @@ uv run --no-project --with-requirements scripts/docs-requirements.txt \
 python3 scripts/check_docs_site.py /tmp/dal-docs/site
 ```
 
-The main website builds MCP and Tower. Lens, Sidecar, Chaos and Evals check out
+The main website builds MCP and Tower, including the Tower product page and
+use cases when present in its repository. Tower's own Docs workflow validates
+the same shared output without creating a duplicate Pages deployment. Lens, Sidecar, Chaos and Evals check out
 this repository's shared theme in their own Docs workflows. Their scheduled
 builds pick up theme changes daily, while source pushes publish immediately.

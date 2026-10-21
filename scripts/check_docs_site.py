@@ -13,6 +13,8 @@ class Page(HTMLParser):
         self.links = []
         self.products = 0
         self.ids = set()
+        self.canonical = None
+        self.redirect = None
 
     def handle_starttag(self, tag, attrs):
         attrs = dict(attrs)
@@ -23,6 +25,10 @@ class Page(HTMLParser):
             self.products += 1
         if attrs.get("id"):
             self.ids.add(attrs["id"])
+        if tag == "link" and attrs.get("rel") == "canonical":
+            self.canonical = attrs.get("href")
+        if tag == "meta" and attrs.get("http-equiv", "").lower() == "refresh":
+            self.redirect = attrs.get("content", "").partition(";url=")[2]
 
 
 def main():
@@ -35,11 +41,24 @@ def main():
         docs = index.parent.parent
         assert json.loads(index.read_text())["docs"], f"Empty search index: {index}"
         assert (docs / "llms.txt").is_file(), f"Missing llms.txt: {docs}"
+        home = Page()
+        home.feed((docs / "index.html").read_text())
+        base = urlsplit(home.canonical or "")
         for html in docs.rglob("*.html"):
             count += 1
             page = Page()
             page.feed(html.read_text())
-            if page.products != 1:
+            if page.redirect:
+                destination = urlsplit(page.redirect)
+                if destination.netloc != base.netloc or not destination.path.startswith(
+                    base.path
+                ):
+                    errors.append(f"{html}: redirect leaves this documentation site")
+                elif not (docs / destination.path.removeprefix(base.path)).exists():
+                    errors.append(
+                        f"{html}: missing redirect destination {page.redirect}"
+                    )
+            elif page.products != 1:
                 errors.append(f"{html}: missing shared product navigation")
             for url in page.links:
                 parsed = urlsplit(url)

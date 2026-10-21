@@ -5,6 +5,8 @@ import json
 import logging
 import re
 import shutil
+import tempfile
+from html import escape
 from pathlib import Path
 from urllib.parse import urlsplit
 
@@ -82,11 +84,18 @@ def category(path):
     return "Guides"
 
 
-def prepare(project, repo, staging):
+def prepare(project, repo, staging, section="docs"):
     name, slug, docs, original = PROJECTS[project]
+    tower_guides = (
+        project == "agenticops-control-tower" and (repo / "docs/index.md").is_file()
+    )
+    if section == "usecases":
+        docs, original = "usecases", "mkdocs.usecases.yml"
+    elif tower_guides:
+        docs, original = "docs", "mkdocs.yml"
     if staging.exists():
         shutil.rmtree(staging)
-    if project == "agenticops-control-tower":
+    if project == "agenticops-control-tower" and not tower_guides and section == "docs":
         staging.mkdir(parents=True)
         shutil.copytree(repo / "docs", staging / "docs")
         shutil.copytree(repo / "examples", staging / "examples")
@@ -102,7 +111,22 @@ def prepare(project, repo, staging):
     else:
         shutil.copytree(repo / docs, staging)
         home = "index.md"
-    if project in ("agenticlens", "agenticops-control-tower"):
+        if tower_guides and section == "docs":
+            # Preserve the root guides and example downloads from the original site.
+            shutil.copytree(repo / "examples", staging / "examples", dirs_exist_ok=True)
+            for filename in (
+                "ROADMAP.md",
+                "CHANGELOG.md",
+                "CONTRIBUTING.md",
+                "LICENSE",
+            ):
+                if (repo / filename).is_file():
+                    shutil.copy2(repo / filename, staging / filename)
+    if (
+        section == "docs"
+        and project in ("agenticlens", "agenticops-control-tower")
+        and not (staging / "getting-started.md").exists()
+    ):
         readme = (repo / "README.md").read_text()
         sections = []
         for heading in ("Installation", "Quickstart"):
@@ -138,7 +162,24 @@ def prepare(project, repo, staging):
             target = (page.parent / parsed.path).resolve()
             if target.is_relative_to(staging) and target.exists():
                 return match.group(0)
-            source = (repo / docs / page.relative_to(staging)).parent / parsed.path
+            relative = page.relative_to(staging)
+            original_page = repo / docs / relative
+            if (
+                tower_guides
+                and section == "docs"
+                and (
+                    relative.parts[0] == "examples"
+                    or relative.name
+                    in (
+                        "ROADMAP.md",
+                        "CHANGELOG.md",
+                        "CONTRIBUTING.md",
+                        "quickstart.md",
+                    )
+                )
+            ):
+                original_page = repo / relative
+            source = original_page.parent / parsed.path
             source = source.resolve()
             if source.is_relative_to(repo) and source.exists():
                 kind = "tree" if source.is_dir() else "blob"
@@ -183,6 +224,8 @@ def prepare(project, repo, staging):
         relative = path.relative_to(staging)
         if str(relative) == home:
             continue
+        if tower_guides and relative.as_posix() in ("ROADMAP.md", "CONTRIBUTING.md"):
+            continue
         if relative.parts[0] == "examples" and path.name != "README.md":
             continue
         group = category(relative)
@@ -217,7 +260,7 @@ def prepare(project, repo, staging):
             "not_in_nav": "",
             "strict": True,
             "site_name": name,
-            "site_url": f"https://deepagentlabs.io/{slug}/docs/",
+            "site_url": f"https://deepagentlabs.io/{slug}/{section}/",
             "repo_url": f"https://github.com/DeepAgentLabs/{project}",
             "repo_name": f"DeepAgentLabs/{project}",
             "docs_dir": str(staging),
@@ -307,35 +350,22 @@ def prepare(project, repo, staging):
     return config
 
 
-def main():
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--sources", type=Path)
-    parser.add_argument("--repo", type=Path)
-    parser.add_argument("--project", choices=PROJECTS)
-    parser.add_argument("--all", action="store_true")
-    parser.add_argument("--output", type=Path, required=True)
-    args = parser.parse_args()
-    logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
-    if args.project and not args.repo:
-        parser.error("--project requires --repo")
-    if not args.project and not args.sources:
-        parser.error("--sources is required when building multiple projects")
-    projects = (
-        [args.project]
-        if args.project
-        else list(PROJECTS)
-        if args.all
-        else ["mcp-server", "agenticops-control-tower"]
+def write_redirect(path, destination):
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(
+        '<!doctype html><html lang="en"><head><meta charset="utf-8">'
+        '<meta name="robots" content="noindex">'
+        f'<link rel="canonical" href="{escape(destination, quote=True)}">'
+        f'<meta http-equiv="refresh" content="0;url={escape(destination, quote=True)}">'
+        f"<script>location.replace({json.dumps(destination)}+location.search+location.hash)</script>"
+        f'</head><body><a href="{escape(destination, quote=True)}">Continue to the guide</a></body></html>'
     )
-    for project in projects:
-        repo = args.repo.resolve() if args.project else args.sources.resolve() / project
-        output = (
-            args.output.resolve()
-            if args.project
-            else args.output.resolve() / PROJECTS[project][1] / "docs"
-        )
-        staging = args.output.resolve().parent / f".docs-source-{project}"
-        config = prepare(project, repo, staging)
+
+
+def build_project(project, repo, output, section="docs"):
+    with tempfile.TemporaryDirectory(prefix=f"dal-{project}-{section}-") as temporary:
+        staging = Path(temporary) / "source"
+        config = prepare(project, repo, staging, section)
         config.site_dir = str(output)
         errors, _warnings = config.validate()
         if errors:
@@ -344,8 +374,7 @@ def main():
         assert (output / "index.html").is_file(), project
         pages = []
         for path in sorted(staging.rglob("*.md")):
-            relative = path.relative_to(staging).with_suffix("").as_posix()
-            parts = relative.split("/")
+            parts = path.relative_to(staging).with_suffix("").as_posix().split("/")
             if parts[-1] in ("index", "README"):
                 parts.pop()
             url = "/".join(parts) + "/" if parts else ""
@@ -353,9 +382,84 @@ def main():
         (output / "llms.txt").write_text(
             f"# {config.site_name}\n\n" + "\n".join(pages) + "\n"
         )
+        if (
+            project == "agenticops-control-tower"
+            and section == "docs"
+            and (repo / "docs/index.md").is_file()
+        ):
+            # The previous site staged docs/ inside its docs root. Keep those bookmarks.
+            for path in (repo / "docs").rglob("*.md"):
+                parts = path.relative_to(repo / "docs").with_suffix("").parts
+                target = "/".join(
+                    parts[:-1] if parts[-1] in ("index", "README") else parts
+                )
+                destination = config.site_url + (target + "/" if target else "")
+                legacy = output / "docs" / target / "index.html"
+                write_redirect(legacy, destination)
+            write_redirect(
+                output / "quickstart/index.html", config.site_url + "getting-started/"
+            )
         print(
-            json.dumps({"project": project, "output": str(output), "pages": len(pages)})
+            json.dumps(
+                {
+                    "project": project,
+                    "section": section,
+                    "output": str(output),
+                    "pages": len(pages),
+                }
+            )
         )
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--sources", type=Path)
+    parser.add_argument("--repo", type=Path)
+    parser.add_argument("--project", choices=PROJECTS)
+    parser.add_argument("--section", choices=("docs", "usecases"), default="docs")
+    parser.add_argument("--all", action="store_true")
+    parser.add_argument("--output", type=Path, required=True)
+    args = parser.parse_args()
+    logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
+    if args.project and not args.repo:
+        parser.error("--project requires --repo")
+    if not args.project and not args.sources:
+        parser.error("--sources is required when building multiple projects")
+    if args.section != "docs" and not args.project:
+        parser.error("--section requires --project")
+    if args.section == "usecases" and not (args.repo / "mkdocs.usecases.yml").is_file():
+        parser.error(
+            "--section usecases requires a repository with mkdocs.usecases.yml"
+        )
+    projects = (
+        [args.project]
+        if args.project
+        else list(PROJECTS)
+        if args.all
+        else ["mcp-server", "agenticops-control-tower"]
+    )
+    for project in projects:
+        repo = (
+            args.repo.resolve()
+            if args.project
+            else (args.sources.resolve() / project).resolve()
+        )
+        output = (
+            args.output.resolve()
+            if args.project
+            else args.output.resolve() / PROJECTS[project][1] / "docs"
+        )
+        build_project(project, repo, output, args.section)
+        if (
+            not args.project
+            and project == "agenticops-control-tower"
+            and (repo / "docs/index.md").is_file()
+        ):
+            product = output.parent
+            for name in ("index.html", "site.css", "site.js", "og.png"):
+                shutil.copy2(repo / name, product / name)
+            shutil.copytree(repo / "img", product / "img", dirs_exist_ok=True)
+            build_project(project, repo, product / "usecases", "usecases")
 
 
 if __name__ == "__main__":
