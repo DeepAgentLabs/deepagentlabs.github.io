@@ -5,6 +5,13 @@ together, see [ARCHITECTURE.md](ARCHITECTURE.md).
 
 ## October 2026
 
+### Shared product documentation (October 21)
+
+- Standardized all six products on a shared MkDocs Material theme with product navigation, grouped sidebars, search, theme switching and page contents.
+- Kept existing documentation paths and repository-owned content. Added a tutorial authoring template and per-product `llms.txt` indexes.
+- Migrated Evals from its single HTML guide to searchable Markdown pages, with redirects for old section bookmarks.
+- Added rendered link and navigation checks to documentation deployments.
+
 ### Control Tower page: livelier hero
 - Entrance animation: the headline rises in and the lime highlight sweeps across, then the text, buttons and install line follow; the fleet card slides in (rises in on phones), its bar grows and the agent rows appear one by one.
 - The fleet card now has a **Recent activity** feed: new events slide in as the simulated fleet changes ("invoice-agent recovered → healthy", "ops-runner stopped checking in", heartbeats).

@@ -8,7 +8,7 @@ source in the product repositories; do not maintain a second copy here.
 | `/agenticlens/docs/` | `agenticlens/docs` | AgenticLens Pages workflow |
 | `/agentic-sidecar/docs/` | `agentic-sidecar/website/docs` | Sidecar Pages workflow |
 | `/agentic-chaos/docs/` | `agentic-chaos/docs` | Chaos Pages workflow |
-| `/agentic-evals/docs/` | `agentic-evals/docs/docs/index.html` | Evals Pages branch deployment |
+| `/agentic-evals/docs/` | `agentic-evals/docs/*.md` | Evals Pages workflow |
 | `/mcp/docs/` | `mcp-server/docs` and its MkDocs config | This website's Pages workflow |
 | `/control-tower/docs/` | `agenticops-control-tower/docs`, README and examples | This website's Pages workflow |
 
@@ -41,5 +41,17 @@ serving their Markdown source folders directly does not expose the workflows'
 `site/docs` output. Their Pages settings were corrected and docs workflows
 redispatched during the 2026-10-21 audit.
 
-Evals currently serves a handwritten HTML guide. Its additional Markdown files
-are not automatically converted into pages by that branch deployment.
+All six sites use the shared [documentation theme](../docs-theme/README.md).
+Evals now builds its Markdown guides with MkDocs; the former HTML guide remains
+in source for migration history, and old section bookmarks redirect to the new
+pages. Its product landing page remains at `/agentic-evals/`.
+
+Lens, Sidecar, Chaos and Evals workflows fetch the shared theme from this
+repository on every docs build and daily. The main website workflow builds MCP
+and Tower with the same builder. Product source pushes remain the trigger for
+immediate documentation updates.
+
+Navigation and presentation are standardized; existing technical guides remain
+owned by their original repositories. The shared [tutorial template](../docs-theme/tutorial-template.md)
+defines prerequisites, installation, a runnable example, expected results and
+next steps for new and revised tutorials.

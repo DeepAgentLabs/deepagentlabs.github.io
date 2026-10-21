@@ -41,6 +41,8 @@ jobs:
           rsync -a --exclude='.git' --exclude='.github' --exclude='_sources' ./ "$RUNNER_TEMP/website/"
       - name: Build repository documentation at website aliases
         run: python scripts/build_docs.py --sources _sources --output "$RUNNER_TEMP/website"
+      - name: Check rendered documentation
+        run: python scripts/check_docs_site.py "$RUNNER_TEMP/website"
       - uses: actions/upload-pages-artifact@v3
         with:
           path: ${{ runner.temp }}/website

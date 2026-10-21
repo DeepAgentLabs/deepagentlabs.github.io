@@ -3,8 +3,10 @@
 How the DeepAgentLabs website is put together: which files exist, what each one does,
 how the pages are built, and how to change things safely.
 
-The site is **plain HTML, CSS and vanilla JavaScript**. There is no build step, no
-framework and no package install. GitHub Pages serves the repository root as-is.
+The marketing site is **plain HTML, CSS and vanilla JavaScript**. The Pages
+workflow stages those files and builds MCP and Control Tower documentation from
+their source repositories. All six product docs share one MkDocs Material theme.
+See [documentation publishing](DOCUMENTATION_PUBLISHING.md) for build and deployment details.
 
 ---
 

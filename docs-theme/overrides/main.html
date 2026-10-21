@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block header %}
+{{ super() }}
+<nav class="docs-products" aria-label="Product documentation">
+  <a class="docs-home" href="https://deepagentlabs.io/">DeepAgentLabs</a>
+  {% for product in config.extra.products %}
+  <a href="{{ product.url }}"{% if product.name == config.site_name %} aria-current="page"{% endif %}>{{ product.name }}</a>
+  {% endfor %}
+</nav>
+{% endblock %}

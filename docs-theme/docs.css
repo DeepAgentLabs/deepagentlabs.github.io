@@ -1,0 +1,41 @@
+:root {
+  --md-text-font: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --md-code-font: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+}
+[data-md-color-scheme="default"] {
+  --md-primary-fg-color: #ffffff;
+  --md-primary-bg-color: #152820;
+  --md-accent-fg-color: #397724;
+  --md-default-bg-color: #ffffff;
+  --md-typeset-a-color: #397724;
+}
+[data-md-color-scheme="slate"] {
+  --md-hue: 150;
+  --md-primary-fg-color: #111b17;
+  --md-primary-bg-color: #eef5f0;
+  --md-default-bg-color: #111b17;
+  --md-accent-fg-color: #b7f343;
+  --md-typeset-a-color: #b7f343;
+}
+.md-header { box-shadow: none; border-bottom: 1px solid #81908730; }
+.md-header__topic { font-weight: 650; }
+.md-tabs { border-bottom: 1px solid #81908730; }
+.md-grid { max-width: 76rem; }
+.md-typeset { font-size: .8rem; line-height: 1.75; }
+.md-typeset h1 { color: var(--md-default-fg-color); font-weight: 750; letter-spacing: -.035em; }
+.md-typeset h2 { font-weight: 650; letter-spacing: -.02em; padding-top: .5rem; }
+.md-typeset h3 { font-weight: 600; }
+.md-typeset pre > code { border: 1px solid #81908730; border-radius: .5rem; }
+.md-typeset table:not([class]) { border-radius: .5rem; overflow: hidden; }
+.md-nav__link { font-size: .68rem; }
+.md-nav__item--section > .md-nav__link { font-weight: 650; color: var(--md-default-fg-color); }
+.md-nav__link--active { font-weight: 650; }
+.md-typeset .admonition { border-radius: .5rem; }
+.docs-products { display: flex; gap: 1.15rem; align-items: center; padding: .65rem max(1rem, calc((100vw - 74rem) / 2)); overflow-x: auto; white-space: nowrap; border-bottom: 1px solid #81908730; font-size: .63rem; background: var(--md-default-bg-color); }
+.docs-products a { color: var(--md-default-fg-color--light); text-decoration: none; }
+.docs-products a[aria-current] { color: var(--md-typeset-a-color); font-weight: 700; }
+.docs-products .docs-home { font-weight: 750; color: var(--md-default-fg-color); }
+.docs-start { border: 1px solid #81908740; border-radius: .75rem; padding: 1.15rem 1.3rem; margin: 1.5rem 0; background: #89b45a0a; }
+.docs-start p { margin: .3rem 0; }
+.md-typeset .grid.cards > ul > li { border-radius: .65rem; }
+@media (max-width: 600px) { .docs-products { gap: .9rem; } .md-typeset { font-size: .78rem; } }
