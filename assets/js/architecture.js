@@ -294,12 +294,12 @@
       },
       {
         id: "out-mcp",
-        label: "Shared access layer for all of the above",
+        label: "Selected shared workflows through MCP",
         icon: "↗",
         owner: "mcp",
-        status: "planned",
+        status: "current",
         detail:
-          "MCP currently exposes Lens, Chaos, Sidecar, and AIOS validation. Agentic Evals access is not implemented.",
+          "MCP exposes selected Lens, Evals, Chaos, Sidecar, Control Tower, and AIOS workflows, with availability varying by transport and version.",
       },
     ],
     principles: [
@@ -336,15 +336,15 @@
         id: "entry-tower",
         from: "entry",
         to: "tower",
-        status: "planned",
-        label: "Control Tower entry surface is a target",
+        status: "current",
+        label: "Console, CLI, and authenticated HTTP API",
       },
       {
         id: "tower-spec",
         from: "tower",
         to: "spec",
-        status: "planned",
-        label: "Control Tower to AIOS integration planned",
+        status: "context",
+        label: "Tower evidence follows shared draft semantics; no stable conformance claim",
       },
       {
         id: "spec-lens",
@@ -371,8 +371,8 @@
         id: "spec-chaos",
         from: "spec",
         to: "chaos",
-        status: "planned",
-        label: "native AIOS exporter not implemented",
+        status: "current",
+        label: "Chaos exports experiment evidence as AIOS Run artifacts",
       },
       {
         id: "spec-mcp",
@@ -399,8 +399,8 @@
         id: "mcp-evals",
         from: "mcp",
         to: "evals",
-        status: "planned",
-        label: "Evals adapter not implemented",
+        status: "current",
+        label: "MCP release checks use native Evals reports and gates",
       },
       {
         id: "mcp-sidecar",
@@ -420,50 +420,50 @@
         id: "sidecar-lens",
         from: "sidecar",
         to: "lens",
-        status: "planned",
-        label: "integration planned",
+        status: "current",
+        label: "Sidecar decisions can be correlated with Lens evidence",
       },
       {
         id: "sidecar-chaos",
         from: "sidecar",
         to: "chaos",
-        status: "planned",
-        label: "integration planned",
+        status: "current",
+        label: "Sidecar supervision evidence is tested with Chaos fixtures",
       },
       {
         id: "tower-mcp",
         from: "tower",
         to: "mcp",
-        status: "planned",
-        label: "connector planned",
+        status: "current",
+        label: "Tower MCP connector supports investigation and posture workflows",
       },
       {
         id: "tower-lens",
         from: "tower",
         to: "lens",
-        status: "planned",
-        label: "connector planned",
+        status: "current",
+        label: "Push-based Lens evidence ingestion; remote pull collection is not included",
       },
       {
         id: "tower-evals",
         from: "tower",
         to: "evals",
-        status: "planned",
-        label: "connector planned",
+        status: "current",
+        label: "Push-based Evals report and gate evidence ingestion",
       },
       {
         id: "tower-chaos",
         from: "tower",
         to: "chaos",
-        status: "planned",
-        label: "connector planned",
+        status: "current",
+        label: "Push-based Chaos report ingestion; Tower does not run experiments",
       },
       {
         id: "tower-sidecar",
         from: "tower",
         to: "sidecar",
-        status: "planned",
-        label: "connector planned",
+        status: "current",
+        label: "Push-based Sidecar decision and journal evidence ingestion",
       },
       {
         id: "frameworks-spec",
@@ -1108,7 +1108,7 @@
       name = "AI Frameworks & Runtimes";
       version = "Instrument & Integrate";
       description =
-        "Frameworks shown in the reference architecture. The local ecosystem guide documents LangGraph adapters for Agentic Chaos and Agentic Sidecar; the other names are examples, not claims of verified native adapters. AIOS defines a framework-neutral contract.";
+        "The ecosystem targets framework-neutral operation. AgenticLens and Evals accept portable workflow data; Sidecar and Chaos provide framework integrations with coverage that varies by adapter.";
       role = "ARCHITECTURE CONTEXT";
     } else if (target.type === "output") {
       var output = outputById(target.id);
@@ -1275,14 +1275,14 @@
         edge: "entry-tower",
         title: "CONSOLE / CLI / API / MCP",
         explanation:
-          "The reference architecture routes the request through its shared entry surfaces. The Control Tower connector is planned.",
+          "Console, CLI, authenticated HTTP API, and MCP are available entry surfaces; each tool can also be used independently.",
       },
       {
         id: "tower",
         edge: "tower-spec",
         title: "CONTROL TOWER",
         explanation:
-          "The target control plane manages the fleet; today its local implementation is an in-memory registry and discovery facade.",
+          "The Control Tower operates fleet inventory, health, evidence posture, alerts, and incident views; sibling evidence is pushed in rather than remotely collected.",
       },
       {
         id: "spec",
