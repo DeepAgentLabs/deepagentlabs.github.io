@@ -111,20 +111,23 @@ html{scroll-padding-top:calc(var(--header-h) + 12px)}
 @media(min-width:821px){#site-nav>a,#site-nav .nav-trigger{white-space:nowrap}.site-header .brand{flex-shrink:0;margin-right:16px}}
 @media(min-width:821px) and (max-width:1180px){#site-nav{gap:16px;font-size:13px}.nav-cta{padding:9px 11px}}
 @media(min-width:821px) and (max-width:960px){#site-nav{gap:11px;font-size:12px}.site-header .brand{font-size:17px}}
-/* ---------- MCP use cases ---------- */
-.mcp-use-case-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
-.mcp-use-case-card{position:relative;min-height:280px;padding:30px 28px 28px;border:1px solid var(--ink);background:#fff;display:flex;flex-direction:column;transition:transform .3s cubic-bezier(.2,.72,.25,1),box-shadow .3s}
-.mcp-use-case-card-accent{background:var(--mint)}
-.mcp-use-case-card-dark{background:var(--ink);color:#fff}
-.mcp-use-case-number{font:500 11px 'DM Mono',monospace;letter-spacing:.12em;color:var(--acid)}
-.mcp-use-case-card h3{margin:54px 0 12px;font-size:23px;letter-spacing:-.035em}
-.mcp-use-case-card p{font-size:14.5px;line-height:1.6;color:#51605a}
-.mcp-use-case-card-dark p{color:#c7d0ca}
-.mcp-use-case-card .text-link{margin-top:auto;padding-top:24px;color:inherit}
-.mcp-use-case-card:hover{transform:translate(-4px,-4px);box-shadow:8px 8px 0 var(--ink)}
-.mcp-use-case-card-dark:hover{box-shadow:8px 8px 0 var(--acid)}
-@media(max-width:900px){.mcp-use-case-grid{grid-template-columns:1fr 1fr}.mcp-use-case-card:last-child{grid-column:1/-1}}
-@media(max-width:620px){.mcp-use-case-grid{grid-template-columns:1fr}.mcp-use-case-card:last-child{grid-column:auto}}
+/* ---------- Agent harness ---------- */
+.harness-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.harness-card{position:relative;min-height:360px;padding:24px 22px;border:1px solid var(--ink);background:#fff;display:flex;flex-direction:column;transition:transform .3s cubic-bezier(.2,.72,.25,1),box-shadow .3s}
+.harness-card-accent{background:var(--mint)}
+.harness-card-dark{background:var(--ink);color:#fff}
+.harness-number{font:500 10px 'DM Mono',monospace;letter-spacing:.08em;color:#4c7b13}
+.harness-card-dark .harness-number{color:var(--acid)}
+.harness-card h3{margin:42px 0 10px;font-size:21px;line-height:1.2;letter-spacing:-.035em}
+.harness-card p{font-size:13.5px;line-height:1.6;color:#51605a}
+.harness-card-dark p{color:#c7d0ca}
+.harness-card .text-link{margin-top:auto;padding-top:18px;color:inherit}
+.harness-card:hover{transform:translate(-4px,-4px);box-shadow:8px 8px 0 var(--ink)}
+.harness-card-dark:hover{box-shadow:8px 8px 0 var(--acid)}
+.harness-note{margin:18px 0 0;color:var(--muted);font-size:13px}
+.harness-note span{color:#4c7b13;margin-right:6px}
+@media(max-width:1000px){.harness-grid{grid-template-columns:1fr 1fr}.harness-card{min-height:320px}}
+@media(max-width:620px){.harness-grid{grid-template-columns:1fr}.harness-card{min-height:0}.harness-card h3{margin-top:30px}}
 
 /* hero: short "about us" row under the buttons (who we are / what we build / who it's for) */
 .hero-about{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;margin:34px 0 0;max-width:660px;font-size:inherit;color:inherit}
