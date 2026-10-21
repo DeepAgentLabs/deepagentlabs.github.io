@@ -122,6 +122,8 @@ html{scroll-padding-top:calc(var(--header-h) + 12px)}
 .harness-card p{font-size:13.5px;line-height:1.6;color:#51605a}
 .harness-card-dark p{color:#c7d0ca}
 .harness-card .text-link{margin-top:auto;padding-top:18px;color:inherit}
+.harness-links{display:flex;flex-wrap:wrap;gap:10px 14px;margin-top:auto;padding-top:18px}
+.harness-links .text-link{margin-top:0;padding-top:0;font-size:12px}
 .harness-card:hover{transform:translate(-4px,-4px);box-shadow:8px 8px 0 var(--ink)}
 .harness-card-dark:hover{box-shadow:8px 8px 0 var(--acid)}
 .harness-note{margin:18px 0 0;color:var(--muted);font-size:13px}
