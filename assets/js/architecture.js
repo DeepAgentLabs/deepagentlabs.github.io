@@ -16,63 +16,63 @@
         subtitle: "One entry point to build, operate and improve agents",
         role: "ENTRY SURFACES",
         description:
-          "The reference architecture presents these as entry surfaces. The Control Tower does not yet provide a unified console, CLI, or API; its MCP connector is planned. The separate MCP server exposes documented sibling capabilities.",
+          "Console, CLI, HTTP API, and MCP are available entry surfaces. Control Tower provides its own authenticated API, CLI, and read-only console; the separate MCP server exposes selected ecosystem workflows, with availability depending on transport and installed integrations.",
       },
       tower: {
         title: "DeepAgent Control Tower",
         package: "agenticops-control-tower",
-        version: "v0.0.1",
+        version: "v0.8.0",
         subtitle: "Manage  |  Monitor  |  Evaluate  |  Govern  |  Scale",
-        role: "IMPROVE",
+        role: "OPERATE",
         description:
-          "The intended fleet-wide registry and control plane. Today it provides in-memory agent registration and capability discovery; persistence, a web console, security/RBAC, and live sibling connectors are not established as implemented.",
+          "A fleet operations control plane with a persistent registry, authenticated HTTP API and CLI, read-only console, shared evidence posture, alerts, and incident views. Configuration and recovery actions use approval controls; production runtime adapters remain limited.",
       },
       spec: {
         title: "AI Operations Specification",
         package: "ai-operations-spec",
-        version: "package v0.1.0  ·  specification through v0.4-draft",
+        version: "package v0.5.1  ·  specification through v0.6 exploratory drafts",
         subtitle: "shared runtime model, semantic events, artifacts, schemas",
         role: "STANDARDIZE",
         description:
-          "A pre-release, vendor-neutral vocabulary and artifact contract for runs, steps, model and tool calls, evaluations, incidents, events, and relationships. Structural and semantic validation exists; native Lens and Chaos exporters and a stable conformance claim do not.",
+          "A pre-release draft vocabulary and artifact specification for runs, steps, model and tool calls, evaluations, incidents, events, and relationships. Vendor neutrality is the design goal; external review and independent validation remain open, so stable conformance is not claimed.",
       },
     },
     towerCapabilities: [
       {
         id: "tower-console",
-        label: "AgenticOps Console",
+        label: "Read-only AgenticOps Console",
         detail:
-          "A Control Tower console is part of the target architecture; the local ecosystem audit says a web console is not implemented.",
+          "The console shows inventory, fleet health, capability coverage, evidence posture, alerts, and incident views. Writes are handled through authenticated API or CLI workflows.",
       },
       {
         id: "tower-registry",
-        label: "Agent Registry",
+        label: "Persistent Agent Registry",
         detail:
-          "In-memory agent registration is implemented in the Control Tower; persistent storage is not.",
+          "Agent registration and inventory can persist to SQLite; offline snapshots are also supported.",
       },
       {
         id: "tower-discovery",
-        label: "Capability Discovery",
+        label: "Capability and Version Inventory",
         detail:
-          "Capability discovery is available in the local Control Tower registry.",
+          "The API and console report installed capabilities, versions, environment coverage, and fleet health.",
       },
       {
         id: "tower-configuration",
-        label: "Configuration",
+        label: "Approved Configuration",
         detail:
-          "Configuration shapes exist in the Control Tower; safe writes and reconciliation are not implemented.",
+          "Tower-owned configuration supports preview, independent approval, execution, expiry, revision checks, and audit records.",
       },
       {
         id: "tower-security",
-        label: "Security & RBAC",
+        label: "Bearer Authorization",
         detail:
-          "Security and RBAC are shown in the reference architecture; the audit does not establish a completed Control Tower implementation.",
+          "HTTP and CLI operations support reader and writer bearer authorization, with a separate approval token. RBAC is not claimed.",
       },
       {
         id: "tower-api",
-        label: "Unified Control API",
+        label: "HTTP API and CLI",
         detail:
-          "A unified Control Tower API is a target capability. The current local facade does not provide the complete live sibling control plane.",
+          "The authenticated HTTP API and CLI expose registry, inventory, configuration, evidence, alerts, and incident workflows. Runtime adapters remain bounded.",
       },
     ],
     packages: [
@@ -80,7 +80,7 @@
         id: "lens",
         title: "AgenticLens",
         package: "agenticlens",
-        version: "v0.5.0",
+        version: "v0.10.0",
         role: "OBSERVE",
         tagline: "Make agents observable",
         color: "lens",
@@ -103,13 +103,13 @@
         id: "evals",
         title: "Agentic Evals",
         package: "agentic-evals",
-        version: "v0.5.0",
+        version: "v0.9.0",
         role: "EVALUATE",
         tagline: "Measure what matters",
         color: "evals",
         icon: "evals",
         description:
-          "A standalone, framework-agnostic scoring engine with deterministic checks, LLM-as-judge rubrics, and CI release gates. The ecosystem guide says no other repository calls it today.",
+          "A standalone, framework-agnostic scoring engine with deterministic checks, LLM-as-judge evaluators, live targets, reusable suites, and CI release gates. MCP release checks and Control Tower evidence workflows can consume native Evals reports.",
         capabilities: [
           "Score",
           "Benchmark",
@@ -121,19 +121,19 @@
           "CI/CD Quality Gates",
         ],
         outputNote:
-          "These are the evaluation outputs named in the architecture reference. Agentic Evals is standalone today; no MCP adapter or cross-repository call is documented.",
+          "Agentic Evals remains independently usable. MCP release checks and Control Tower evidence ingestion support its native reports; exact compatibility depends on installed versions.",
       },
       {
         id: "sidecar",
         title: "Agentic Sidecar",
         package: "agentic-sidecar",
-        version: "v0.2.0",
+        version: "v0.9.0",
         role: "SUPERVISE",
         tagline: "Keep agents safe and aligned",
         color: "sidecar",
         icon: "sidecar",
         description:
-          "Decision-time supervision checks an agent action against declared intent and can allow, warn, or block through an attached wrapper. LangGraph support is documented today.",
+          "Runtime supervision checks plans and actions against intent, constraints, policy, and risk. Supported integrations include LangGraph, AutoGen, CrewAI, OpenAI Agents, Google ADK, and MCP, with evidence and adapter coverage varying by integration.",
         capabilities: [
           "Supervise",
           "Govern",
@@ -145,19 +145,19 @@
           "Replan / Pause / Approve",
         ],
         outputNote:
-          "These are target/reference outputs. The local audit describes escalation and export workflow as incomplete; Lens and Chaos adapters are placeholders, and broader control-room behavior is planned.",
+          "The current runtime includes intent/context injection, guardrail checks, critique and judge stages, human escalation, runtime status/control, audit events, and Lens/Chaos integrations. Stable shared schemas and broader adapter evidence remain in progress.",
       },
       {
         id: "chaos",
         title: "Agentic Chaos",
         package: "agentic-chaos",
-        version: "v0.4.0",
+        version: "v0.8.0",
         role: "TEST / BREAK",
         tagline: "Build resilient agents",
         color: "chaos",
         icon: "chaos",
         description:
-          "Controlled LLM and agent fault injection records typed events and reports how a workflow responded. It can run standalone or attach events to an AgenticLens workflow.",
+          "A standalone resilience-testing toolkit for LLM and agent workflows. It injects controlled faults, runs declarative experiments, records outcomes, and supports AIOS artifact export.",
         capabilities: [
           "Break",
           "Validate",
@@ -169,19 +169,19 @@
           "Improve robustness",
         ],
         outputNote:
-          "Chaos sessions and standalone ChaosReport output are implemented. A native AIOS reliability-event or Run exporter is not.",
+          "Chaos emits native experiment reports and can export AIOS Run artifacts. Resilience scoring and broader experiment sharing remain planned.",
       },
       {
         id: "mcp",
         title: "MCP Server",
         package: "deep-agentic-core-mcp",
-        version: "v0.2.0",
+        version: "v0.4.1",
         role: "CONNECT",
         tagline: "Integrate with your ecosystem",
         color: "mcp",
         icon: "mcp",
         description:
-          "A thin MCP interface exposes selected AgenticLens, Agentic Chaos, Agentic Sidecar, and AIOS validation capabilities as 14 callable tools for MCP-compatible clients.",
+          "The shared MCP server exposes selected Lens analysis, Evals release checks, Chaos workflows, Sidecar discovery, Control Tower posture/investigation, and AIOS validation. Available tools vary between trusted local stdio and hosted HTTP.",
         capabilities: [
           "Unified MCP interface",
           "Access tools & data sources",
@@ -192,7 +192,7 @@
           "Works with AgenticLens, Evals, Chaos and Sidecar",
         ],
         outputNote:
-          "The current server exposes Lens, Chaos, Sidecar, and AIOS validation. Agentic Evals is not wired in; its connector is planned. Enterprise systems, shared context, and custom tool extensions are architecture goals, not claims that every integration ships today.",
+          "Hosted and local transports expose selected Lens analysis, Evals release checks, Sidecar discovery, Control Tower posture/investigation, and AIOS validation. Chaos code execution is limited to trusted local stdio; hosted HTTP accepts locally generated Chaos reports.",
       },
     ],
     frameworks: [
@@ -552,7 +552,7 @@
       Benchmark:
         "Benchmark is a capability named in the source architecture reference.",
       "LLM-as-Judge":
-        "Agentic Evals includes LLM-as-judge evaluators and built-in rubrics.",
+        "Agentic Evals 0.9 includes LLM-as-judge evaluation, usage reporting, retries, agreement scoring, and fail-closed release gates.",
       "Trajectory Evals":
         "Trajectory and tool-call scorers are listed in the site's Agentic Evals capability inventory.",
       "Eval Suites":
@@ -570,19 +570,19 @@
       "Align intent":
         "Sidecar checks actions against numeric, enum, and allow-list intent constraints.",
       "Judge / Critic":
-        "Planner, Critic, and Judge modules are roadmap work; implemented deterministic policy and risk checks are narrower.",
+        "Planner and Critic apply bounded checks to plans and available evidence; Judge supports a mock provider and optional live OpenAI/Anthropic providers.",
       Escalate:
-        "Escalation workflow is listed in the reference map; the audit records remaining escalation work.",
+        "Human escalation supports local and HTTP approval handlers, CLI prompts, and correlated audit events.",
       "Human approval":
-        "Human approval is a reference/target capability; a dashboard wired to approvals is not implemented.",
+        "Human approval is available through Sidecar's local and HTTP handlers and CLI control flow.",
       "Live agent status":
-        "The reference architecture lists live status; broad Control Room status workflows remain planned.",
+        "Runtime-connected status, follow mode, narration, and control/approval commands are available; coverage varies by adapter.",
       "Replan / Pause / Approve":
-        "These actions are target capabilities in the reference map, not established shipped Sidecar controls.",
+        "Supported Sidecar control flows include pause/suspend and approval decisions; behavior depends on the attached adapter.",
       Break:
         "Agentic Chaos can apply controlled faults to model and agent call sites.",
       Validate:
-        "Chaos sessions report observed outcomes; native AIOS artifact validation is not a Chaos capability today.",
+        "Chaos reports experiment outcomes and exports AIOS Run artifacts; schema validation is handled by the specification tooling.",
       Test: "Agentic Chaos runs repeatable fault-injection experiments against workflows.",
       "Stress scenarios":
         "Chaos supports configured provider and agent fault scenarios; broader workflow orchestration remains roadmap work.",
@@ -591,23 +591,23 @@
       "Produce resilience evidence":
         "Chaos records typed events and produces standalone experiment reports.",
       "Measure recovery":
-        "Chaos reports how a system responded to injected failures; resilience scoring remains incomplete.",
+        "Chaos reports observed outcomes and recovery behavior; the planned numeric resilience score is not yet released.",
       "Improve robustness":
         "Chaos provides evidence for improving robustness; it does not automatically change the agent.",
       "Unified MCP interface":
         "The server exposes selected ecosystem capabilities through the MCP protocol.",
       "Access tools & data sources":
-        "The current tool surface exposes selected Lens, Chaos, Sidecar, and AIOS validation tools.",
+        "MCP exposes selected Lens, Evals, Chaos, Sidecar, Control Tower, and AIOS workflows; available tools depend on transport and installed versions.",
       "Connect to enterprise systems":
         "Enterprise-system connections are a reference architecture goal; no specific connector is verified here.",
       "Share context across agents":
         "The MCP server has process-local session state; it is not a durable shared evidence store.",
       "Secure access layer":
-        "The secure access layer is a reference architecture label; this does not assert a completed enterprise authorization system.",
+        "The local server supports trusted stdio use; hosted HTTP uses configured authentication. Enterprise-wide authorization remains deployment-specific.",
       "Extend with custom tools":
         "Custom-tool extension is shown as an architecture capability; it is not established by the local audit as a current feature.",
       "Works with AgenticLens, Evals, Chaos and Sidecar":
-        "Lens, Chaos, and Sidecar adapters are current. Agentic Evals is standalone and has no MCP adapter today.",
+        "Current MCP workflows integrate selected Lens, Evals, Chaos, Sidecar, and Control Tower capabilities; availability depends on transport and version compatibility.",
     };
     return (
       descriptions[label] ||
