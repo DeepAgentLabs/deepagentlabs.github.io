@@ -112,3 +112,33 @@ footer{max-width:var(--max);margin:auto;padding:42px 28px;display:grid;grid-temp
 @media(prefers-reduced-motion:reduce){
 	.faq-item,.faq-answer{transition:none}
 }
+
+
+/* Homepage AgenticOps hero: make the ecosystem legible at a glance. */
+.hero-agenticops{min-height:650px}
+.hero-agenticops h1{max-width:700px}
+.hero-agenticops h1 em{color:#4e5b55}
+.hero-agenticops .hero-lede{max-width:620px}
+.hero-agenticops .hero-proof{gap:18px;flex-wrap:wrap}
+.hero-ecosystem-card{min-height:0;padding:22px}
+.hero-ecosystem-list{list-style:none;margin:20px 0 12px;padding:0;border-top:1px solid #2a362e}
+.hero-ecosystem-list li{display:grid;grid-template-columns:96px 112px minmax(0,1fr);align-items:center;gap:8px;min-height:48px;border-bottom:1px solid #2a362e}
+.hero-stage{color:#a7b2aa;font:10px 'DM Mono',monospace;letter-spacing:.01em}
+.hero-ecosystem-list strong{font-size:12px;white-space:nowrap}
+.hero-ecosystem-list small{color:#a7b2aa;font-size:10px;line-height:1.3}
+.hero-contract{display:grid;grid-template-columns:1fr;gap:4px;padding:12px 14px;background:#111c16;border-left:3px solid var(--acid)}
+.hero-contract span{color:#a7b2aa;font:9px 'DM Mono',monospace;text-transform:uppercase;letter-spacing:.11em}
+.hero-contract strong{font-size:13px}
+.hero-contract small{color:#a7b2aa;font-size:10px;line-height:1.4}
+@media(max-width:760px){
+  .hero-agenticops{min-height:0}
+  .hero-ecosystem-list li{grid-template-columns:78px 104px minmax(0,1fr);gap:6px;min-height:46px}
+  .hero-stage{font-size:9px}
+  .hero-ecosystem-list strong{font-size:11px}
+  .hero-ecosystem-list small{font-size:9px}
+}
+@media(max-width:390px){
+  .hero-ecosystem-card{padding:16px}
+  .hero-ecosystem-list li{grid-template-columns:68px 92px minmax(0,1fr);gap:5px}
+  .hero-ecosystem-list small{font-size:8px}
+}
