@@ -117,8 +117,11 @@ footer{max-width:var(--max);margin:auto;padding:42px 28px;display:grid;grid-temp
 
 /* Homepage AgenticOps hero: make the ecosystem legible at a glance. */
 .hero-agenticops{min-height:650px}
-.hero-agenticops h1{max-width:700px}
+.hero-agenticops h1{max-width:760px;font-size:clamp(48px,5.2vw,72px);line-height:.98}
+.hero-agenticops h1 .hero-title-line,.hero-agenticops h1 em{display:block}
 .hero-agenticops h1 em{color:#4e5b55}
+@media(max-width:760px){.hero-agenticops h1{font-size:clamp(40px,7.2vw,56px)}}
+@media(max-width:680px){.hero-agenticops h1{font-size:clamp(32px,8.4vw,46px)}}
 .hero-agenticops .hero-lede{max-width:620px}
 .hero-agenticops .hero-proof{gap:18px;flex-wrap:wrap}
 .hero-ecosystem-card{min-height:0;padding:22px}
