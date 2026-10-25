@@ -253,6 +253,14 @@ def prepare(project, repo, staging, section="docs"):
         else staging / "dal-docs.css",
     )
     css = "assets/dal-docs.css" if (staging / "assets").exists() else "dal-docs.css"
+    # Use-case pages may ship interactive figures. Keep their own scripts and
+    # styles, but not the repository's theme overrides (extra.css): the shared
+    # theme owns presentation.
+    figures = original_values if section == "usecases" else {}
+    figure_css = [
+        path for path in figures.get("extra_css", []) if Path(path).name != "extra.css"
+    ]
+    figure_js = list(figures.get("extra_javascript", []))
     config.load_dict(
         {
             "exclude_docs": "",
@@ -301,10 +309,11 @@ def prepare(project, repo, staging, section="docs"):
                     "toc.follow",
                 ],
             },
-            "extra_css": [css],
-            "extra_javascript": ["legacy-links.js"]
-            if project == "agentic-evals"
-            else [],
+            "extra_css": [css] + figure_css,
+            "extra_javascript": (
+                ["legacy-links.js"] if project == "agentic-evals" else []
+            )
+            + figure_js,
             "plugins": ["search"],
             "markdown_extensions": [
                 "admonition",
