@@ -1,4 +1,4 @@
-/* The six actual demos, shared by the dark navigation card and product-page links. */
+/* The ecosystem demos, shared by product-page links. */
 (() => {
   const demos = [
     { id: 'mcp', number: '01', title: 'Operate your agents through MCP', summary: 'Explore the ecosystem through a simulated AI conversation.', href: '/usecases/1/' },

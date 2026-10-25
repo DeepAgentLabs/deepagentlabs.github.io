@@ -1,4 +1,4 @@
-/* The dark Use cases card links only to the six real demos. */
+/* Fills [data-uc-most-asked] demo chips where a page still has them; the menu card no longer does. */
 (() => {
   const data = window.DAL_USECASES;
   const chips = document.querySelector('[data-uc-most-asked]');
