@@ -12,6 +12,11 @@ PATHS = [f"/usecases/{n}/" for n in range(1, 7)] + [
         "prevent-unauthorized-refunds", "governed-customer-support-agent",
         "govern-langgraph-agent-workflows",
     )
+] + [
+    f"/control-tower/usecases/{slug}/" for slug in (
+        "fleet-health-snapshot", "lens-failure-to-incident",
+        "ecosystem-evidence-posture", "fleet-change-with-approval",
+    )
 ]
 
 
