@@ -12,3 +12,4 @@
 /* Highlight only the outline; preserve the dark card and its text colors. */
 .uc-resource-grid>a:hover,.uc-resource-grid>a:focus-visible{filter:none;transform:none;border-color:#b7f343;box-shadow:0 0 0 1px #b7f343,0 0 18px #b7f34338}
 .uc-card>.uc-view-count{color:#47632c}
+@media(min-width:901px){.uc-resource-grid-pairs{grid-template-columns:repeat(2,minmax(0,1fr))}}

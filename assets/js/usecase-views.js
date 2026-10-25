@@ -1,6 +1,6 @@
 /* Public page-load counters; previews never increment production totals. */
 (() => {
-  const paths = ["/usecases/1/", "/usecases/2/", "/usecases/3/", "/usecases/4/", "/usecases/5/", "/usecases/6/", "/agentic-sidecar/usecases/prevent-unauthorized-refunds/", "/agentic-sidecar/usecases/governed-customer-support-agent/", "/agentic-sidecar/usecases/govern-langgraph-agent-workflows/"];
+  const paths = ["/usecases/1/", "/usecases/2/", "/usecases/3/", "/usecases/4/", "/usecases/5/", "/usecases/6/", "/agentic-sidecar/usecases/prevent-unauthorized-refunds/", "/agentic-sidecar/usecases/governed-customer-support-agent/", "/agentic-sidecar/usecases/govern-langgraph-agent-workflows/", "/control-tower/usecases/fleet-health-snapshot/", "/control-tower/usecases/lens-failure-to-incident/", "/control-tower/usecases/ecosystem-evidence-posture/", "/control-tower/usecases/fleet-change-with-approval/"];
   const normalize = path => path.replace(/index\.html$/, '').replace(/\/?$/, '/');
   const path = normalize(location.pathname);
   if (['deepagentlabs.io', 'www.deepagentlabs.io'].includes(location.hostname) && paths.includes(path)) {
