@@ -161,10 +161,6 @@ nav .mega-pypi a:hover{opacity:1;background:var(--acid);border-color:var(--acid)
   #site-nav .nav-item.is-open>.nav-trigger::after{transform:translateY(3px) rotate(225deg)}
 }
 @media(prefers-reduced-motion:reduce){#site-nav .nav-trigger::after{transition:none}}
-/* The Use cases dropdown is the dark demo card only. */
-#mega-usecases{grid-template-columns:minmax(0,1fr);left:auto;right:28px;width:420px;max-width:calc(100% - 56px)}
-#mega-usecases .mega-side{display:flex;min-width:0}
-#mega-usecases .mega-side-copy{display:block}
-#mega-usecases .mega-pypi{flex-wrap:wrap}
-@media(max-width:820px){#mega-usecases{width:100%;max-width:none;margin-bottom:16px}#mega-usecases .mega-side{padding:22px 18px}#mega-usecases .mega-label{display:block}#mega-usecases .mega-pypi a{font-size:10px}}
-@media(min-width:821px){.nav-item:has(>#mega-usecases){position:relative}#mega-usecases{left:0;right:auto;max-width:calc(100vw - 56px);top:calc(100% + 10px)}}
+/* Use cases dropdown: same layout and styles as the Products menu (built by usecases.js). */
+.mega-share{display:inline-flex;gap:6px;margin-top:14px;padding-top:12px;border-top:1px solid var(--line);font-size:13px;font-weight:600;color:var(--ink);text-decoration:none}.mega-share:hover{text-decoration:underline;text-decoration-color:var(--acid);text-decoration-thickness:2px}.mega-share:focus-visible{outline:2px solid #4c7b13;outline-offset:2px}
+@media(max-width:820px){.mega-share{margin:4px 0 0;padding-top:12px}}

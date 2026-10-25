@@ -8,7 +8,8 @@ from html import escape
 from html.parser import HTMLParser
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[2]
+REPO_ROOT = Path(__file__).resolve().parents[1]
+ROOT = REPO_ROOT.parent
 ASSETS = 'https://deepagentlabs.github.io/assets'
 # Every number is illustrative, never a benchmark or a live service measurement.
 DEMOS = [

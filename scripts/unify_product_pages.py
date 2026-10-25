@@ -74,7 +74,7 @@ class Sections(HTMLParser):
 
 
 def shell():
-    source = (ROOT / 'deepagentlabs.github.io/control-tower/index.html').read_text()
+    source = (Path(__file__).resolve().parents[1] / 'control-tower/index.html').read_text()
     header = re.search(r'<header class="site-header">.*?</header>', source, re.S).group()
     footer = re.search(r'<footer class="site-footer">.*?</footer>', source, re.S).group()
     # Shell links must work from project Pages sites as well as the custom domain.
