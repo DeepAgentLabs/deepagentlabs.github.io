@@ -17,6 +17,11 @@ PATHS = [f"/usecases/{n}/" for n in range(1, 7)] + [
         "fleet-health-snapshot", "lens-failure-to-incident",
         "ecosystem-evidence-posture", "fleet-change-with-approval",
     )
+] + [
+    f"/agentic-evals/usecases/{slug}/" for slug in (
+        "block-an-unsafe-release", "right-reply-wrong-trajectory",
+        "gate-on-judge-reliability",
+    )
 ]
 
 
