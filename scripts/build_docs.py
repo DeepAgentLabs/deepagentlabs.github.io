@@ -311,7 +311,9 @@ def prepare(project, repo, staging, section="docs"):
             },
             "extra_css": [css] + figure_css,
             "extra_javascript": (
-                ["legacy-links.js"] if project == "agentic-evals" else []
+                ["legacy-links.js"]
+                if project == "agentic-evals" and section == "docs"
+                else []
             )
             + figure_js,
             "plugins": ["search"],
