@@ -22,6 +22,8 @@ PATHS = [f"/usecases/{n}/" for n in range(1, 7)] + [
         "block-an-unsafe-release", "right-reply-wrong-trajectory",
         "gate-on-judge-reliability",
     )
+] + [
+    "/agentic-chaos/usecases/finassure-release-gate/",
 ]
 
 
