@@ -3,6 +3,14 @@
 What changed on the DeepAgentLabs website, newest first. For how the site is put
 together, see [ARCHITECTURE.md](ARCHITECTURE.md).
 
+## November 2026
+
+### Customer discovery survey (November 7)
+
+Added `survey.html` with the supplied Google Forms embed, responsive sizing,
+an accessible iframe title and a direct Google Forms link. Reuses the shared
+site header and footer; the homepage footer links to the new survey.
+
 ## October 2026
 
 ### Control Tower command-center scenarios (October 21)
