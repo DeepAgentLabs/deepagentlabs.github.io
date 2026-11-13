@@ -31,6 +31,8 @@ PROJECTS = {
 }
 GROUPS = [
     "Getting started",
+    "Concepts",
+    "How-to guides",
     "Guides",
     "Integrations",
     "Examples",
@@ -42,7 +44,11 @@ GROUPS = [
 
 def title(path):
     match = re.search(r"^#\s+(.+)", path.read_text(), re.MULTILINE)
-    return match.group(1).strip() if match else path.stem.replace("-", " ").title()
+    label = match.group(1).strip() if match else path.stem.replace("-", " ").title()
+    # Navigation describes tasks. Release history and schema data stay intact
+    # in the source pages, without package release numbers in sidebar labels.
+    label = re.sub(r"\(?\bv?\d+\.\d+(?:\.\d+)?(?:\.x)?\)?", "", label)
+    return re.sub(r"\s+", " ", label).strip(" —–-()")
 
 
 def category(path):
@@ -56,7 +62,7 @@ def category(path):
     if stem in ("index", "readme", "getting-started", "installation", "quickstart"):
         return "Getting started"
     if re.search(
-        r"(compatib|aios-v|chaos-0|sidecar-|tower-0|control-tower-0|lens-0|mcp-0|evals-|roadmap|changelog|v0\.)",
+        r"(compatib|aios-[v0-9]|chaos-0|sidecar-|tower-0|control-tower-0|lens-0|mcp-0|evals-|roadmap|changelog|v\d+\.|coordinated-v\d)",
         stem,
     ):
         return "Compatibility and releases"
@@ -120,7 +126,10 @@ def prepare(project, repo, staging, section="docs"):
                 "CONTRIBUTING.md",
                 "LICENSE",
             ):
-                if (repo / filename).is_file():
+                # Windows is case-insensitive: never replace docs/roadmap.md
+                # or docs/contributing.md with a different root-level document.
+                existing_names = {p.name.casefold() for p in staging.iterdir()}
+                if (repo / filename).is_file() and filename.casefold() not in existing_names:
                     shutil.copy2(repo / filename, staging / filename)
     if (
         section == "docs"
@@ -206,7 +215,7 @@ def prepare(project, repo, staging, section="docs"):
     text = home_path.read_text()
     intro = '\n\n<div class="docs-start" markdown>\n\n**Start here**\n\n'
     quickstart = next(
-        (p for p in ("getting-started.md", "quickstart.md") if (staging / p).exists()),
+        (p for p in ("guide/quickstart.md", "getting-started.md", "quickstart.md") if (staging / p).exists()),
         None,
     )
     intro += f"[Get started]({quickstart}) · " if quickstart else ""
@@ -219,21 +228,47 @@ def prepare(project, repo, staging, section="docs"):
     home_path.write_text(first_line + intro + "\n" + rest)
     groups = {group: [] for group in GROUPS}
     groups["Getting started"].append({"Overview": home})
+    curated = {home}
+    manifest = staging / "navigation.json"
+    if section == "docs" and manifest.is_file():
+        for entry in json.loads(manifest.read_text(encoding="utf-8")):
+            label, target = next(iter(entry.items()))
+            if target in curated:
+                continue
+            if not (staging / target).is_file():
+                raise ValueError(f"Navigation target does not exist: {target}")
+            curated.add(target)
+            topic = Path(target).stem
+            group = (
+                "Getting started" if topic in ("developer-guide", "quickstart")
+                else "Concepts" if topic in ("concepts", "capabilities", "workflow")
+                else "Reference" if topic in ("reference", "data-model", "tool-reference")
+                else "Deployment and operations" if topic == "troubleshooting"
+                else "How-to guides"
+            )
+            groups[group].append({label: target})
     all_pages = sorted(staging.rglob("*.md"))
     for path in all_pages:
         relative = path.relative_to(staging)
-        if str(relative) == home:
+        if relative.as_posix() in curated or relative.as_posix() == "guide/overview.md":
             continue
         if tower_guides and relative.as_posix() in ("ROADMAP.md", "CONTRIBUTING.md"):
             continue
         if relative.parts[0] == "examples" and path.name != "README.md":
             continue
         group = category(relative)
+        if manifest.is_file() and group == "Getting started":
+            groups["Reference"].append({"Setup reference": relative.as_posix()})
+            continue
+        heading = re.search(r"^#\s+(.+)", path.read_text(), re.MULTILINE)
+        if heading and re.search(r"\bv?\d+\.\d+", heading.group(1)):
+            group = "Compatibility and releases"
         groups[group].append({title(path): relative.as_posix()})
     # First-run instructions come before deeper concepts and version notes.
-    groups["Getting started"][1:] = sorted(
-        groups["Getting started"][1:], key=lambda p: next(iter(p.values()))
-    )
+    if not manifest.is_file():
+        groups["Getting started"][1:] = sorted(
+            groups["Getting started"][1:], key=lambda p: next(iter(p.values()))
+        )
     nav = [{group: pages} for group, pages in groups.items() if pages]
     with home_path.open("a") as stream:
         stream.write("\n\n## Documentation guides\n\n")
@@ -340,6 +375,7 @@ def prepare(project, repo, staging, section="docs"):
                 {"pymdownx.tabbed": {"alternate_style": True}},
             ],
             "extra": {
+                "has_developer_guide": (staging / "developer-guide.md").is_file(),
                 "products": [
                     {
                         "name": item[0],

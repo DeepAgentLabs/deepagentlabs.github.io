@@ -17,7 +17,7 @@ source in the product repositories; do not maintain a second copy here.
 The MCP and Tower paths differ from their repository names, so this website
 builds them into its deployment artifact. The Tower product page and assets are staged from its repository when present;
 other product pages and website assets are preserved. The workflow fetches both repositories' `main` branches
-on website pushes, daily, or when manually dispatched. Pull requests build an
+on website pushes, hourly, or when manually dispatched. Pull requests build an
 artifact without deploying. Documentation source is never executed as Python;
 only the MkDocs configuration is loaded. Source repositories are trusted inputs.
 
@@ -25,12 +25,54 @@ Local preview (run from this repository, with sibling repositories available):
 
 ```sh
 uv run --no-project --with-requirements scripts/docs-requirements.txt \
-  python scripts/build_docs.py --sources .. --output /tmp/dal-docs/site
-python3 -m http.server 8000 --directory /tmp/dal-docs/site
+  python -X utf8 scripts/build_docs.py --sources .. --all --output ../documentation-preview
+python -X utf8 scripts/check_docs_site.py ../documentation-preview
+python -m http.server 8000 --directory ../documentation-preview
 ```
 
 Open `/mcp/docs/` and `/control-tower/docs/`. The script writes generated output
 and Tower staging files outside the source repositories.
+
+## Where to edit
+
+Each product owns the following files inside its documentation source directory
+listed above:
+
+- `index.md`: high-level overview, capabilities, concepts, and workflow.
+- `developer-guide.md`: entry point for developers.
+- `guide/quickstart.md`: complete first-run tutorial and expected results.
+- `guide/*.md`: individual tasks, troubleshooting, and reference entry points.
+- `guide/examples/`: downloadable files used in the tutorials.
+- `navigation.json`: ordered, product-specific navigation entries. Paths are
+  relative to that product's documentation directory.
+
+Existing technical reference files remain editable at their original paths.
+The shared builder includes them after the curated task guides. Do not edit
+generated HTML or copy product documentation into this website repository.
+
+For presentation changes, edit `docs-theme/docs.css` and
+`docs-theme/overrides/main.html` here. Navigation grouping belongs in
+`scripts/build_docs.py`. The product selector navigates to another product's
+documentation site; each site has its own sidebar and search index.
+
+Use task names in navigation and headings, without package release numbers.
+Keep schema identifiers and protocol fields intact in examples; these are data
+contracts. Historical compatibility and release pages retain their existing
+URLs and live separately from the getting-started path.
+
+## Update the public website
+
+1. Review and merge the documentation changes in each affected product repository.
+2. Review and merge the shared theme and builder changes in this website repository.
+3. Run the product Docs workflows for Lens, Evals, Chaos, and Sidecar after the
+   shared theme is merged, or wait for their scheduled rebuilds.
+4. Run this repository's **Website and repository docs** workflow to refresh
+   MCP and Control Tower immediately, or wait for its hourly rebuild.
+5. Check the published overview, developer guide, product selector, search,
+   and example downloads for each changed product.
+
+A local edit or preview does not update the public site. The existing Pages
+workflows publish from merged source; there is no separate manual HTML copy step.
 
 For the first website deployment, select **GitHub Actions** under the website
 repository's Settings → Pages → Build and deployment → Source. Merge the
