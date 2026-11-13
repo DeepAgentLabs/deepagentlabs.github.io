@@ -58,7 +58,7 @@ documentation site; each site has its own sidebar and search index.
 Use task names in navigation and headings, without package release numbers.
 Keep schema identifiers and protocol fields intact in examples; these are data
 contracts. Historical compatibility and release pages retain their existing
-URLs and live separately from the getting-started path.
+URLs but are omitted from the sidebar and generated overview guide lists.
 
 ## Update the public website
 

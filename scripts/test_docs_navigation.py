@@ -16,6 +16,8 @@ class NavigationTests(unittest.TestCase):
             (docs / "guide").mkdir(parents=True)
             for filename in ("index.md", "developer-guide.md", "guide/quickstart.md", "api-reference.md"):
                 (docs / filename).write_text("# Example\n", encoding="utf-8")
+            for filename in ("roadmap.md", "aios-0.8-compatibility.md", "release-notes.md"):
+                (docs / filename).write_text("# Release notes 1.0.0\n", encoding="utf-8")
             (docs / "navigation.json").write_text(json.dumps([
                 {"Overview": "index.md"},
                 {"Developer guide": "developer-guide.md"},
@@ -30,6 +32,12 @@ class NavigationTests(unittest.TestCase):
             self.assertTrue(config.extra["has_developer_guide"])
             self.assertEqual(config.site_url, "https://deepagentlabs.io/agentic-evals/docs/")
             self.assertIn({"Reference": [{"Example": "api-reference.md"}]}, config.nav)
+            self.assertNotIn("Compatibility and releases", json.dumps(config.nav))
+            self.assertNotIn("release-notes.md", json.dumps(config.nav))
+            overview = (root / "staging/index.md").read_text(encoding="utf-8")
+            self.assertNotIn("Compatibility and releases", overview)
+            self.assertNotIn("aios-0.8-compatibility.md", overview)
+            self.assertTrue((root / "staging/aios-0.8-compatibility.md").is_file())
 
     def test_release_notes_are_separate_from_task_guides(self):
         for filename in ("aios-0.8-operational-artifacts.md", "coordinated-v1-readiness.md", "v1.0.md"):
