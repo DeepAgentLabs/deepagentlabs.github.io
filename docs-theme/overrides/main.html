@@ -3,8 +3,16 @@
 {{ super() }}
 <nav class="docs-products" aria-label="Product documentation">
   <a class="docs-home" href="https://deepagentlabs.io/">DeepAgentLabs</a>
-  {% for product in config.extra.products %}
-  <a href="{{ product.url }}"{% if product.name == config.site_name %} aria-current="page"{% endif %}>{{ product.name }}</a>
-  {% endfor %}
+  <label for="docs-product">Product</label>
+  <select id="docs-product" aria-label="Select product documentation" onchange="window.location.assign(this.value)">
+    {% for product in config.extra.products %}
+    <option value="{{ product.url }}"{% if product.name == config.site_name %} selected{% endif %}>{{ product.name }}</option>
+    {% endfor %}
+  </select>
+  <a href="{{ 'index.html' | url }}">Overview</a>
+  {% if config.extra.has_developer_guide %}
+  <a href="{{ 'developer-guide/' | url }}">Developer guide</a>
+  {% endif %}
+  <noscript>{% for product in config.extra.products %}<a href="{{ product.url }}">{{ product.name }}</a> {% endfor %}</noscript>
 </nav>
 {% endblock %}
