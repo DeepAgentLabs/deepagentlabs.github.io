@@ -35,6 +35,10 @@ jobs:
           python-version: '3.12'
       - name: Install documentation builder
         run: pip install -r scripts/docs-requirements.txt
+      - name: Test documentation generation
+        run: |
+          python scripts/test_docs_navigation.py
+          python scripts/test_ai_docs.py
       - name: Stage website
         run: |
           mkdir -p "$RUNNER_TEMP/website"

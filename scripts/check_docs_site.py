@@ -1,5 +1,6 @@
 """Check rendered documentation links, navigation, search, and theme assets."""
 
+import hashlib
 import json
 import sys
 from html.parser import HTMLParser
@@ -41,6 +42,13 @@ def main():
         docs = index.parent.parent
         assert json.loads(index.read_text())["docs"], f"Empty search index: {index}"
         assert (docs / "llms.txt").is_file(), f"Missing llms.txt: {docs}"
+        ai_manifest = docs / "ai-docs-manifest.json"
+        if ai_manifest.is_file():
+            metadata = json.loads(ai_manifest.read_text(encoding="utf-8"))
+            reference = docs / "llms-full.txt"
+            assert reference.is_file(), f"Missing comprehensive AI reference: {docs}"
+            assert metadata["sha256"] == hashlib.sha256(reference.read_bytes()).hexdigest(), f"AI reference checksum mismatch: {docs}"
+            assert "llms-full.txt" in (docs / "llms.txt").read_text(encoding="utf-8"), f"AI reference not discoverable: {docs}"
         home = Page()
         home.feed((docs / "index.html").read_text())
         base = urlsplit(home.canonical or "")

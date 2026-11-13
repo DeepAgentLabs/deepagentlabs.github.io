@@ -13,6 +13,9 @@
   {% if config.extra.has_developer_guide %}
   <a href="{{ 'developer-guide/' | url }}">Developer guide</a>
   {% endif %}
+  {% if config.extra.has_ai_reference %}
+  <a href="{{ 'llms-full.txt' | url }}">AI reference</a>
+  {% endif %}
   <noscript>{% for product in config.extra.products %}<a href="{{ product.url }}">{{ product.name }}</a> {% endfor %}</noscript>
 </nav>
 {% endblock %}

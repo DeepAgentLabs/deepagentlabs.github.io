@@ -402,6 +402,7 @@ def prepare(project, repo, staging, section="docs"):
             ],
             "extra": {
                 "has_developer_guide": (staging / "developer-guide.md").is_file(),
+                "has_ai_reference": (staging / "llms-full.txt").is_file(),
                 "products": [
                     {
                         "name": item[0],
@@ -446,12 +447,22 @@ def build_project(project, repo, output, section="docs"):
         build(config)
         assert (output / "index.html").is_file(), project
         pages = []
+        navigation_manifest = staging / "navigation.json"
+        public_pages = None
+        if section == "docs" and navigation_manifest.is_file():
+            public_pages = {target for entry in json.loads(navigation_manifest.read_text(encoding="utf-8"))
+                            for target in entry.values()}
         for path in sorted(staging.rglob("*.md")):
+            if public_pages is not None and path.relative_to(staging).as_posix() not in public_pages:
+                continue
             parts = path.relative_to(staging).with_suffix("").as_posix().split("/")
             if parts[-1] in ("index", "README"):
                 parts.pop()
             url = "/".join(parts) + "/" if parts else ""
             pages.append(f"- [{title(path)}]({config.site_url}{url})")
+        if section == "docs" and (staging / "llms-full.txt").is_file():
+            pages.insert(0, f"- [Comprehensive AI-readable reference]({config.site_url}llms-full.txt)")
+            pages.append(f"- [Source manifest and checksum]({config.site_url}ai-docs-manifest.json)")
         (output / "llms.txt").write_text(
             f"# {config.site_name}\n\n" + "\n".join(pages) + "\n"
         )
