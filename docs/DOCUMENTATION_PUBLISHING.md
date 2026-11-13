@@ -46,8 +46,12 @@ listed above:
 - `navigation.json`: ordered, product-specific navigation entries. Paths are
   relative to that product's documentation directory.
 
-Existing technical reference files remain editable at their original paths.
-The shared builder includes them after the curated task guides. Do not edit
+The public documentation has two entry points: a short `index.md` overview and
+a complete `developer-guide.md` with procedural sections. `navigation.json`
+is an explicit allowlist; the builder does not add other Markdown files.
+Existing technical reference files remain editable at their original paths
+and can be linked from the detailed guide. Unlisted pages stay accessible by
+URL but are omitted from navigation and public search. Do not edit
 generated HTML or copy product documentation into this website repository.
 
 For presentation changes, edit `docs-theme/docs.css` and
