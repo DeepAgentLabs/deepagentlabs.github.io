@@ -269,6 +269,9 @@ def prepare(project, repo, staging, section="docs"):
         groups["Getting started"][1:] = sorted(
             groups["Getting started"][1:], key=lambda p: next(iter(p.values()))
         )
+    # Historical notes keep their URLs, but do not belong in product navigation
+    # or the generated overview's guide list.
+    groups.pop("Compatibility and releases", None)
     nav = [{group: pages} for group, pages in groups.items() if pages]
     with home_path.open("a") as stream:
         stream.write("\n\n## Documentation guides\n\n")
