@@ -18,6 +18,8 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    outputs:
+      artifact_name: github-pages-${{ github.run_attempt }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/checkout@v4
@@ -51,6 +53,7 @@ jobs:
         run: python scripts/check_docs_site.py "$RUNNER_TEMP/website"
       - uses: actions/upload-pages-artifact@v3
         with:
+          name: github-pages-${{ github.run_attempt }}
           path: ${{ runner.temp }}/website
   deploy:
     if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
@@ -68,3 +71,5 @@ jobs:
           enablement: true
       - uses: actions/deploy-pages@v4
         id: deployment
+        with:
+          artifact_name: ${{ needs.build.outputs.artifact_name }}
