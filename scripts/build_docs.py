@@ -10,6 +10,8 @@ from html import escape
 from pathlib import Path
 from urllib.parse import urlsplit
 
+import yaml
+
 from mkdocs.commands.build import build
 from mkdocs.config import load_config
 from mkdocs.config.defaults import MkDocsConfig
@@ -218,9 +220,13 @@ def prepare(project, repo, staging, section="docs"):
         (p for p in ("guide/quickstart.md", "getting-started.md", "quickstart.md") if (staging / p).exists()),
         None,
     )
-    intro += f"[Get started]({quickstart}) · " if quickstart else ""
+    if (staging / "navigation.json").is_file() and section == "docs":
+        intro += "[Quickstart](developer-guide.md#quickstart) · [Detailed guide](developer-guide.md) · "
+    else:
+        intro += f"[Get started]({quickstart}) · " if quickstart else ""
+        intro += "[Browse guides](#documentation-guides) · "
     intro += (
-        "[Browse guides](#documentation-guides) · [View source](https://github.com/DeepAgentLabs/"
+        "[View source](https://github.com/DeepAgentLabs/"
         + project
         + ")\n\n</div>\n"
     )
@@ -250,7 +256,20 @@ def prepare(project, repo, staging, section="docs"):
     all_pages = sorted(staging.rglob("*.md"))
     for path in all_pages:
         relative = path.relative_to(staging)
-        if relative.as_posix() in curated or relative.as_posix() == "guide/overview.md":
+        if relative.as_posix() in curated:
+            continue
+        # A product manifest is an allowlist, not a supplement to a file scan.
+        # Internal phase notes and historical files must not become user guides.
+        if section == "docs" and manifest.is_file():
+            content = path.read_text(encoding="utf-8")
+            metadata = {}
+            if content.startswith("---\n"):
+                front, separator, body = content[4:].partition("\n---\n")
+                if separator:
+                    metadata = yaml.safe_load(front) or {}
+                    content = body
+            metadata["search"] = {"exclude": True}
+            path.write_text("---\n" + yaml.safe_dump(metadata) + "---\n" + content, encoding="utf-8")
             continue
         if tower_guides and relative.as_posix() in ("ROADMAP.md", "CONTRIBUTING.md"):
             continue
@@ -274,8 +293,12 @@ def prepare(project, repo, staging, section="docs"):
     groups.pop("Compatibility and releases", None)
     nav = [{group: pages} for group, pages in groups.items() if pages]
     with home_path.open("a") as stream:
-        stream.write("\n\n## Documentation guides\n\n")
+        curated_overview = section == "docs" and manifest.is_file()
+        if not curated_overview:
+            stream.write("\n\n## Documentation guides\n\n")
         for group, pages in groups.items():
+            if curated_overview:
+                break
             if not pages:
                 continue
             stream.write(f"### {group}\n\n")
