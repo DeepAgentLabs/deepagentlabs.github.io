@@ -45,10 +45,10 @@ def main():
         ai_manifest = docs / "ai-docs-manifest.json"
         if ai_manifest.is_file():
             metadata = json.loads(ai_manifest.read_text(encoding="utf-8"))
-            reference = docs / "llms-full.txt"
+            reference = docs / "llms-full.md"
             assert reference.is_file(), f"Missing comprehensive AI reference: {docs}"
             assert metadata["sha256"] == hashlib.sha256(reference.read_bytes()).hexdigest(), f"AI reference checksum mismatch: {docs}"
-            assert "llms-full.txt" in (docs / "llms.txt").read_text(encoding="utf-8"), f"AI reference not discoverable: {docs}"
+            assert "llms-full.md" in (docs / "llms.txt").read_text(encoding="utf-8"), f"AI reference not discoverable: {docs}"
         home = Page()
         home.feed((docs / "index.html").read_text())
         base = urlsplit(home.canonical or "")
