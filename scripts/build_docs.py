@@ -159,6 +159,8 @@ def prepare(project, repo, staging, section="docs"):
         )
     # Links into source examples and root guides belong on GitHub when outside docs.
     for page in staging.rglob("*.md"):
+        if page.name == "llms-full.md":
+            continue
 
         def source_link(match, page=page):
             url = match.group(2)
@@ -253,7 +255,7 @@ def prepare(project, repo, staging, section="docs"):
                 else "How-to guides"
             )
             groups[group].append({label: target})
-    all_pages = sorted(staging.rglob("*.md"))
+    all_pages = sorted(p for p in staging.rglob("*.md") if p.name != "llms-full.md")
     for path in all_pages:
         relative = path.relative_to(staging)
         if relative.as_posix() in curated:
@@ -324,7 +326,7 @@ def prepare(project, repo, staging, section="docs"):
     figure_js = list(figures.get("extra_javascript", []))
     config.load_dict(
         {
-            "exclude_docs": "",
+            "exclude_docs": "llms-full.md",
             "draft_docs": "",
             "not_in_nav": "",
             "strict": True,
@@ -402,7 +404,7 @@ def prepare(project, repo, staging, section="docs"):
             ],
             "extra": {
                 "has_developer_guide": (staging / "developer-guide.md").is_file(),
-                "has_ai_reference": (staging / "llms-full.txt").is_file(),
+                "has_ai_reference": (staging / "llms-full.md").is_file(),
                 "products": [
                     {
                         "name": item[0],
@@ -445,6 +447,9 @@ def build_project(project, repo, output, section="docs"):
         if errors:
             raise ValueError(errors)
         build(config)
+        # Publish the AI reference verbatim, outside MkDocs rendering and search.
+        if (staging / "llms-full.md").is_file():
+            shutil.copy2(staging / "llms-full.md", output / "llms-full.md")
         assert (output / "index.html").is_file(), project
         pages = []
         navigation_manifest = staging / "navigation.json"
@@ -453,6 +458,8 @@ def build_project(project, repo, output, section="docs"):
             public_pages = {target for entry in json.loads(navigation_manifest.read_text(encoding="utf-8"))
                             for target in entry.values()}
         for path in sorted(staging.rglob("*.md")):
+            if path.name == "llms-full.md":
+                continue
             if public_pages is not None and path.relative_to(staging).as_posix() not in public_pages:
                 continue
             parts = path.relative_to(staging).with_suffix("").as_posix().split("/")
@@ -460,8 +467,8 @@ def build_project(project, repo, output, section="docs"):
                 parts.pop()
             url = "/".join(parts) + "/" if parts else ""
             pages.append(f"- [{title(path)}]({config.site_url}{url})")
-        if section == "docs" and (staging / "llms-full.txt").is_file():
-            pages.insert(0, f"- [Comprehensive AI-readable reference]({config.site_url}llms-full.txt)")
+        if section == "docs" and (staging / "llms-full.md").is_file():
+            pages.insert(0, f"- [Comprehensive AI-readable reference]({config.site_url}llms-full.md)")
             pages.append(f"- [Source manifest and checksum]({config.site_url}ai-docs-manifest.json)")
         (output / "llms.txt").write_text(
             f"# {config.site_name}\n\n" + "\n".join(pages) + "\n"
@@ -473,6 +480,8 @@ def build_project(project, repo, output, section="docs"):
         ):
             # The previous site staged docs/ inside its docs root. Keep those bookmarks.
             for path in (repo / "docs").rglob("*.md"):
+                if path.name == "llms-full.md":
+                    continue
                 parts = path.relative_to(repo / "docs").with_suffix("").parts
                 target = "/".join(
                     parts[:-1] if parts[-1] in ("index", "README") else parts

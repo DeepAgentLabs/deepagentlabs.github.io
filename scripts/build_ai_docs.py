@@ -166,12 +166,12 @@ def build(repo, check=False):
     output = header + "\n\n---\n\n".join(sections) + "\n"
     manifest = {
         "product": config["name"], "repository": repo.name, "distribution": project["name"],
-        "document": "llms-full.txt", "content_type": "text/markdown; charset=utf-8",
+        "document": "llms-full.md", "content_type": "text/markdown; charset=utf-8",
         "sha256": hashlib.sha256(output.encode("utf-8")).hexdigest(),
         "source_hash_normalization": "UTF-8 text with LF newlines",
         "human_guide": "developer-guide.md", "sources": sources,
     }
-    outputs = {"llms-full.txt": output, "ai-docs-manifest.json": json.dumps(manifest, indent=2, ensure_ascii=False) + "\n"}
+    outputs = {"llms-full.md": output, "ai-docs-manifest.json": json.dumps(manifest, indent=2, ensure_ascii=False) + "\n"}
     for filename, content in outputs.items():
         target = docs / filename
         if check:

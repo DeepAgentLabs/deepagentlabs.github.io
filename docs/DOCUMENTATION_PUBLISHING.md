@@ -37,7 +37,7 @@ and Tower staging files outside the source repositories.
 
 For the separate comprehensive AI-readable deliverable and its MCP integration
 handoff, see [AI documentation handoff](AI_DOCUMENTATION_HANDOFF.md). The public
-header links to `llms-full.txt` when a product supplies it; it is not added to
+header links to `llms-full.md` when a product supplies it; it is not added to
 the human sidebar or indexed as another tutorial.
 
 Each product owns the following files inside its documentation source directory

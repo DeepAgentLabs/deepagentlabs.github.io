@@ -6,19 +6,19 @@ Human-readable documentation and comprehensive AI-readable references are separa
 
 | Product | Repository source directory | Published AI document |
 | --- | --- | --- |
-| AgenticLens | `agenticlens/docs/` | `/agenticlens/docs/llms-full.txt` |
-| Agentic Evals | `agentic-evals/docs/` | `/agentic-evals/docs/llms-full.txt` |
-| Agentic Chaos | `agentic-chaos/docs/` | `/agentic-chaos/docs/llms-full.txt` |
-| Agentic Sidecar | `agentic-sidecar/website/docs/` | `/agentic-sidecar/docs/llms-full.txt` |
-| MCP Server | `mcp-server/docs/` | `/mcp/docs/llms-full.txt` |
-| Control Tower | `agenticops-control-tower/docs/` | `/control-tower/docs/llms-full.txt` |
+| AgenticLens | `agenticlens/docs/` | `/agenticlens/docs/llms-full.md` |
+| Agentic Evals | `agentic-evals/docs/` | `/agentic-evals/docs/llms-full.md` |
+| Agentic Chaos | `agentic-chaos/docs/` | `/agentic-chaos/docs/llms-full.md` |
+| Agentic Sidecar | `agentic-sidecar/website/docs/` | `/agentic-sidecar/docs/llms-full.md` |
+| MCP Server | `mcp-server/docs/` | `/mcp/docs/llms-full.md` |
+| Control Tower | `agenticops-control-tower/docs/` | `/control-tower/docs/llms-full.md` |
 
 These paths become live only after the product and website changes are merged and their documentation workflows deploy.
 
 Each source directory contains:
 
 - `developer-guide.md`: the human-readable guide; `index.md` is its short overview.
-- `llms-full.txt`: UTF-8 Markdown containing the full selected reference content, source declarations, schemas where available, and complete example files. This is the AI-readable deliverable, not a list of links.
+- `llms-full.md`: UTF-8 Markdown containing the full selected reference content, source declarations, schemas where available, and complete example files. This is the AI-readable deliverable, not a list of links.
 - `ai-docs-manifest.json`: product identity, source file hashes normalized to UTF-8 with LF newlines, and the SHA-256 of the AI document's exact UTF-8 bytes.
 - `ai-docs.json`: the maintained allowlist of product-owned reference, contract, and schema sources. Internal release/phase notes are not included automatically.
 

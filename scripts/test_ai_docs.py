@@ -30,7 +30,7 @@ class AIDocsTests(unittest.TestCase):
             repo = self.fixture(Path(directory))
             build(repo)
             build(repo, check=True)
-            content = (repo / "docs/llms-full.txt").read_bytes()
+            content = (repo / "docs/llms-full.md").read_bytes()
             manifest = json.loads((repo / "docs/ai-docs-manifest.json").read_text())
             self.assertEqual(manifest["sha256"], hashlib.sha256(content).hexdigest())
             text = content.decode("utf-8")
