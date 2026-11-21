@@ -1,5 +1,7 @@
 """Regression checks for repository-owned, product-scoped navigation."""
 import json
+import shutil
+import subprocess
 import tempfile
 import unittest
 from pathlib import Path
@@ -55,6 +57,53 @@ class NavigationTests(unittest.TestCase):
             targets = [target for group in config.nav for entries in group.values()
                        for entry in entries for target in entry.values()]
             self.assertEqual(len(targets), len(set(targets)))
+
+    def test_spec_layout_uses_tracked_sources_and_nested_guides(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            repo = root / "ai-operations-spec"
+            (repo / "scripts").mkdir(parents=True)
+            # Exercise the actual publication script against an isolated index.
+            website = Path(__file__).resolve().parents[1]
+            source = next((candidate for candidate in (
+                website.parent / "ai-operations-spec/scripts/build_docs.py",
+                website / "_sources/ai-operations-spec/scripts/build_docs.py",
+            ) if candidate.is_file()), None)
+            if source is None:
+                # Website CI only needs its tiny source fixture; the script is supplied by the checkout.
+                self.skipTest("AIOS checkout is required for its publication-boundary test")
+            shutil.copy2(source, repo / "scripts/build_docs.py")
+            files = {
+                "README.md": "# AIOS\n",
+                "docs/developer-guide.md": "# Developer guide\n\n## Quickstart\n",
+                "docs/ai-reference-index.md": "# Capability index\n",
+                "docs/llms-full.md": "# Raw reference\n\n[Home](../README.md)\n",
+                "docs/ai-docs-manifest.json": "{}",
+                "docs/navigation.json": json.dumps([
+                    {"Overview": "index.md"},
+                    {"Developer Guide (simple)": "docs/developer-guide.md"},
+                    {"AI Reference (robust)": "docs/ai-reference-index.md"},
+                ]),
+                "specification/v0.8/schemas/audit_event.schema.json": '{"$id":"unchanged"}',
+            }
+            for relative, content in files.items():
+                path = repo / relative
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_text(content, encoding="utf-8")
+            subprocess.run(["git", "init", "-q", str(repo)], check=True)
+            subprocess.run(["git", "add", "."], cwd=repo, check=True)
+            (repo / "docs/untracked.md").write_text("private")
+            config = prepare("ai-operations-spec", repo, root / "staging")
+            self.assertTrue(config.extra["has_developer_guide"])
+            self.assertTrue(config.extra["has_ai_reference"])
+            self.assertEqual(config.extra["developer_guide_url"], "docs/developer-guide/")
+            self.assertEqual(config.site_url, "https://deepagentlabs.io/ai-operations-spec/docs/")
+            self.assertIn("docs/ai-reference-index.md", json.dumps(config.nav))
+            staged = root / "staging"
+            self.assertFalse((staged / "docs/untracked.md").exists())
+            self.assertFalse((staged / "scripts").exists())
+            self.assertEqual((staged / "llms-full.md").read_text(), files["docs/llms-full.md"])
+            self.assertTrue((staged / "v0.8/audit_event.schema.json").is_file())
 
     def test_release_notes_are_separate_from_task_guides(self):
         for filename in ("aios-0.8-operational-artifacts.md", "coordinated-v1-readiness.md", "v1.0.md"):

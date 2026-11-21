@@ -1,6 +1,7 @@
 """Publish repository-owned documentation with the shared DeepAgentLabs theme."""
 
 import argparse
+import importlib.util
 import json
 import logging
 import re
@@ -19,6 +20,7 @@ from pymdownx.superfences import fence_code_format
 
 ROOT = Path(__file__).resolve().parent.parent
 PROJECTS = {
+    "ai-operations-spec": ("AI Operations Specification", "ai-operations-spec", ".", None),
     "agenticlens": ("AgenticLens", "agenticlens", "docs", "mkdocs.yml"),
     "agentic-sidecar": (
         "Agentic Sidecar",
@@ -103,7 +105,17 @@ def prepare(project, repo, staging, section="docs"):
         docs, original = "docs", "mkdocs.yml"
     if staging.exists():
         shutil.rmtree(staging)
-    if project == "agenticops-control-tower" and not tower_guides and section == "docs":
+    if project == "ai-operations-spec" and section == "docs":
+        # Reuse the spec's tracked-source publication boundary and schema aliases.
+        spec = importlib.util.spec_from_file_location("aios_docs", repo / "scripts/build_docs.py")
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        module.STAGING = staging
+        module.stage()
+        for filename in ("navigation.json", "llms-full.md", "ai-docs-manifest.json"):
+            shutil.copy2(staging / "docs" / filename, staging / filename)
+        home = "index.md"
+    elif project == "agenticops-control-tower" and not tower_guides and section == "docs":
         staging.mkdir(parents=True)
         shutil.copytree(repo / "docs", staging / "docs")
         shutil.copytree(repo / "examples", staging / "examples")
@@ -223,7 +235,9 @@ def prepare(project, repo, staging, section="docs"):
         None,
     )
     if (staging / "navigation.json").is_file() and section == "docs":
-        intro += "[Quickstart](developer-guide.md#quickstart) · [Detailed guide](developer-guide.md) · "
+        intro += ("[Quickstart](docs/developer-guide.md#quickstart) · [Detailed guide](docs/developer-guide.md) · "
+                  if project == "ai-operations-spec" else
+                  "[Quickstart](developer-guide.md#quickstart) · [Detailed guide](developer-guide.md) · ")
     else:
         intro += f"[Get started]({quickstart}) · " if quickstart else ""
         intro += "[Browse guides](#documentation-guides) · "
@@ -250,7 +264,7 @@ def prepare(project, repo, staging, section="docs"):
             group = (
                 "Getting started" if topic in ("developer-guide", "quickstart")
                 else "Concepts" if topic in ("concepts", "capabilities", "workflow")
-                else "Reference" if topic in ("reference", "data-model", "tool-reference")
+                else "Reference" if topic in ("reference", "data-model", "tool-reference", "ai-reference-index")
                 else "Deployment and operations" if topic == "troubleshooting"
                 else "How-to guides"
             )
@@ -326,7 +340,7 @@ def prepare(project, repo, staging, section="docs"):
     figure_js = list(figures.get("extra_javascript", []))
     config.load_dict(
         {
-            "exclude_docs": "llms-full.md",
+            "exclude_docs": "**/llms-full.md",
             "draft_docs": "",
             "not_in_nav": "",
             "strict": True,
@@ -403,7 +417,8 @@ def prepare(project, repo, staging, section="docs"):
                 {"pymdownx.tabbed": {"alternate_style": True}},
             ],
             "extra": {
-                "has_developer_guide": (staging / "developer-guide.md").is_file(),
+                "has_developer_guide": (staging / ("docs/developer-guide.md" if project == "ai-operations-spec" else "developer-guide.md")).is_file(),
+                "developer_guide_url": "docs/developer-guide/" if project == "ai-operations-spec" else "developer-guide/",
                 "has_ai_reference": (staging / "llms-full.md").is_file(),
                 "products": [
                     {
@@ -529,7 +544,7 @@ def main():
         if args.project
         else list(PROJECTS)
         if args.all
-        else ["mcp-server", "agenticops-control-tower"]
+        else ["mcp-server", "agenticops-control-tower", "ai-operations-spec"]
     )
     for project in projects:
         repo = (
