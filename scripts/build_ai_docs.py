@@ -136,6 +136,19 @@ def build(repo, check=False):
                 continue
             schema = json.loads(path.read_text(encoding="utf-8"))
             sections.append(f"## Data contract: {relative}\n\nSource: [{relative}]({source_url(repo, relative)})\n\n```json\n{json.dumps(schema, indent=2, ensure_ascii=False)}\n```")
+    # Catalogs and fixtures are data contracts too, especially for specification repositories.
+    for pattern in config.get("data", []):
+        paths = sorted(repo.glob(pattern))
+        if not paths:
+            raise ValueError(f"Empty data selection: {pattern}")
+        for path in paths:
+            relative = path.relative_to(repo).as_posix()
+            if include(relative, "reference-data") is None:
+                continue
+            # Keep fixture formatting; digest verification still requires original source bytes.
+            content = path.read_text(encoding="utf-8").rstrip()
+            json.loads(content)
+            sections.append(f"## Reference data: {relative}\n\nSource: [{relative}]({source_url(repo, relative)})\n\n```json\n{content}\n```")
     # Include downloadable tutorial files in full, so retrieving the pack does not require UI interaction.
     for path in sorted((docs / "guide/examples").glob("*")):
         if not path.is_file() or path.suffix not in (".py", ".json", ".yaml", ".yml"):
@@ -188,7 +201,7 @@ def main():
     parser.add_argument("--project", action="append")
     parser.add_argument("--check", action="store_true")
     args = parser.parse_args()
-    projects = args.project or ["agenticlens", "agentic-evals", "agentic-chaos", "agentic-sidecar", "mcp-server", "agenticops-control-tower"]
+    projects = args.project or ["agenticlens", "agentic-evals", "agentic-chaos", "agentic-sidecar", "mcp-server", "agenticops-control-tower", "ai-operations-spec"]
     for project in projects:
         print(json.dumps(build((args.sources / project).resolve(), args.check)))
 
