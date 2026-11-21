@@ -43,6 +43,31 @@ class AIDocsTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "Stale AI documentation"):
                 build(repo, check=True)
 
+    def test_includes_catalogs_and_exact_fixture_formatting_once(self):
+        with tempfile.TemporaryDirectory() as directory:
+            repo = self.fixture(Path(directory))
+            catalog = repo / "catalog.json"
+            catalog.write_text('{"rules": ["AIOS-0.5-V03"]}\n', encoding="utf-8")
+            schema = repo / "example.schema.json"
+            schema.write_text('{"$schema":"https://json-schema.org/draft/2020-12/schema","type":"object"}\n', encoding="utf-8")
+            config_path = repo / "docs/ai-docs.json"
+            config = json.loads(config_path.read_text())
+            config.update({"schemas": ["*.schema.json"], "data": ["*.json"]})
+            config_path.write_text(json.dumps(config), encoding="utf-8")
+            build(repo)
+            build(repo, check=True)
+            reference = (repo / "docs/llms-full.md").read_text()
+            self.assertIn('## Reference data: catalog.json', reference)
+            self.assertIn(catalog.read_text(), reference)
+            self.assertEqual(reference.count('## Data contract: example.schema.json'), 1)
+            self.assertNotIn('## Reference data: example.schema.json', reference)
+            manifest = json.loads((repo / "docs/ai-docs-manifest.json").read_text())
+            entry = next(item for item in manifest["sources"] if item["path"] == "catalog.json")
+            self.assertEqual(entry["kind"], "reference-data")
+            catalog.write_text('{"rules": []}\n', encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "Stale AI documentation"):
+                build(repo, check=True)
+
     def test_rejects_sources_outside_product(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
