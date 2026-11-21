@@ -339,3 +339,27 @@ retained content sections and simulation data. The browser regression script
 also checks theme tokens, mobile menu operation and all six interactive demos.
 Original Lens release-gate controls, Evals code tabs and Sidecar demo actions
 and code tabs were checked in the local preview.
+
+
+## AI Operations Specification documentation
+
+AIOS now participates in the repository-docs build and the AI-reference generator.
+Its source layout is preserved (`docs/`, `specification/`, `drafts/`, `reviews/`),
+using the specification repository's tracked-source staging boundary and schema
+aliases. The shared product navigation links the simple developer guide and raw
+robust AI reference at `/ai-operations-spec/docs/`. Both guides have the same
+capability index. The reference includes Markdown, JSON Schemas, rule catalogs,
+examples and portable fixtures; negative and historical cases retain their scope.
+
+The website workflow checks out AIOS, regenerates/checks its source manifest,
+and builds its shared-theme docs alongside MCP and Tower. For a local build
+with the sibling checkout present (after adding intended new docs to Git):
+
+```bash
+python scripts/build_ai_docs.py --sources .. --project ai-operations-spec
+python scripts/build_ai_docs.py --sources .. --project ai-operations-spec --check
+python scripts/build_docs.py --project ai-operations-spec --repo ../ai-operations-spec --output /tmp/aios-docs
+python scripts/check_docs_site.py /tmp/aios-docs
+```
+
+Publication does not promote draft schemas or close independent acceptance gates.
