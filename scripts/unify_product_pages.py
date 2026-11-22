@@ -93,7 +93,7 @@ def hero(product):
         <p class="section-label">{p['name']} · {p['role']}</p>
         <h1>{p['headline']}</h1>
         <p class="pp-lede">{p['lede']}</p>
-        <div class="hero-actions"><a class="button button-primary" href="#simulation">Try the simulation <span aria-hidden="true">↘</span></a><a class="button button-secondary" href="docs/">Read the docs <span aria-hidden="true">→</span></a></div>
+        <div class="hero-actions"><a class="button button-primary" href="#simulation">Try the simulation <span aria-hidden="true">↘</span></a><a class="button button-secondary" href="docs/">Read the docs <span aria-hidden="true">→</span></a><a class="button button-secondary" href="https://deepagentlabs.io/{p['package']}/usecases/">Use cases <span aria-hidden="true">→</span></a></div>
         <code class="tl-pip pp-pip">pip install {p['package']}</code>
         <ul class="pp-facts" aria-label="Key facts">{facts}</ul>
       </div>
