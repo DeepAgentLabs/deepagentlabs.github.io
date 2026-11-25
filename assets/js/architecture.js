@@ -6,22 +6,15 @@
     nodes: {
       users: {
         title: "Users",
-        subtitle: "Developers  |  AI Teams  |  Enterprises",
+        subtitle: "Developers  |  AI Agents  |  Enterprise Applications",
         role: "PEOPLE",
         description:
-          "The developers, AI teams, and enterprises building and operating agent systems.",
-      },
-      entry: {
-        title: "Console / CLI / API / MCP",
-        subtitle: "One entry point to build, operate and improve agents",
-        role: "ENTRY SURFACES",
-        description:
-          "Console, CLI, HTTP API, and MCP are available entry surfaces. Control Tower provides its own authenticated API, CLI, and read-only console; the separate MCP server exposes selected ecosystem workflows, with availability depending on transport and installed integrations.",
+          "The developers, AI agents, and enterprise applications using the ecosystem.",
       },
       tower: {
         title: "DeepAgent Control Tower",
         package: "agenticops-control-tower",
-        version: "v0.8.0",
+        version: "v1.0.4",
         subtitle: "Manage  |  Monitor  |  Evaluate  |  Govern  |  Scale",
         role: "OPERATE",
         description:
@@ -80,7 +73,7 @@
         id: "lens",
         title: "AgenticLens",
         package: "agenticlens",
-        version: "v0.10.0",
+        version: "v1.0.4",
         role: "OBSERVE",
         tagline: "Make agents observable",
         color: "lens",
@@ -89,21 +82,21 @@
           "Local-first, OpenTelemetry-native observation and evaluation for AI workflows: ingest traces, track cost and latency, compare runs, and produce evidence-backed findings.",
         capabilities: [
           "Observe",
-          "Evaluate (runtime)",
+          "Evaluate traces",
           "Explain",
           "Recommend",
           "Export",
           "Compare",
-          "Audit",
+          "Audit evidence",
         ],
         outputNote:
-          "JSON, CSV, Markdown, Jira-oriented output, and OTLP export are documented locally. HTML and Semantica appear in the original reference image, but the available local package documentation does not verify those exporters.",
+          "Export JSON, CSV, Markdown, Jira-oriented output, and OTLP traces; generate HTML evaluation and experiment reports. A Semantica exporter is not verified in the current implementation.",
       },
       {
         id: "evals",
         title: "Agentic Evals",
         package: "agentic-evals",
-        version: "v0.9.0",
+        version: "v1.0.4",
         role: "EVALUATE",
         tagline: "Measure what matters",
         color: "evals",
@@ -112,13 +105,13 @@
           "A standalone, framework-agnostic scoring engine with deterministic checks, LLM-as-judge evaluators, live targets, reusable suites, and CI release gates. MCP release checks and Control Tower evidence workflows can consume native Evals reports.",
         capabilities: [
           "Score",
-          "Benchmark",
+          "Live target evaluation",
           "LLM-as-Judge",
           "Trajectory Evals",
           "Eval Suites",
           "Release Gates",
-          "Regression Testing",
-          "CI/CD Quality Gates",
+          "Regression suites",
+          "CI integration",
         ],
         outputNote:
           "Agentic Evals remains independently usable. MCP release checks and Control Tower evidence ingestion support its native reports; exact compatibility depends on installed versions.",
@@ -127,7 +120,7 @@
         id: "sidecar",
         title: "Agentic Sidecar",
         package: "agentic-sidecar",
-        version: "v0.9.0",
+        version: "v1.0.4",
         role: "SUPERVISE",
         tagline: "Keep agents safe and aligned",
         color: "sidecar",
@@ -138,11 +131,13 @@
           "Supervise",
           "Govern",
           "Align intent",
+          "Context (generic and specific)",
+          "Guardrails (generic and specific)",
           "Judge / Critic",
           "Escalate",
           "Human approval",
           "Live agent status",
-          "Replan / Pause / Approve",
+          "Pause / Approve / Reject",
         ],
         outputNote:
           "The current runtime includes intent/context injection, guardrail checks, critique and judge stages, human escalation, runtime status/control, audit events, and Lens/Chaos integrations. Stable shared schemas and broader adapter evidence remain in progress.",
@@ -151,7 +146,7 @@
         id: "chaos",
         title: "Agentic Chaos",
         package: "agentic-chaos",
-        version: "v0.8.0",
+        version: "v1.0.4",
         role: "TEST / BREAK",
         tagline: "Build resilient agents",
         color: "chaos",
@@ -159,37 +154,44 @@
         description:
           "A standalone resilience-testing toolkit for LLM and agent workflows. It injects controlled faults, runs declarative experiments, records outcomes, and supports AIOS artifact export.",
         capabilities: [
-          "Break",
-          "Validate",
-          "Test",
-          "Stress scenarios",
           "Fault injection",
-          "Produce resilience evidence",
-          "Measure recovery",
-          "Improve robustness",
+          "Declarative experiments",
+          "Workflow fault scenarios",
+          "Safety controls",
+          "Recovery checks",
+          "Resilience probes",
+          "Resilience scoring",
+          "Experiment reports",
         ],
         outputNote:
-          "Chaos emits native experiment reports and can export AIOS Run artifacts. Resilience scoring and broader experiment sharing remain planned.",
+          "Chaos emits native experiment reports and AIOS Run artifacts, supports pre/during/post probes and evidence-based resilience scoring, and includes offline recipes with opt-in recipe exchange.",
       },
       {
         id: "mcp",
         title: "MCP Server",
         package: "deep-agentic-core-mcp",
-        version: "v0.4.1",
+        version: "v1.1.0",
         role: "CONNECT",
         tagline: "Integrate with your ecosystem",
         color: "mcp",
         icon: "mcp",
         description:
-          "The shared MCP server exposes selected Lens analysis, Evals release checks, Chaos workflows, Sidecar discovery, Control Tower posture/investigation, and AIOS validation. Available tools vary between trusted local stdio and hosted HTTP.",
+          "Access DeepAgentLabs from MCP-capable CLI clients, discover AI-readable documentation for all seven products, and invoke supported product operations, including Control Tower workflows. Available controls depend on transport, installed integrations, permissions, and approvals.",
         capabilities: [
+          "CLI / MCP client access",
+          "All-product access",
+          "Supported product controls",
+          "AI-readable documentation",
           "Unified MCP interface",
           "Access tools & data sources",
-          "Connect to enterprise systems",
-          "Share context across agents",
+          "Connect to enterprise systems (planned)",
+          "Share context across agents (planned)",
           "Secure access layer",
-          "Extend with custom tools",
-          "Works with AgenticLens, Evals, Chaos and Sidecar",
+          "Extend with custom tools (planned)",
+          "Run comparisons",
+          "Combined release checks",
+          "Hosted access controls",
+          "AIOS artifact validation",
         ],
         outputNote:
           "Hosted and local transports expose selected Lens analysis, Evals release checks, Sidecar discovery, Control Tower posture/investigation, and AIOS validation. Chaos code execution is limited to trusted local stdio; hosted HTTP accepts locally generated Chaos reports.",
@@ -326,18 +328,11 @@
     ],
     relationships: [
       {
-        id: "users-entry",
+        id: "users-tower",
         from: "users",
-        to: "entry",
-        status: "context",
-        label: "people use the ecosystem",
-      },
-      {
-        id: "entry-tower",
-        from: "entry",
         to: "tower",
-        status: "current",
-        label: "Console, CLI, and authenticated HTTP API",
+        status: "context",
+        label: "People access Control Tower and its MCP interface",
       },
       {
         id: "tower-spec",
@@ -432,8 +427,8 @@
       },
       {
         id: "tower-mcp",
-        from: "tower",
-        to: "mcp",
+        from: "mcp",
+        to: "tower",
         status: "current",
         label: "Tower MCP connector supports investigation and posture workflows",
       },
@@ -536,39 +531,43 @@
     var descriptions = {
       Observe:
         "OTLP trace ingestion and workflow observation are documented AgenticLens capabilities.",
-      "Evaluate (runtime)":
-        "AgenticLens includes an evaluation engine and pass/fail release gates.",
+      "Evaluate traces":
+        "Evaluate recorded traces and live-target results through Agentic Evals adapters, with Lens trace-aware evaluators and evidence analysis. Pre-action supervision belongs to Sidecar.",
       Explain:
         "AgenticLens surfaces evidence-backed findings and explanations from workflow analysis.",
       Recommend:
         "AgenticLens produces recommendations from recorded workflow evidence.",
       Export:
-        "AgenticLens documents JSON, CSV, Markdown, Jira-oriented, and OTLP output.",
+        "Export JSON, CSV, Markdown, Jira-oriented output, and OTLP traces; generate HTML evaluation and experiment reports.",
       Compare: "AgenticLens compares saved runs and reports their differences.",
-      Audit:
-        "AgenticLens includes audit-report capabilities through its documented CLI/API.",
+      "Audit evidence":
+        "Audit evaluation reports for evaluator identity and versions, failed-case trace links, and cost coverage and provenance.",
       Score:
         "Agentic Evals scores outputs using deterministic and evaluator-backed checks.",
-      Benchmark:
-        "Benchmark is a capability named in the source architecture reference.",
+      "Live target evaluation":
+        "Run a supplied test suite against Python callables or HTTP endpoints and capture outputs, traces, latency, errors, and available cost data.",
       "LLM-as-Judge":
-        "Agentic Evals 0.9 includes LLM-as-judge evaluation, usage reporting, retries, agreement scoring, and fail-closed release gates.",
+        "Agentic Evals supports provider-neutral LLM judges, rubric-based verdicts, retries, usage reporting, and repeated-judgment agreement checks.",
       "Trajectory Evals":
-        "Trajectory and tool-call scorers are listed in the site's Agentic Evals capability inventory.",
+        "Score recorded execution paths for tool selection, required-tool coverage, redundant calls, and efficiency against supplied latency or cost baselines.",
       "Eval Suites":
         "Agentic Evals documents declarative TestSuite and TestCase APIs.",
       "Release Gates":
-        "Agentic Evals provides a pass/fail release gate for CI.",
-      "Regression Testing":
-        "Run comparisons and regression testing are named in the source architecture reference.",
-      "CI/CD Quality Gates":
-        "Agentic Evals documents CI release gates; quality thresholds can block a merge.",
+        "Compute pass/fail decisions from suite, tag, metric, cost, latency, judge, and live-target thresholds. Your pipeline controls deployment enforcement.",
+      "Regression suites":
+        "Re-run fixed suites and apply explicit score and gate thresholds to catch regressions. Statistical comparison of repeated runs is provided by Lens.",
+      "CI integration":
+        "The agentic-evals CLI discovers evaluation files and returns a nonzero exit code on failure. Configure your CI pipeline to enforce that result.",
       Supervise:
         "Sidecar watches the agent's next action against declared intent.",
       Govern:
         "Sidecar can allow, warn, or block through an attached wrapper; enforcement is scoped to that wrapper.",
       "Align intent":
         "Sidecar checks actions against numeric, enum, and allow-list intent constraints.",
+      "Context (generic and specific)":
+        "Provide shared context across a system or task and exclusive context for a specific agent, with explicit delivery, reader access, expiry, and revocation.",
+      "Guardrails (generic and specific)":
+        "Apply shared system or task guardrails alongside agent-specific rules. Shared guardrails remain mandatory when exclusive rules are added; enforcement depends on the attached adapter.",
       "Judge / Critic":
         "Planner and Critic apply bounded checks to plans and available evidence; Judge supports a mock provider and optional live OpenAI/Anthropic providers.",
       Escalate:
@@ -577,37 +576,52 @@
         "Human approval is available through Sidecar's local and HTTP handlers and CLI control flow.",
       "Live agent status":
         "Runtime-connected status, follow mode, narration, and control/approval commands are available; coverage varies by adapter.",
-      "Replan / Pause / Approve":
-        "Supported Sidecar control flows include pause/suspend and approval decisions; behavior depends on the attached adapter.",
-      Break:
-        "Agentic Chaos can apply controlled faults to model and agent call sites.",
-      Validate:
-        "Chaos reports experiment outcomes and exports AIOS Run artifacts; schema validation is handled by the specification tooling.",
-      Test: "Agentic Chaos runs repeatable fault-injection experiments against workflows.",
-      "Stress scenarios":
-        "Chaos supports configured provider and agent fault scenarios; broader workflow orchestration remains roadmap work.",
+      "Pause / Approve / Reject":
+        "Pause or suspend governed actions and resolve approval requests by approving or rejecting them. Runtime control depends on the attached adapter.",
       "Fault injection":
-        "Fault injection — used to introduce controlled failure conditions for resilience testing.",
-      "Produce resilience evidence":
-        "Chaos records typed events and produces standalone experiment reports.",
-      "Measure recovery":
-        "Chaos reports observed outcomes and recovery behavior; the planned numeric resilience score is not yet released.",
-      "Improve robustness":
-        "Chaos provides evidence for improving robustness; it does not automatically change the agent.",
+        "Inject controlled timeouts, rate limits, malformed responses, tool failures, and other configured faults at instrumented call sites.",
+      "Declarative experiments":
+        "Load JSON, TOML, or optional YAML experiments with configured faults, targets, contracts, and safety limits.",
+      "Workflow fault scenarios":
+        "Run multi-step chaos workflows with step-specific faults, contracts, and recorded outcomes.",
+      "Safety controls":
+        "Dry runs, injection and duration limits, recorded-cost limits, and circuit breakers bound instrumented experiments. In-flight calls are not guaranteed to be cancelled.",
+      "Recovery checks":
+        "Check explicit retry, fallback, and recovery contracts against recorded calls and injected failures.",
+      "Resilience probes":
+        "Run health, latency, response-quality, or custom probes before, during, and after fault injection.",
+      "Resilience scoring":
+        "Compute a 0-100 score from experiment evidence when sufficient evidence is available; inconclusive runs have no numeric score.",
+      "Experiment reports":
+        "Save native reports with faults, calls, contract outcomes, probes, and resilience evidence; export AIOS Run artifacts when needed.",
+      "CLI / MCP client access":
+        "Use an MCP-capable command-line client to call server tools over local stdio or hosted HTTP. The server launch command starts MCP; each product also retains its own CLI.",
       "Unified MCP interface":
-        "The server exposes selected ecosystem capabilities through the MCP protocol.",
+        "Connect once through MCP to discover and invoke selected DeepAgentLabs tools over trusted local stdio or authenticated hosted HTTP.",
       "Access tools & data sources":
-        "MCP exposes selected Lens, Evals, Chaos, Sidecar, Control Tower, and AIOS workflows; available tools depend on transport and installed versions.",
-      "Connect to enterprise systems":
-        "Enterprise-system connections are a reference architecture goal; no specific connector is verified here.",
-      "Share context across agents":
-        "The MCP server has process-local session state; it is not a durable shared evidence store.",
+        "Access exposed ecosystem tools, supplied workflow artifacts, authorized saved reports, documentation, and configured Tower evidence. Available sources depend on installed integrations and permissions.",
+      "Connect to enterprise systems (planned)":
+        "Enterprise-system connectors are an architecture goal. Dedicated connectors to external enterprise applications have not been verified in the current implementation.",
+      "Share context across agents (planned)":
+        "General cross-agent context sharing is an architecture goal. Current authorized session state and saved reports do not establish automatic context synchronization between agents.",
       "Secure access layer":
-        "The local server supports trusted stdio use; hosted HTTP uses configured authentication. Enterprise-wide authorization remains deployment-specific.",
-      "Extend with custom tools":
-        "Custom-tool extension is shown as an architecture capability; it is not established by the local audit as a current feature.",
-      "Works with AgenticLens, Evals, Chaos and Sidecar":
-        "Current MCP workflows integrate selected Lens, Evals, Chaos, Sidecar, and Control Tower capabilities; availability depends on transport and version compatibility.",
+        "Hosted access uses authentication, tool allow/deny policies, expiry, task scope, revocation, and access audit records. Local stdio is intended for a trusted environment; Tower retains its own authorization and approval controls.",
+      "Extend with custom tools (planned)":
+        "A supported custom-tool extension interface is an architecture goal. The current source registry can be developed further, but a public plug-in API for arbitrary custom tools has not been verified.",
+      "All-product access":
+        "Discover bundled references for all seven products: Lens, Evals, Sidecar, Chaos, Control Tower, AI Operations Specification, and MCP. Runtime tool coverage varies by product, transport, and installed integrations.",
+      "Supported product controls":
+        "Invoke exposed product operations, including Lens analysis, Evals release checks, trusted local Chaos experiments, Sidecar discovery, AIOS validation, and supported Control Tower actions. Tower writes retain authentication and approval requirements; full feature control stays with each product's API or CLI.",
+      "Run comparisons":
+        "Compose Lens baseline-versus-candidate trace comparisons through core.compare_runs and retain results for release checks.",
+      "Combined release checks":
+        "Combine producer-owned Lens, Evals, and Chaos evidence through core.release_check; missing required evidence or malformed reports block readiness.",
+      "Hosted access controls":
+        "Hosted keys support tool allow/deny policies, expiry, task scope, dispatch-time authorization, revocation, and access audit records.",
+      "AIOS artifact validation":
+        "Validate supported AIOS draft artifacts using the specification adapter. Validation does not certify production readiness.",
+      "AI-readable documentation":
+        "Discover, search, and read bundled references for all seven projects through core.docs_catalog, core.docs_search, and core.docs_read, without installing sibling packages.",
     };
     return (
       descriptions[label] ||
@@ -762,7 +776,10 @@
         );
       })
       .join("");
-    var packages = DATA.packages.map(packageCard).join("");
+    var packages = DATA.packages.filter(function (item) {
+      return item.id !== "mcp";
+    }).map(packageCard).join("");
+    var mcp = packageCard(packageById("mcp"), 4);
     var outputGroups = packageOutputGroups()
       .map(function (group) {
         return (
@@ -801,15 +818,13 @@
       '<div class="arch-top-layout"><div class="arch-spine">' +
       '<button type="button" class="arch-flow-node arch-users arch-anchor arch-major-node" data-anchor-id="users" data-select-type="node" data-id="users" data-arch-node="users"><span class="arch-flow-icon" aria-hidden="true">' +
       icon("team") +
-      "</span><span><strong>USERS</strong><small>Developers　|　AI Teams　|　Enterprises</small></span></button>" +
-      '<button type="button" class="arch-flow-node arch-entry arch-anchor arch-major-node" data-anchor-id="entry" data-select-type="node" data-id="entry" data-arch-node="entry"><span class="arch-flow-icon" aria-hidden="true">' +
-      icon("console") +
-      "</span><span><strong>CONSOLE / CLI / API / MCP</strong><small>One entry point to build, operate and improve agents</small></span></button>" +
-      '<section class="arch-tower arch-anchor" data-anchor-id="tower"><button type="button" class="arch-tower-title arch-major-node" data-select-type="node" data-id="tower" data-arch-node="tower"><span class="arch-tower-glyph" aria-hidden="true">' +
+      "</span><span><strong>USERS</strong><small>Developers　|　AI Agents　|　Enterprise Applications</small></span></button>" +
+      '<section class="arch-tower arch-tower-with-mcp arch-anchor" data-anchor-id="tower"><div class="arch-tower-main"><button type="button" class="arch-tower-title arch-major-node" data-select-type="node" data-id="tower" data-arch-node="tower"><span class="arch-tower-glyph" aria-hidden="true">' +
       icon("tower") +
       '</span><span><strong>DeepAgent Control Tower</strong><small>Manage　|　Monitor　|　Evaluate　|　Govern　|　Scale</small></span></button><div class="arch-tower-capabilities">' +
       towerFeatures +
-      "</div></section>" +
+      '</div></div><span class="arch-mcp-tower-link" aria-hidden="true"><svg width="28" height="24" viewBox="0 0 32 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M30 8H13V2L2 12l11 10v-6h17z"/></svg></span>' +
+      mcp + '</section>' +
       '<button type="button" class="arch-spec arch-anchor arch-major-node" data-anchor-id="spec" data-select-type="node" data-id="spec" data-arch-node="spec"><span class="arch-spec-glyph" aria-hidden="true">' +
       icon("spec") +
       "</span><span><strong>AI Operations Specification</strong><small>shared runtime model, semantic events, artifacts, schemas</small></span><b>STANDARDIZE</b></button>" +
@@ -884,25 +899,85 @@
         y: toRect.top + toRect.height / 2 - root.top,
       };
     }
+    // Tower -> tooling connectors: all four share one line from the Tower
+    // that runs behind the spec box, then diverge from the box's bottom
+    // centre to each card using the same curve as the other connectors.
+    var towerFan = ["lens", "evals", "sidecar", "chaos"];
+    if (fromId === "tower" && towerFan.indexOf(toId) !== -1) {
+      // When the cards wrap (narrow screens) the fan would cut through the
+      // first row, so leave it out of the overview there.
+      var firstCard = artwork.querySelector('[data-anchor-id="lens"]');
+      if (!fromAbove || (firstCard && toRect.top > firstCard.getBoundingClientRect().top + 4))
+        return null;
+      var specElement = artwork.querySelector('[data-anchor-id="spec"]');
+      if (specElement && specElement.getClientRects().length) {
+        var spec = specElement.getBoundingClientRect();
+        // Small left-to-right offset so the four lines leave the box a
+        // little apart rather than from a single pixel.
+        var spread = 14 * (towerFan.indexOf(toId) - (towerFan.length - 1) / 2);
+        var split = {
+          x:
+            Math.min(Math.max(start.x, spec.left - root.left + 24), spec.right - root.left - 24) +
+            spread,
+          y: spec.bottom - root.top,
+        };
+        // Rounded "metro" route below the box: down, round corner, across,
+        // round corner, down into the card. Outer lines turn higher than
+        // inner ones so the routes nest without crossing.
+        var fanIndex = towerFan.indexOf(toId);
+        var outer = fanIndex === 0 || fanIndex === towerFan.length - 1;
+        var gap = end.y - split.y;
+        var level = split.y + gap * (outer ? 0.32 : 0.6);
+        var dir = end.x < split.x ? -1 : 1;
+        // Corners are stretched horizontally (elliptical) for a softer bend.
+        var rV1 = Math.max(0, Math.min(24, level - split.y));
+        var rV2 = Math.max(0, Math.min(24, end.y - level - 8));
+        var rH = Math.max(0, Math.min(48, Math.abs(end.x - split.x) / 2));
+        var route =
+          " L " + split.x + " " + (level - rV1) +
+          " C " + split.x + " " + level + " " + split.x + " " + level +
+          " " + (split.x + dir * rH) + " " + level +
+          " L " + (end.x - dir * rH) + " " + level +
+          " C " + end.x + " " + level + " " + end.x + " " + level +
+          " " + end.x + " " + (level + rV2) +
+          " L " + end.x + " " + end.y;
+        var fanPath = createSvg("path", {
+          d:
+            // Parallel drop from the Tower, slightly apart, behind the box.
+            "M" + (start.x + spread) + " " + start.y +
+            " L " + split.x + " " + split.y +
+            route,
+          class: "arch-connection arch-" + relationship.status,
+          "data-relationship": relationship.id,
+          "data-from": relationship.from,
+          "data-to": relationship.to,
+          "marker-end": "url(#arch-arrow-" + relationship.status + ")",
+        });
+        fanPath.dataset.label = relationship.label;
+        return fanPath;
+      }
+    }
     var control = Math.max(22, Math.abs(end.y - start.y) * 0.42);
+    var d;
+    if (!fromAbove && !toBelow) {
+      // Side-by-side boxes: horizontal handles so the line leaves and
+      // enters level, and the arrowhead points straight into the box.
+      var hControl = Math.max(22, Math.abs(end.x - start.x) * 0.45);
+      var hDir = end.x > start.x ? 1 : -1;
+      d =
+        "M" + start.x + " " + start.y +
+        " C " + (start.x + hDir * hControl) + " " + start.y +
+        " " + (end.x - hDir * hControl) + " " + end.y +
+        " " + end.x + " " + end.y;
+    } else {
+      d =
+        "M" + start.x + " " + start.y +
+        " C " + start.x + " " + (start.y + (fromAbove ? control : -control)) +
+        " " + end.x + " " + (end.y + (fromAbove ? -control : control)) +
+        " " + end.x + " " + end.y;
+    }
     var path = createSvg("path", {
-      d:
-        "M" +
-        start.x +
-        " " +
-        start.y +
-        " C " +
-        start.x +
-        " " +
-        (start.y + (fromAbove ? control : -control)) +
-        " " +
-        end.x +
-        " " +
-        (end.y + (fromAbove ? -control : control)) +
-        " " +
-        end.x +
-        " " +
-        end.y,
+      d: d,
       class: "arch-connection arch-" + relationship.status,
       "data-relationship": relationship.id,
       "data-from": relationship.from,
@@ -927,18 +1002,21 @@
     svg.setAttribute("height", rect.height);
     svg.setAttribute("viewBox", "0 0 " + rect.width + " " + rect.height);
     paths.replaceChildren();
+    // Keep the overview to one connector per product. Other integrations
+    // remain available in each component's connected-components details.
+    var overviewConnections = [
+      "users-tower",
+      "frameworks-spec",
+      // Tower evidence ingestion, drawn under the spec box (see connectionPath).
+      "tower-lens",
+      "tower-evals",
+      "tower-sidecar",
+      "tower-chaos",
+    ];
     DATA.relationships
-      .concat(
-        packageOutputGroups().map(function (group) {
-          return {
-            id: "output-" + group.owner,
-            from: group.owner,
-            to: group.id,
-            status: group.status,
-            label: "package outputs and results",
-          };
-        }),
-      )
+      .filter(function (relationship) {
+        return overviewConnections.indexOf(relationship.id) !== -1;
+      })
       .forEach(function (relationship) {
         var path = connectionPath(
           relationship.from,
@@ -1265,17 +1343,10 @@
     return [
       {
         id: "users",
-        edge: "users-entry",
+        edge: "users-tower",
         title: "USER",
         explanation:
-          "A request begins with a developer, AI team, or enterprise.",
-      },
-      {
-        id: "entry",
-        edge: "entry-tower",
-        title: "CONSOLE / CLI / API / MCP",
-        explanation:
-          "Console, CLI, authenticated HTTP API, and MCP are available entry surfaces; each tool can also be used independently.",
+          "A request begins with a developer, AI agent, or enterprise application.",
       },
       {
         id: "tower",
@@ -1354,7 +1425,7 @@
     traceStatus.innerHTML =
       "<strong>STEP " +
       (traceIndex + 1) +
-      " / 6 · " +
+      " / " + traceSteps().length + " · " +
       escapeHtml(step.title) +
       "</strong><span>" +
       escapeHtml(step.explanation) +
@@ -1371,7 +1442,7 @@
       role: "TRACE REQUEST",
     });
     document.getElementById("arch-pd-kind").textContent =
-      "TRACE REQUEST · STEP " + (traceIndex + 1) + " / 6";
+      "TRACE REQUEST · STEP " + (traceIndex + 1) + " / " + traceSteps().length;
   }
 
   function stopTrace(reset) {

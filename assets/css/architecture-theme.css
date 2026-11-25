@@ -51,13 +51,69 @@
 .arch-tower-cap:hover,.arch-tower-cap.arch-selected,.arch-tower-cap.arch-group-highlight,.arch-tower-cap:focus-visible{background:#18271f;color:#fff;box-shadow:inset 0 -2px 0 var(--acid)}
 .arch-tower.arch-selected{box-shadow:inset 0 -3px 0 var(--acid)}
 
+/* MCP access sits inside the Tower group, pointing toward its controls. */
+.arch-tower-with-mcp{display:grid;grid-template-columns:minmax(0,1fr) 28px 230px;gap:10px;align-items:center}
+.arch-tower-main{min-width:0}
+.arch-tower-with-mcp .arch-tower-title strong{font-size:clamp(20px,2vw,27px)}
+.arch-tower-with-mcp .arch-tower-title{transform:translateY(-22px)}
+.arch-tower-with-mcp .arch-tower-capabilities{grid-template-columns:repeat(3,minmax(0,1fr))}
+.arch-tower-with-mcp .arch-package{min-width:0;align-self:stretch}
+.arch-tower-with-mcp .arch-capabilities{max-height:260px;overflow-y:auto;grid-auto-rows:max-content;scrollbar-width:thin;scrollbar-color:#829077 #fff}
+.arch-mcp-tower-link{display:block;color:var(--acid);transform:translateY(-88px)}
+.arch-mcp-tower-link svg{display:block;width:28px;height:24px;max-width:100%;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linejoin:round}
+.arch-connection[data-relationship="tower-mcp"]{display:none}
+.arch-package-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+@media(max-width:1120px){
+  .arch-top-layout{grid-template-columns:minmax(0,1fr)}
+  .arch-package-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:760px){
+  .arch-tower-with-mcp{grid-template-columns:minmax(0,1fr);gap:14px}
+  .arch-tower-with-mcp .arch-tower-title{transform:none}
+  .arch-mcp-tower-link{width:28px;justify-self:center;transform:rotate(90deg)}
+}
+@media(max-width:480px){
+  .arch-package-grid{grid-template-columns:minmax(0,1fr)}
+}
+
 /* ---------- Specification: the one lime block ---------- */
 .arch-spec{border:1px solid var(--ink);border-radius:0;background:var(--acid);color:var(--ink);min-height:62px}
 .arch-spec-glyph,.arch-spec>b{color:var(--ink)}
+.arch-spec>b{position:absolute;right:12px;top:8px;margin:0}
 .arch-spec strong{font-family:var(--font-display,inherit);letter-spacing:-.02em}
 .arch-spec:hover,.arch-spec.arch-selected{box-shadow:inset 0 -3px 0 var(--ink)}
 
 /* ---------- frameworks ---------- */
+.arch-frameworks{padding:4px}
+.arch-framework-list{margin:3px 0;gap:2px}
+.arch-framework-title{gap:5px}
+.arch-framework-title strong{font-size:14px;line-height:1.15}
+.arch-framework-title svg{width:22px;height:22px;flex-shrink:0}
+.arch-framework-chip{padding:1px 3px;font-size:10.5px;line-height:1.15}
+.arch-instrument{padding:3px 0 0;font-size:11px;line-height:1.2;gap:4px}
+.arch-instrument .arch-rel-mark{font-size:13px;line-height:1}
+.arch-top-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,540px) 300px minmax(0,1fr);gap:20px 24px;align-items:center}
+.arch-spine{display:contents}
+.arch-users{grid-column:1/-1;grid-row:1;justify-self:center;margin-bottom:0}
+.arch-frameworks{grid-column:3/-1;grid-row:3;justify-self:end;width:232px;transform:none}
+.arch-tower-with-mcp{grid-column:1/-1;grid-row:2;justify-self:center;width:min(100%,900px);margin-bottom:0}
+.arch-spec{grid-column:2;grid-row:3;justify-self:center;width:100%}
+@media(min-width:1121px){
+  .arch-spec{transform:translateX(60px)}
+}
+@media(min-width:1280px){
+  .arch-spec{transform:translateX(100px)}
+}
+@media(max-width:1120px){
+  .arch-top-layout{grid-template-columns:minmax(0,1fr) 300px}
+  .arch-spec{grid-column:1}
+  .arch-frameworks{grid-column:2;transform:translateX(12px)}
+}
+@media(max-width:760px){
+  .arch-top-layout{grid-template-columns:minmax(0,1fr)}
+  .arch-spec{grid-column:1;grid-row:3;width:min(100%,540px)}
+  .arch-frameworks{grid-column:1;grid-row:4;justify-self:center;width:min(100%,232px);transform:none}
+}
 .arch-framework-title{color:var(--ink)}
 .arch-framework-chip{border:1px solid var(--line);border-radius:0;background:var(--paper);color:var(--ink)}
 .arch-framework-chip:hover,.arch-framework-chip:focus-visible,.arch-frameworks.arch-selected .arch-framework-chip{border-color:var(--ink);background:var(--acid)}
@@ -145,3 +201,4 @@
 /* Package-to-package links ran straight through neighbouring cards, so they are not drawn on the
    map; those relationships are still listed in the details panel ("Connected components"). */
 .arch-connection:is([data-from=lens],[data-from=evals],[data-from=sidecar],[data-from=chaos],[data-from=mcp]):is([data-to=lens],[data-to=evals],[data-to=sidecar],[data-to=chaos],[data-to=mcp]){display:none}
+@media(max-width:760px){.arch-spec>b{position:static;margin-left:auto}}
