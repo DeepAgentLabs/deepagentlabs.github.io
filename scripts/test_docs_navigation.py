@@ -148,6 +148,9 @@ class NavigationTests(unittest.TestCase):
             self.assertFalse((staged / "scripts").exists())
             self.assertEqual((staged / "llms-full.md").read_text(), files["docs/llms-full.md"])
             self.assertTrue((staged / "v0.8/audit_event.schema.json").is_file())
+            # The product menu lists the shared specification after every product.
+            self.assertEqual(config.extra["products"][-1]["name"], "AI Operations Specification")
+            self.assertEqual(config.extra["products"][0]["name"], "AgenticLens")
 
     def test_release_notes_are_separate_from_task_guides(self):
         for filename in ("aios-0.8-operational-artifacts.md", "coordinated-v1-readiness.md", "v1.0.md"):
