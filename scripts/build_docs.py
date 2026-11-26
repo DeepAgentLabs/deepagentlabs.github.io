@@ -425,6 +425,12 @@ def prepare(project, repo, staging, section="docs"):
                 "has_developer_guide": (staging / ("docs/developer-guide.md" if project == "ai-operations-spec" else "developer-guide.md")).is_file(),
                 "developer_guide_url": "docs/developer-guide/" if project == "ai-operations-spec" else "developer-guide/",
                 "has_ai_reference": (staging / "llms-full.md").is_file(),
+                # The header links the API reference only when the product curates it.
+                "has_api_reference": section == "docs" and (staging / "navigation.json").is_file()
+                and any(
+                    "api-reference.md" in entry.values()
+                    for entry in json.loads((staging / "navigation.json").read_text(encoding="utf-8"))
+                ),
                 "products": [
                     {
                         "name": item[0],
