@@ -266,6 +266,14 @@ def prepare(project, repo, staging, section="docs"):
             label, target = next(iter(entry.items()))
             if target in curated:
                 continue
+            if target == "llms-full.md":
+                # The AI-readable reference is published verbatim, outside MkDocs.
+                # Link the raw file, as the header's "AI-readable docs" link does.
+                if not (staging / target).is_file():
+                    raise ValueError("Navigation links llms-full.md, but the product has none")
+                curated.add(target)
+                groups[pinned_group or "Reference"].append({label: f"/{slug}/{section}/llms-full.md"})
+                continue
             if not (staging / target).is_file():
                 raise ValueError(f"Navigation target does not exist: {target}")
             curated.add(target)
