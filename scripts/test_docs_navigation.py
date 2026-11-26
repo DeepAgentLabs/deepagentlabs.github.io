@@ -80,6 +80,7 @@ class NavigationTests(unittest.TestCase):
                 {"AI readable": "ai-reference-index.md"},
             ])
             self.assertTrue(config.extra["has_api_reference"])
+            self.assertEqual(config.extra["api_reference_url"], "api-reference/")
 
     def test_unknown_navigation_group_is_rejected(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -114,12 +115,14 @@ class NavigationTests(unittest.TestCase):
                 "README.md": "# AIOS\n",
                 "docs/developer-guide.md": "# Developer guide\n\n## Quickstart\n",
                 "docs/ai-reference-index.md": "# Capability index\n",
+                "docs/api-reference.md": "# API Reference (detailed)\n",
                 "docs/llms-full.md": "# Raw reference\n\n[Home](../README.md)\n",
                 "docs/ai-docs-manifest.json": "{}",
                 "docs/navigation.json": json.dumps([
                     {"Overview": "index.md"},
                     {"Developer Guide (simple)": "docs/developer-guide.md"},
-                    {"AI Reference (robust)": "docs/ai-reference-index.md"},
+                    {"API Reference (detailed)": "docs/api-reference.md", "group": "Getting started"},
+                    {"AI Readable Documentation": "docs/ai-reference-index.md", "group": "Getting started"},
                 ]),
                 "specification/v0.8/schemas/audit_event.schema.json": '{"$id":"unchanged"}',
             }
@@ -136,11 +139,18 @@ class NavigationTests(unittest.TestCase):
             self.assertEqual(config.extra["developer_guide_url"], "docs/developer-guide/")
             self.assertEqual(config.site_url, "https://deepagentlabs.io/ai-operations-spec/docs/")
             self.assertIn("docs/ai-reference-index.md", json.dumps(config.nav))
+            # The header must reach the nested page, not a missing root api-reference/.
+            self.assertTrue(config.extra["has_api_reference"])
+            self.assertEqual(config.extra["api_reference_url"], "docs/api-reference/")
+            self.assertEqual(config.nav[0]["Getting started"][2], {"API Reference (detailed)": "docs/api-reference.md"})
             staged = root / "staging"
             self.assertFalse((staged / "docs/untracked.md").exists())
             self.assertFalse((staged / "scripts").exists())
             self.assertEqual((staged / "llms-full.md").read_text(), files["docs/llms-full.md"])
             self.assertTrue((staged / "v0.8/audit_event.schema.json").is_file())
+            # The product menu lists the shared specification after every product.
+            self.assertEqual(config.extra["products"][-1]["name"], "AI Operations Specification")
+            self.assertEqual(config.extra["products"][0]["name"], "AgenticLens")
 
     def test_release_notes_are_separate_from_task_guides(self):
         for filename in ("aios-0.8-operational-artifacts.md", "coordinated-v1-readiness.md", "v1.0.md"):
