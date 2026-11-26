@@ -84,7 +84,10 @@ def contract_extract(path):
 
 
 def build(repo, check=False):
-    docs = repo / ("website/docs" if repo.name == "agentic-sidecar" else "docs")
+    docs = repo / "docs"
+    if not (docs / "ai-docs.json").is_file() and (repo / "website/docs/ai-docs.json").is_file():
+        # Retired website/ layout, kept readable for older checkouts.
+        docs = repo / "website/docs"
     config_path = docs / "ai-docs.json"
     config = json.loads(config_path.read_text(encoding="utf-8"))
     project = tomllib.loads((repo / "pyproject.toml").read_text(encoding="utf-8"))["project"]

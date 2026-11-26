@@ -22,12 +22,7 @@ ROOT = Path(__file__).resolve().parent.parent
 PROJECTS = {
     "ai-operations-spec": ("AI Operations Specification", "ai-operations-spec", ".", None),
     "agenticlens": ("AgenticLens", "agenticlens", "docs", "mkdocs.yml"),
-    "agentic-sidecar": (
-        "Agentic Sidecar",
-        "agentic-sidecar",
-        "website/docs",
-        "website/mkdocs.yml",
-    ),
+    "agentic-sidecar": ("Agentic Sidecar", "agentic-sidecar", "docs", "mkdocs.yml"),
     "agentic-chaos": ("Agentic Chaos", "agentic-chaos", "docs", "mkdocs.yml"),
     "agentic-evals": ("Agentic Evals", "agentic-evals", "docs", None),
     "mcp-server": ("MCP Server", "mcp", "docs", "mkdocs.yml"),
@@ -94,6 +89,13 @@ def category(path):
     return "Guides"
 
 
+def legacy_layout(repo, docs, original):
+    """Accept the retired website/ layout until every checkout uses root docs/."""
+    if original and not (repo / original).is_file() and (repo / "website" / original).is_file():
+        return f"website/{docs}", f"website/{original}"
+    return docs, original
+
+
 def prepare(project, repo, staging, section="docs"):
     name, slug, docs, original = PROJECTS[project]
     tower_guides = (
@@ -103,6 +105,7 @@ def prepare(project, repo, staging, section="docs"):
         docs, original = "usecases", "mkdocs.usecases.yml"
     elif tower_guides:
         docs, original = "docs", "mkdocs.yml"
+    docs, original = legacy_layout(repo, docs, original)
     if staging.exists():
         shutil.rmtree(staging)
     if project == "ai-operations-spec" and section == "docs":
