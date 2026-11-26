@@ -68,6 +68,29 @@ class AIDocsTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "Stale AI documentation"):
                 build(repo, check=True)
 
+    def test_specification_pack_omits_package_sections(self):
+        with tempfile.TemporaryDirectory() as directory:
+            repo = self.fixture(Path(directory))
+            config_path = repo / "docs/ai-docs.json"
+            config = json.loads(config_path.read_text())
+            build(repo)
+            package = (repo / "docs/llms-full.md").read_text()
+            self.assertIn("## Package entry points", package)
+            self.assertIn("Python requirement:", package)
+            config["kind"] = "specification"
+            config_path.write_text(json.dumps(config), encoding="utf-8")
+            build(repo)
+            build(repo, check=True)
+            reference = (repo / "docs/llms-full.md").read_text()
+            self.assertTrue(reference.startswith("# Example — comprehensive AI-readable reference\n\nSpecification: Example\n"))
+            for removed in ("## Package entry points", "## Installation dependencies", "Python requirement:", "Distribution:"):
+                self.assertNotIn(removed, reference)
+            self.assertIn("Runtimes, SDKs and exporters implement it", reference)
+            config["kind"] = "sdk"
+            config_path.write_text(json.dumps(config), encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "Unknown documentation kind"):
+                build(repo)
+
     def test_rejects_sources_outside_product(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
