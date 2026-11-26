@@ -82,6 +82,30 @@ class NavigationTests(unittest.TestCase):
             self.assertTrue(config.extra["has_api_reference"])
             self.assertEqual(config.extra["api_reference_url"], "api-reference/")
 
+    def test_ai_readable_entry_links_the_raw_reference(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            docs = root / "product" / "docs"
+            docs.mkdir(parents=True)
+            for filename in ("index.md", "developer-guide.md", "api-reference.md", "ai-reference-index.md"):
+                (docs / filename).write_text("# Example\n", encoding="utf-8")
+            (docs / "llms-full.md").write_text("# Raw reference\n", encoding="utf-8")
+            (docs / "navigation.json").write_text(json.dumps([
+                {"Overview": "index.md"},
+                {"Developer guide": "developer-guide.md"},
+                {"API reference": "api-reference.md", "group": "Getting started"},
+                {"AI Readable Documentation": "llms-full.md", "group": "Getting started"},
+            ]), encoding="utf-8")
+            config = prepare("agentic-evals", root / "product", root / "staging")
+            self.assertEqual(config.nav[0]["Getting started"][-1],
+                             {"AI Readable Documentation": "/agentic-evals/docs/llms-full.md"})
+            # The capability index is no longer a curated page: kept out of nav and search.
+            self.assertNotIn("ai-reference-index.md", json.dumps(config.nav))
+            self.assertIn("exclude: true", (root / "staging/ai-reference-index.md").read_text())
+            (docs / "llms-full.md").unlink()
+            with self.assertRaisesRegex(ValueError, "has none"):
+                prepare("agentic-evals", root / "product", root / "staging2")
+
     def test_unknown_navigation_group_is_rejected(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
