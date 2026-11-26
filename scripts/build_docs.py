@@ -254,6 +254,11 @@ def prepare(project, repo, staging, section="docs"):
     manifest = staging / "navigation.json"
     if section == "docs" and manifest.is_file():
         for entry in json.loads(manifest.read_text(encoding="utf-8")):
+            entry = dict(entry)
+            # Optional "group" pins a curated page to a sidebar group.
+            pinned_group = entry.pop("group", None)
+            if pinned_group is not None and pinned_group not in groups:
+                raise ValueError(f"Unknown navigation group: {pinned_group}")
             label, target = next(iter(entry.items()))
             if target in curated:
                 continue
@@ -261,7 +266,7 @@ def prepare(project, repo, staging, section="docs"):
                 raise ValueError(f"Navigation target does not exist: {target}")
             curated.add(target)
             topic = Path(target).stem
-            group = (
+            group = pinned_group or (
                 "Getting started" if topic in ("developer-guide", "quickstart")
                 else "Concepts" if topic in ("concepts", "capabilities", "workflow")
                 else "Reference" if topic in ("reference", "data-model", "tool-reference", "ai-reference-index")
