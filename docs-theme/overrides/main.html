@@ -14,7 +14,7 @@
   <a href="{{ config.extra.developer_guide_url | default('developer-guide/') | url }}">Developer guide</a>
   {% endif %}
   {% if config.extra.has_api_reference %}
-  <a href="{{ 'api-reference/' | url }}">API reference</a>
+  <a href="{{ config.extra.api_reference_url | default('api-reference/') | url }}">API reference</a>
   {% endif %}
   {% if config.extra.has_ai_reference %}
   <a href="{{ 'llms-full.md' | url }}">AI-readable docs</a>
