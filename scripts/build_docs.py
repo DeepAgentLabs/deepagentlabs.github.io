@@ -19,14 +19,15 @@ from mkdocs.config.defaults import MkDocsConfig
 from pymdownx.superfences import fence_code_format
 
 ROOT = Path(__file__).resolve().parent.parent
+# Order sets the docs product menu: products first, the shared specification last.
 PROJECTS = {
-    "ai-operations-spec": ("AI Operations Specification", "ai-operations-spec", ".", None),
     "agenticlens": ("AgenticLens", "agenticlens", "docs", "mkdocs.yml"),
     "agentic-sidecar": ("Agentic Sidecar", "agentic-sidecar", "docs", "mkdocs.yml"),
     "agentic-chaos": ("Agentic Chaos", "agentic-chaos", "docs", "mkdocs.yml"),
     "agentic-evals": ("Agentic Evals", "agentic-evals", "docs", None),
     "mcp-server": ("MCP Server", "mcp", "docs", "mkdocs.yml"),
     "agenticops-control-tower": ("Control Tower", "control-tower", ".", None),
+    "ai-operations-spec": ("AI Operations Specification", "ai-operations-spec", ".", None),
 }
 GROUPS = [
     "Getting started",
