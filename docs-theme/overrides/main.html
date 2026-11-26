@@ -17,7 +17,7 @@
   <a href="{{ 'api-reference/' | url }}">API reference</a>
   {% endif %}
   {% if config.extra.has_ai_reference %}
-  <a href="{{ 'llms-full.md' | url }}">AI reference</a>
+  <a href="{{ 'llms-full.md' | url }}">AI-readable docs</a>
   {% endif %}
   <noscript>{% for product in config.extra.products %}<a href="{{ product.url }}">{{ product.name }}</a> {% endfor %}</noscript>
 </nav>
