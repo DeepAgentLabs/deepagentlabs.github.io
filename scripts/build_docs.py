@@ -346,6 +346,15 @@ def prepare(project, repo, staging, section="docs"):
         path for path in figures.get("extra_css", []) if Path(path).name != "extra.css"
     ]
     figure_js = list(figures.get("extra_javascript", []))
+    # A curated API reference may sit below the docs root (the spec keeps its
+    # guides in docs/); link the header to wherever the manifest places it.
+    api_reference = next((
+        Path(target).with_suffix("").as_posix() + "/"
+        for entry in (json.loads(manifest.read_text(encoding="utf-8"))
+                      if section == "docs" and manifest.is_file() else [])
+        for key, target in entry.items()
+        if key != "group" and Path(target).name == "api-reference.md"
+    ), None)
     config.load_dict(
         {
             "exclude_docs": "**/llms-full.md",
@@ -429,11 +438,8 @@ def prepare(project, repo, staging, section="docs"):
                 "developer_guide_url": "docs/developer-guide/" if project == "ai-operations-spec" else "developer-guide/",
                 "has_ai_reference": (staging / "llms-full.md").is_file(),
                 # The header links the API reference only when the product curates it.
-                "has_api_reference": section == "docs" and (staging / "navigation.json").is_file()
-                and any(
-                    "api-reference.md" in entry.values()
-                    for entry in json.loads((staging / "navigation.json").read_text(encoding="utf-8"))
-                ),
+                "has_api_reference": api_reference is not None,
+                "api_reference_url": api_reference or "api-reference/",
                 "products": [
                     {
                         "name": item[0],
