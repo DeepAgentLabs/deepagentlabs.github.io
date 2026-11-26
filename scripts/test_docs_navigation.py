@@ -57,6 +57,43 @@ class NavigationTests(unittest.TestCase):
             targets = [target for group in config.nav for entries in group.values()
                        for entry in entries for target in entry.values()]
             self.assertEqual(len(targets), len(set(targets)))
+            self.assertTrue(config.extra["has_api_reference"])
+
+    def test_navigation_group_pins_curated_pages(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            docs = root / "product" / "docs"
+            docs.mkdir(parents=True)
+            for filename in ("index.md", "developer-guide.md", "api-reference.md", "ai-reference-index.md"):
+                (docs / filename).write_text("# Example\n", encoding="utf-8")
+            (docs / "navigation.json").write_text(json.dumps([
+                {"Overview": "index.md"},
+                {"Developer guide": "developer-guide.md"},
+                {"API reference": "api-reference.md", "group": "Getting started"},
+                {"AI readable": "ai-reference-index.md", "group": "Getting started"},
+            ]), encoding="utf-8")
+            config = prepare("agentic-evals", root / "product", root / "staging")
+            self.assertEqual(config.nav[0]["Getting started"], [
+                {"Overview": "index.md"},
+                {"Developer guide": "developer-guide.md"},
+                {"API reference": "api-reference.md"},
+                {"AI readable": "ai-reference-index.md"},
+            ])
+            self.assertTrue(config.extra["has_api_reference"])
+
+    def test_unknown_navigation_group_is_rejected(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            docs = root / "product" / "docs"
+            docs.mkdir(parents=True)
+            for filename in ("index.md", "api-reference.md"):
+                (docs / filename).write_text("# Example\n", encoding="utf-8")
+            (docs / "navigation.json").write_text(json.dumps([
+                {"Overview": "index.md"},
+                {"API reference": "api-reference.md", "group": "Nowhere"},
+            ]), encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "Unknown navigation group"):
+                prepare("agentic-evals", root / "product", root / "staging")
 
     def test_spec_layout_uses_tracked_sources_and_nested_guides(self):
         with tempfile.TemporaryDirectory() as directory:

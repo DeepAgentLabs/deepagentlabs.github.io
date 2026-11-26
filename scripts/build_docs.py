@@ -254,6 +254,11 @@ def prepare(project, repo, staging, section="docs"):
     manifest = staging / "navigation.json"
     if section == "docs" and manifest.is_file():
         for entry in json.loads(manifest.read_text(encoding="utf-8")):
+            entry = dict(entry)
+            # Optional "group" pins a curated page to a sidebar group.
+            pinned_group = entry.pop("group", None)
+            if pinned_group is not None and pinned_group not in groups:
+                raise ValueError(f"Unknown navigation group: {pinned_group}")
             label, target = next(iter(entry.items()))
             if target in curated:
                 continue
@@ -261,7 +266,7 @@ def prepare(project, repo, staging, section="docs"):
                 raise ValueError(f"Navigation target does not exist: {target}")
             curated.add(target)
             topic = Path(target).stem
-            group = (
+            group = pinned_group or (
                 "Getting started" if topic in ("developer-guide", "quickstart")
                 else "Concepts" if topic in ("concepts", "capabilities", "workflow")
                 else "Reference" if topic in ("reference", "data-model", "tool-reference", "ai-reference-index")
@@ -420,6 +425,12 @@ def prepare(project, repo, staging, section="docs"):
                 "has_developer_guide": (staging / ("docs/developer-guide.md" if project == "ai-operations-spec" else "developer-guide.md")).is_file(),
                 "developer_guide_url": "docs/developer-guide/" if project == "ai-operations-spec" else "developer-guide/",
                 "has_ai_reference": (staging / "llms-full.md").is_file(),
+                # The header links the API reference only when the product curates it.
+                "has_api_reference": section == "docs" and (staging / "navigation.json").is_file()
+                and any(
+                    "api-reference.md" in entry.values()
+                    for entry in json.loads((staging / "navigation.json").read_text(encoding="utf-8"))
+                ),
                 "products": [
                     {
                         "name": item[0],
