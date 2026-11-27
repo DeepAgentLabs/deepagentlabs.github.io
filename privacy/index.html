@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Privacy Policy for the DeepAgentLabs website, hosted MCP service, and connected plugins, published by PRAMOD BEGUR NAGARAJ.">
+  <meta name="theme-color" content="#203c30">
+  <link rel="icon" type="image/png" href="/assets/img/dal-logo.png">
+  <link rel="canonical" href="https://deepagentlabs.io/privacy/">
+  <link rel="stylesheet" href="/assets/css/legal.css?v=1">
+  <title>Privacy Policy — DeepAgentLabs</title>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="legal-header">
+    <a class="brand" href="/"><img src="/assets/img/dal-logo.png" alt="" width="46" height="46"><span>DeepAgentLabs</span></a>
+    <nav aria-label="Main navigation"><a href="/mcp/docs/">Documentation</a><a href="/privacy/" aria-current="page">Privacy</a><a href="/terms/" >Terms</a></nav>
+  </header>
+  <main id="main">
+    <p class="eyebrow">DeepAgentLabs · Hosted services</p>
+    <h1>Privacy Policy</h1>
+    <p class="updated">Effective November 26, 2026 · Publisher: PRAMOD BEGUR NAGARAJ</p>
+    
+<p class="intro">This policy explains how information is handled when you use the DeepAgentLabs website, hosted MCP service, and plugins that connect to that service. The publisher and service operator is <strong>PRAMOD BEGUR NAGARAJ</strong>, using the DeepAgentLabs name.</p>
+<div class="summary"><p><strong>Your workflow data is used to provide your requested service.</strong> We do not sell it or use it for advertising or AI model training.</p><p>Connecting through ChatGPT or Claude sends tool inputs to our hosted service and returns results to the platform you chose. Those platforms also apply their own policies.</p></div>
+<nav class="toc" aria-label="On this page"><a href="#information">Information handled</a><a href="#use">How it is used</a><a href="#providers">Service providers</a><a href="#retention">Retention</a><a href="#choices">Your choices</a><a href="#contact">Contact</a></nav>
+<section id="information"><h2>1. Information handled</h2>
+<ul><li><strong>Account information:</strong> the display name you provide, an assigned account identifier, account status, API-key digest, and access-policy settings. Hosted MCP signup does not require a password, payment details, or email address.</li>
+<li><strong>Authentication information:</strong> OAuth consent state, client and callback identifiers, permissions, grant records, and hashed access/refresh-token records. Your existing API key is entered on our service to authorize access. It is not given to the AI host as its OAuth access token.</li>
+<li><strong>Tool inputs and results:</strong> workflow artifacts, traces, evaluation data, reports, identifiers, and other information you choose to supply to a tool. These inputs may contain personal information if you include it. Send only information needed for the task and that you are authorized to share.</li>
+<li><strong>Technical information:</strong> network/request metadata needed for hosting, security, rate limiting, diagnostics, and troubleshooting. Infrastructure providers may keep their own request logs.</li>
+<li><strong>Information you send separately:</strong> support emails, optional newsletter subscriptions, or survey answers that you choose to submit.</li></ul>
+<p>The connector receives information supplied to its tools; connecting does not give us blanket access to your AI account, unrelated conversations, local files, or other users’ accounts.</p></section>
+<section id="use"><h2>2. How information is used</h2>
+<p>We process service information to authenticate your account, apply permissions, execute the requested tools, return results, preserve user-scoped workflow state where needed, prevent misuse, and handle support or privacy requests. We do not use submitted workflow content for unrelated purposes. We do not sell personal information or use it for advertising or training our AI models.</p>
+<p>If you explicitly subscribe to the newsletter or submit a survey, we use that submission for the purpose you requested, separately from MCP workflow processing. Website page-view counters measure visits to selected public pages; they do not receive your MCP workflow content from the connector.</p></section>
+<section id="providers"><h2>3. Sharing and service providers</h2>
+<ul><li><strong>Hosting and storage:</strong> the website uses GitHub Pages, and the hosted MCP service uses Render and Supabase for service delivery and stored account, authentication, and workflow/session information.</li>
+<li><strong>Your chosen AI platform:</strong> tool responses are returned to ChatGPT, Claude, or another client you connect. Information handled by those platforms is also governed by their own policies.</li>
+<li><strong>Optional configured runtimes:</strong> tools that communicate with a separately configured DeepAgentLabs runtime, such as Control Tower or Sidecar, send information needed for that operation to that runtime. Connecting the MCP service does not itself create such a runtime connection.</li>
+<li><strong>Website services:</strong> some pages load fonts or icons from Google Fonts or public CDNs, fetch public package statistics/badges from Pepy or Shields, or use Hits.sh for public page-load counts. These providers receive connection metadata when your browser requests their resources. Optional newsletter submissions use Buttondown; embedded surveys use Google Forms.</li>
+<li><strong>Support:</strong> emails sent to our contact address are handled through the email provider. Do not send API keys or sensitive workflow data by email.</li></ul>
+<p>Service providers may process data in countries different from your own. Their storage, security, logging and backup practices also apply to information they process. We do not promise that the service stores all data in one jurisdiction. We may disclose information where required by applicable law.</p></section>
+<section id="retention"><h2>4. Storage, expiry, and retention</h2>
+<p>Account records are retained for account operation until removed by the operator. Revoking an account stops access but does <strong>not</strong> automatically erase its account record or all related information.</p>
+<p>Hosted workflow/session state uses an expiry mechanism; the default session expiry is one hour. OAuth defaults are a ten-minute pending-consent window, two-minute authorization codes, one-hour access tokens, and rotating refresh tokens with a thirty-day inactivity window and ninety-day maximum connection lifetime. Runtime settings can change these periods. Expiry limits validity or access; it is not a guarantee that every expired row, provider log, cache, or backup is physically erased at that instant.</p>
+<p>Support correspondence and infrastructure logs/backups may remain while needed for their operational purpose or under the provider’s retention processes. We do not publish a universal deletion deadline for all systems. Contact us about retention or deletion of particular information.</p></section>
+<section id="choices"><h2>5. Your choices and deletion requests</h2>
+<p>You can disconnect the connector in the AI platform, rotate an API key, or revoke account access through the account controls. These actions invalidate access according to the service’s authorization checks; they are distinct from a data-erasure request.</p>
+<p>To request access, correction, or deletion of your information, email <a href="mailto:deepagentlabs@gmail.com">deepagentlabs@gmail.com</a>. Include your account identifier if available, but not an API key. We may need to verify your relationship to the account before acting. We will explain the request’s scope and any applicable legal, security, provider-log or backup limits. Rights and requirements can vary under applicable law.</p></section>
+<section><h2>6. Security and browser storage</h2>
+<p>The public hosted endpoint uses HTTPS. The service stores API-key and token digests for lookup rather than persisting those plaintext credentials as account keys. User-scoped authorization checks limit access. The OAuth consent flow uses a short-lived secure browser cookie to bind the form to your browser. No system can guarantee complete security; keep your keys private and report suspected compromise to the contact below.</p></section>
+<section><h2>7. Age, scope, and changes</h2>
+<p>The hosted service is intended for people aged thirteen or older and is not directed at children under thirteen. Users must also satisfy the age rules of the AI platform they use. If you believe a child under thirteen supplied personal information, contact us.</p>
+<p>This policy covers our website and hosted service. Standalone open-source packages running on your own computer follow their own configuration; sending data from them to this hosted service brings that processing within this policy. External websites and services have their own policies. We may update this policy and will show the updated effective date on this page.</p></section>
+
+    <section class="contact-box" id="contact"><h2>Contact</h2><p>PRAMOD BEGUR NAGARAJ · DeepAgentLabs<br><a href="mailto:deepagentlabs@gmail.com">deepagentlabs@gmail.com</a><br>Support, privacy questions, and deletion requests</p></section>
+  </main>
+  <footer class="legal-footer"><p>© 2026 DeepAgentLabs</p><nav aria-label="Footer navigation"><a href="/">Home</a><a href="/privacy/">Privacy Policy</a><a href="/terms/">Terms of Service</a><a href="mailto:deepagentlabs@gmail.com">Contact</a></nav></footer>
+</body>
+</html>
